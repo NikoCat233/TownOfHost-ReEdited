@@ -659,6 +659,11 @@ internal class ChatCommands
             "和平之鸽" or "和平之鴿" or "和平的鸽子" or "和平" => GetString("DovesOfNeace"),
             "持槍" or "持械" or "手长" => GetString("Reach"),
             "monarch" => GetString("Monarch"),
+            "命运眷顾者" or "运神" or "命运" or "眷顾" => GetString("Fategiver"),
+            "Oiiai" or "oiiai" or "OIIAI" => GetString("Oiiai"),
+            "贱人" or "賤人" => GetString("Bitch"),
+            "欺诈" or "欺诈者" or "欺诈师" => GetString("Fraudster"),
+            
             _ => text,
         };
     }

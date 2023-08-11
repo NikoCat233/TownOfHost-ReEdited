@@ -596,7 +596,7 @@ class CheckMurderPatch
                         var rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
                         Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
                         rp.SetRealKiller(target);
-                        rp.RpcMurderPlayerV3(rp);
+                        rp.RpcMurderPlayerV2(rp);
                     }
 
                     MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None, -1);
@@ -1176,8 +1176,21 @@ class MurderPlayerPatch
             {
             Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
             rp.SetRealKiller(target);
-            rp.RpcMurderPlayerV3(rp);
+            rp.RpcMurderPlayerV2(rp);
             }
+        }
+
+        if (target.Is(CustomRoles.Oiiai))
+        {
+            if (!killer.GetCustomRole().IsNeutral())
+            {
+                killer.RpcSetCustomRole(CustomRolesHelper.GetErasedRole(killer.GetCustomRole()));
+                NameNotifyManager.Notify(killer, GetString("LostRoleByOiiai"));
+                Utils.MarkEveryoneDirtySettings();
+                Logger.Info($"{killer.GetNameWithRole()} 被Oiiai了", "Oiiai");
+            }
+            else
+                Logger.Info($"{killer.GetNameWithRole()} Oiiai不能抹除中立", "Oiiai");
         }
 
         foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Mediumshiper)))
@@ -2887,7 +2900,7 @@ class FixedUpdatePatch
                         if (isExiled)
                             CheckForEndVotingPatch.TryAddAfterMeetingDeathPlayers(PlayerState.DeathReason.FollowingSuicide, partnerPlayer.PlayerId);
                         else
-                            partnerPlayer.RpcMurderPlayerV3(partnerPlayer);
+                            partnerPlayer.RpcMurderPlayerV2(partnerPlayer);
                         }
                     }
                 }

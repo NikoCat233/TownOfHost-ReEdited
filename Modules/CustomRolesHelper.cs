@@ -164,6 +164,7 @@ internal static class CustomRolesHelper
                 CustomRoles.Doomsayer => CustomRoles.Crewmate,
                 CustomRoles.Agitater => CustomRoles.Impostor,
                 CustomRoles.Pitfall => CustomRoles.Shapeshifter,
+                CustomRoles.Fraudster => CustomRoles.Impostor,
 
                 _ => role.IsImpostor() ? CustomRoles.Impostor : CustomRoles.Crewmate,
             };
@@ -351,7 +352,10 @@ internal static class CustomRolesHelper
       //      CustomRoles.Cyber or
             CustomRoles.DoubleShot or
             CustomRoles.Ghoul or
-            CustomRoles.EvilSpirit;
+            CustomRoles.EvilSpirit or
+            CustomRoles.Fategiver or
+            CustomRoles.Bitch or
+            CustomRoles.Oiiai;
     }
     public static bool IsAmneMaverick(this CustomRoles role) // ROLE ASSIGNING, NOT NEUTRAL TYPE
     {
@@ -647,7 +651,8 @@ internal static class CustomRolesHelper
             CustomRoles.Camouflager or
             CustomRoles.Twister or
             CustomRoles.Lurker or
-            CustomRoles.Pitfall;
+            CustomRoles.Pitfall or
+            CustomRoles.Fraudster;
     }
     public static bool IsNeutral(this CustomRoles role)
     {

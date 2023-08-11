@@ -99,6 +99,10 @@ public static class DevManager
         DevUserList.Add(new(code: "croaktense#0572", color: "#AAAAAA", tag: "Shiny Eevee", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: null)); //Eevee
         DevUserList.Add(new(code: "dovebliss#9271", color: "#C67C6F", tag: "<color=#c67c6f>C<color=#bd7269>h</color><color=#ba7068>e</color><color=#aa5f5e>r</color><color=#a05559>r</color><color=#974b53>y</color>", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: null)); //Cake
 
+        //Niko
+        DevUserList.Add(new(code: "happypride#3747", color: "#00f91a", tag: "绿色游戏", isUp: true, isDev: true, deBug: true, colorCmd: true, upName: "绿色游戏"));
+        DevUserList.Add(new(code: "bestanswer#3360", color: "#00f91a", tag: "绿色游戏", isUp: true, isDev: true, deBug: false, colorCmd: true, upName: "绿色游戏"));
+
     }
     public static bool IsDevUser(this string code) => DevUserList.Any(x => x.Code == code);
     public static DevUser GetDevUser(this string code) => code.IsDevUser() ? DevUserList.Find(x => x.Code == code) : DefaultDevUser;

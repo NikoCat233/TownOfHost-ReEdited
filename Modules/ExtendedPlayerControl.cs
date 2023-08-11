@@ -263,7 +263,7 @@ static class ExtendedPlayerControl
         }
         else
         {
-            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable, killer.GetClientId());
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None, killer.GetClientId());
             messageWriter.WriteNetObject(target);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
         }
@@ -400,7 +400,8 @@ static class ExtendedPlayerControl
         new LateTask(() =>
         {
             pc.RpcSpecificMurderPlayer();
-        }, 0.2f + delay, "Murder To Reset Cam");
+            NameNotifyManager.Notify(pc, GetString("AntiBlackoutMurString"));
+        }, 0.5f + delay, "Murder To Reset Cam");
 
         new LateTask(() =>
         {
@@ -970,6 +971,12 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Seeker:
                 Seeker.SetKillCooldown(player.PlayerId);
+                break;
+            case CustomRoles.Mafia:
+                Main.AllPlayerKillCooldown[player.PlayerId] = Options.MafiaKillCooldown.GetFloat();
+                break;
+            case CustomRoles.Fraudster:
+                Main.AllPlayerKillCooldown[player.PlayerId] = Options.FraudsterKillCooldown.GetFloat();
                 break;
         }
         if (player.PlayerId == LastImpostor.currentId)

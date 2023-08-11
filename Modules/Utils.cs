@@ -2256,16 +2256,17 @@ public static class Utils
     public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");
     public static bool CanMafiaKill()
     {
-        if (Main.PlayerStates == null) return false;
-        //マフィアを除いた生きているインポスターの人数  Number of Living Impostors excluding mafia
-        int LivingImpostorsNum = 0;
-        foreach (var pc in Main.AllAlivePlayerControls)
-        {
-            var role = pc.GetCustomRole();
-            if (role != CustomRoles.Mafia && role.IsImpostor()) LivingImpostorsNum++;
-        }
+        //if (Main.PlayerStates == null) return false;
+        ////マフィアを除いた生きているインポスターの人数  Number of Living Impostors excluding mafia
+        //int LivingImpostorsNum = 0;
+        //foreach (var pc in Main.AllAlivePlayerControls)
+        //{
+        //    var role = pc.GetCustomRole();
+        //    if (role != CustomRoles.Mafia && role.IsImpostor()) LivingImpostorsNum++;
+        //}
 
-        return LivingImpostorsNum <= 0;
+        //return LivingImpostorsNum <= 0;
+        return true;
     }
     public static void FlashColor(Color color, float duration = 1f)
     {

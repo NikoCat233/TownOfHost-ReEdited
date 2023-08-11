@@ -484,6 +484,9 @@ public class Main : BasePlugin
                 {CustomRoles.Diseased, "#AAAAAA"},
                 {CustomRoles.Antidote,"#FF9876"},
                 {CustomRoles.Burst, "#B619B9"},
+                {CustomRoles.Fategiver,"#FFB6C1"},
+                {CustomRoles.Oiiai, "#96ab2f"},
+                {CustomRoles.Bitch, "#333333"},
 
                 {CustomRoles.Swift, "#ff1919"},
                 {CustomRoles.Mare, "#ff1919"},
@@ -628,6 +631,7 @@ public enum CustomRoles
     Ludopath,
     Chronomancer,
     Pitfall,
+    Fraudster,
     // Flashbang,
     //Crewmate(Vanilla)
     Engineer,
@@ -822,7 +826,10 @@ public enum CustomRoles
     Burst,
     Sleuth,
     Clumsy,
-  //  Cyber,
+    Fategiver,
+    Oiiai,
+    Bitch,
+    //  Cyber,
     // QuickFix
 }
 //WinData

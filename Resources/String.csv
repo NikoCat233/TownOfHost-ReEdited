@@ -3074,3 +3074,36 @@
 "ForceEnd","强制结束游戏","Aborted","Прервано","強制結束遊戲","强制结束游戏"
 "EveryoneDied","无人生还","Everyone died","Все Мертвы","無人生還","无人生还"
 "ForceEndText","房主强制结束了游戏","Host has aborted the game","Хост завершил игру","房主強制結束了遊戲","房主强制结束了游戏
+
+"## 自己的职业说明 ##"
+"ImpCanBeOiiai","内鬼能成为Oiiai","Imposter can be Oiiai"
+"NeutralCanBeOiiai","中立能成为Oiiai","Neutral roles can be Oiiai"
+"LostRoleByOiiai","<color=#96ab2f>OIIAI</color>使你忘记了职业","You lost your role because of the <color=#96ab2f>Oiiai</color>"
+
+"Fraudster","欺诈师","Fraudster"
+"FraudsterInfo","真正的骗术家很少的","Fraud every one !"
+"FraudsterInfoLong","(内鬼阵营):\n欺诈师的击杀冷却非常长，而且无法投票，但是只要驱逐欺诈师则内鬼直接获胜，但是投票给他时有几率为0票。\n根据设置，可以设置欺诈师是否拥有市长的技能（获得技能时概率取决于原职业的设置）","(impostor )\n This role 's kill CD is very long and he cannot vote .when this role was voted ,imps win ."
+"FraudsterVoteLose","投票失败概率","vote lose probabilities"
+"FraudsterCanMayor","可使用市长技能","can use Mayor skill"
+"FraudsterKillCooldown","欺诈师击杀冷却","kill  CD of Fraudster"
+"ExiledFraudster","票出 {0} 时看到他正在笑着\n同时人群里的的个别人也在笑着\n{1} 点燃了引爆键..."，"He was smiling when the ticket was sent out {0} and a few people in the crowd were also smiling \n{1} and lit the trigger..."
+
+"Fategiver","命运眷顾者","Fategiver"
+"Bitch","贱人","Bitch"
+"Oiiai","Oiiai","Oiiai"
+
+"Prefix.Fategiver","命运眷顾者","Fategiver "
+"Prefix.Bitch","贱人","Bitch "
+"Prefix.Oiiai","OIIAI","OIIAI "
+
+"PrefixB.Fategiver","（命运眷顾者）","(Fategiver) "
+"PrefixB.Bitch","（贱人）","(Bitch) "
+"PrefixB.Oiiai","（OIIAI）","(OIIAI) "
+
+"FategiverInfo","神明保佑你","God will help you on voting"
+"BitchInfo","贱人人尽诛之","Just a Bitch"
+"OiiaiInfo","OIIAIOIIIAI","OIIAIOIIIAI"
+
+"FategiverInfoLong","(附加职业)\n命运眷顾者的投票有几率变为0或1或2或3票，如果投票者是市长则加或减对应票数","(add-ons)\n Your vote may change to 1 ,2 or 0 tickets ."
+"BitchInfoLong","(附加职业)\n投给贱人的票数变为15，因为很贱:)\n小丑、处刑人、集票者不会成为贱人。\n由于模组bug，贱人被投的票数不显示，但是仍会被计算。","(Add-ons)\n If any one vote to bitch ,bitch will die ."
+"OiiaiInfoLong","(附加职业)\n当OIIAI被击杀时（被票出以及非常规击杀不算），OIIAI会抹除击杀者的职业，Oiiai无法抹除中立职业。\n房主可以设置内鬼或中立成为Oiiai","(Add-ons):\n When the OIIAI is killed (voted out and unconventional kills are not counted), the OIIAI will erase the killer's role."

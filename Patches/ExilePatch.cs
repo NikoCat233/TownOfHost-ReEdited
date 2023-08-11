@@ -96,6 +96,23 @@ class ExileControllerWrapUpPatch
             if (role == CustomRoles.Devourer) Devourer.OnDevourerDied(exiled.PlayerId);
 
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Terrorist) Main.PlayerStates[exiled.PlayerId].SetDead();
+
+            //判断欺诈师被出内鬼胜利（被魅惑的欺诈师被出魅魔胜利 || 恋人欺诈师被出恋人胜利）
+            if (role == CustomRoles.Fraudster)
+            {
+                if (role == (CustomRoles.Charmed))
+                {
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Succubus);
+                }
+                else if (role == CustomRoles.Lovers)
+                {
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
+                }
+                else
+                {
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
+                }
+            }
         }
         if (AmongUsClient.Instance.AmHost && Main.IsFixedCooldown)
             Main.RefixCooldownDelay = Options.DefaultKillCooldown - 3f;

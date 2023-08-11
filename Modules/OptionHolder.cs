@@ -107,6 +107,16 @@ public static class Options
     };
 
     // 各役職の詳細設定
+
+    //My settings
+    public static OptionItem MafiaKillCooldown;
+    public static OptionItem FraudsterKillCooldown;
+    public static OptionItem FraudsterVoteLose;
+    public static OptionItem FraudsterCanMayor;
+    public static OptionItem FraudsterCanParanoia;
+    public static OptionItem ImpCanBeOiiai;
+    public static OptionItem NeutralCanBeOiiai;
+
     public static OptionItem EnableGM;
     public static float DefaultKillCooldown = Main.NormalOptions?.KillCooldown ?? 20;
     public static OptionItem GhostsDoTasks;
@@ -1107,6 +1117,9 @@ public static class Options
         MafiaShapeshiftDur = FloatOptionItem.Create(3212, "ShapeshiftDuration", new(1f, 999f, 1f), 30f, TabGroup.ImpostorRoles, false)
             .SetParent(LegacyMafia)
             .SetValueFormat(OptionFormat.Seconds);
+        MafiaKillCooldown = FloatOptionItem.Create(3201, "MafiaKillCooldown", new(0f, 180f, 2.5f), 45f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Mafia])
+            .SetValueFormat(OptionFormat.Seconds);
         TimeThief.SetupCustomOption();
         SetupRoleOptions(3400, TabGroup.ImpostorRoles, CustomRoles.Vindicator);
         VindicatorAdditionalVote = IntegerOptionItem.Create(3410, "MayorAdditionalVote", new(1, 99, 1), 3, TabGroup.ImpostorRoles, false)
@@ -1115,6 +1128,15 @@ public static class Options
         VindicatorHideVote = BooleanOptionItem.Create(3411, "MayorHideVote", false, TabGroup.ImpostorRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Vindicator]);
         SetupRoleOptions(16150, TabGroup.ImpostorRoles, CustomRoles.Visionary);
+        SetupRoleOptions(23300100, TabGroup.ImpostorRoles, CustomRoles.Fraudster);
+        FraudsterVoteLose = IntegerOptionItem.Create(12412332, "FraudsterVoteLose", new(0, 100, 5), 50, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fraudster])
+            .SetValueFormat(OptionFormat.Percent);
+        FraudsterCanMayor = BooleanOptionItem.Create(1254545, "FraudsterCanMayor", false, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fraudster]);
+        FraudsterKillCooldown = FloatOptionItem.Create(5343453, "FraudsterKillCooldown", new(0f, 180f, 2.5f), 45f, TabGroup.ImpostorRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fraudster])
+            .SetValueFormat(OptionFormat.Seconds);
 
 
         TextOptionItem.Create(100003, "RoleType.ImpConcealing", TabGroup.ImpostorRoles) //CONCEALING
@@ -1677,6 +1699,12 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
         NeutralCanBeWatcher = BooleanOptionItem.Create(15012, "NeutralCanBeWatcher", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
+        SetupAdtRoleOptions(141355, CustomRoles.Fategiver, canSetNum: true);
+        SetupAdtRoleOptions(141455, CustomRoles.Oiiai, canSetNum: true);
+        ImpCanBeOiiai = BooleanOptionItem.Create(141456, "ImpCanBeOiiai", false, TabGroup.Addons, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Oiiai]);
+        NeutralCanBeOiiai = BooleanOptionItem.Create(141457, "NeutralCanBeOiiai", false, TabGroup.Addons, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Oiiai]);
 
         TextOptionItem.Create(100015, "RoleType.Harmful", TabGroup.Addons) // HARMFUL
             .SetGameMode(CustomGameMode.Standard)
@@ -1774,6 +1802,7 @@ public static class Options
         NeutralCanBeUnlucky = BooleanOptionItem.Create(14363, "NeutralCanBeUnlucky", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Unlucky]);
         Workhorse.SetupCustomOption();
+        SetupAdtRoleOptions(6052146, CustomRoles.Bitch, canSetNum: true);
 
         TextOptionItem.Create(100016, "RoleType.Impostor", TabGroup.Addons) // IMPOSTOR
             .SetGameMode(CustomGameMode.Standard)
