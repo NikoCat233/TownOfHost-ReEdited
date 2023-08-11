@@ -13,6 +13,7 @@ public static class Cleanser
     public static Dictionary<byte,byte> CleanserTarget = new();
     public static Dictionary<byte, int> CleanserUses = new();
     public static List<byte> CleansedPlayers = new();
+    public static Dictionary<byte, bool> DidVote = new();
 
     public static OptionItem CleanserUsesOpt;
     public static OptionItem CleansedCanGetAddon;
@@ -31,6 +32,7 @@ public static class Cleanser
         CleanserTarget = new();
         CleanserUses = new();
         CleansedPlayers = new();
+        DidVote = new();
     }
 
     public static void Add(byte playerId)
@@ -38,6 +40,7 @@ public static class Cleanser
         playerIdList.Add(playerId);
         CleanserTarget.Add(playerId, byte.MaxValue);
         CleanserUses.Add(playerId, 0);
+        DidVote.Add(playerId, false);
     }
 
     public static bool IsEnable => playerIdList.Any();
@@ -65,6 +68,8 @@ public static class Cleanser
     public static void OnVote(PlayerControl voter, PlayerControl target)
     {
         if (!voter.Is(CustomRoles.Cleanser)) return;
+        if (DidVote[voter.PlayerId]) return;
+        DidVote[voter.PlayerId] = true;
         if (CleanserUses[voter.PlayerId] > CleanserUsesOpt.GetInt()) return;
         if (target.PlayerId == voter.PlayerId)
         {
@@ -85,6 +90,7 @@ public static class Cleanser
     {
         foreach(var pid in CleanserTarget.Keys)
         {
+            DidVote[pid] = false;
             if (pid == byte.MaxValue) continue;
             var targetid = CleanserTarget[pid];
             if (targetid == byte.MaxValue) continue;

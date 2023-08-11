@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using static TOHE.Options;
 using static TOHE.Translator;
+using System.Diagnostics.Metrics;
 
 namespace TOHE.Roles.Neutral;
 public static class SoulCollector
@@ -11,6 +12,7 @@ public static class SoulCollector
     public static List<byte> playerIdList = new();
     public static Dictionary<byte, byte> SoulCollectorTarget = new();
     public static Dictionary<byte, int> SoulCollectorPoints = new();
+    public static Dictionary<byte, bool> DidVote = new();
 
     public static OptionItem SoulCollectorPointsOpt;
     public static OptionItem CollectOwnSoulOpt;
@@ -27,6 +29,7 @@ public static class SoulCollector
         playerIdList = new();
         SoulCollectorTarget = new();
         SoulCollectorPoints = new();
+        DidVote = new();
     }
 
     public static void Add(byte playerId)
@@ -34,6 +37,7 @@ public static class SoulCollector
         playerIdList.Add(playerId);
         SoulCollectorTarget.Add(playerId, byte.MaxValue);
         SoulCollectorPoints.Add(playerId, 0);
+        DidVote[playerId] = false;
     }
 
     public static bool IsEnable => playerIdList.Any();
@@ -67,7 +71,9 @@ public static class SoulCollector
     public static void OnVote(PlayerControl voter, PlayerControl target)
     {
         if (!voter.Is(CustomRoles.SoulCollector)) return;
+        if (DidVote[voter.PlayerId]) return;
         if (SoulCollectorTarget[voter.PlayerId] != byte.MaxValue) return;
+        DidVote[voter.PlayerId] = true;
         if (!CollectOwnSoulOpt.GetBool() && voter.PlayerId == target.PlayerId)
         {
             Utils.SendMessage(GetString("SoulCollectorSelfVote"), voter.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.SoulCollector), "SoulCollectorTitle"));
@@ -86,7 +92,11 @@ public static class SoulCollector
 
     public static void OnReportDeadBody()
     {
-        foreach (var playerId in SoulCollectorTarget.Keys) SoulCollectorTarget[playerId] = byte.MaxValue;
+        foreach (var playerId in SoulCollectorTarget.Keys) 
+        { 
+            SoulCollectorTarget[playerId] = byte.MaxValue;
+            DidVote[playerId] = false;
+        }
     }
 
     public static void OnPlayerDead(PlayerControl deadPlayer)
