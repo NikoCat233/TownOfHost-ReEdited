@@ -85,8 +85,8 @@ public static class SoulCollector
 
 
         SoulCollectorTarget[voter.PlayerId] = target.PlayerId;
-        Logger.Info($"{voter.GetNameWithRole()} predicted the death of {target.GetNameWithRole()}", "SoulCollector");
-        Utils.SendMessage(string.Format(GetString("SoulCollectorTarget"), target.GetRealName()), voter.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.SoulCollector), "SoulCollectorTitle"));
+        Logger.Info($"{voter.GetNameWithRole()} predicted the death of {target.GetNameWithRole()}", GetString("SoulCollector"));
+        Utils.SendMessage(string.Format(GetString("SoulCollectorTarget"), target.GetRealName()), voter.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.SoulCollector), GetString("SoulCollectorTitle")));
         SendRPC(voter.PlayerId);
     }
 

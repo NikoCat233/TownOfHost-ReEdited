@@ -557,7 +557,7 @@
 "LudopathInfo","我的冷却时间怎么变化的那么奇怪？","Your kill cooldown is random","Твой откат убийства случайный","",""
 "GodfatherInfo","给我变成逃亡者吧！","Convert players to Refugees by voting","Превращайте игроков в Беженцев путем голосования","",""
 "ChronomancerInfo","爆发式击杀！","Kill in bursts","Убивайте очередями","",""
-"Pitfall","放置陷阱抓住猎物","Setup Traps","Устанавливайте ловушки","",""
+"PitfallInfo","放置陷阱抓住猎物","Setup Traps","Устанавливайте ловушки","",""
 
 "# 船员阵营 / Crewmate descriptions"
 "LuckeyInfo","你擅长治疗内鬼的低血压","Dodge attacks","Уклоняйтесь от атак","是生是死，看你是歐還是非","你擅长治疗内鬼的低血压"
@@ -668,7 +668,7 @@
 "SeekerInfo","与目标玩捉迷藏","Play Hide and Seek with your target","Играйте в прятки со своей целью","",""
 "OccultistInfo","","Kill and curse your enemies","","",""
 "ShadeInfo","","Go invisible and murder","","",""
-"SoulCollectorInfo","","Collect the souls of players by predicting their deaths","","",""
+"SoulCollectorInfo","收集亡魂","Collect the souls of players by predicting their deaths","","",""
 
 "#  / Covens descriptions"
 "PoisonerInfo","用延迟杀人击杀所有人","Kill everyone with delayed kills","Ваши убийства задерживаются","Info not provided","Info not provided"
@@ -2422,7 +2422,7 @@
 "## Soul Collector Text Strings"
 "SoulCollectorPointsToWin","需要收集多少灵魂获胜","Required number of souls","","",""
 "SoulCollectorTarget","你预测玩家<b>{0}</b>会在下一轮会议前死亡","You have predicted the death of <b>{0}</b>","","",""
-"SoulCollectorTitle","灵魂收集者","SOUL COLLECTOR","","",""
+"SoulCollectorTitle","[ ★ 集魂事件 ★ ]","SOUL COLLECTOR"
 "CollectOwnSoulOpt","能否收集自己的灵魂","Can collect their own soul","","",""
 "SoulCollectorSelfVote","房主设置不允许你收集自己的灵魂","Host settings do not allow you to collect your own soul","","",""
 
