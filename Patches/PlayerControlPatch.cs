@@ -1186,6 +1186,11 @@ class MurderPlayerPatch
             {
                 killer.RpcSetCustomRole(CustomRolesHelper.GetErasedRole(killer.GetCustomRole()));
                 NameNotifyManager.Notify(killer, GetString("LostRoleByOiiai"));
+                new LateTask(() =>
+                {
+                    if (killer.Is(CustomRoles.CrewmateTOHE))
+                    killer.SetKillCooldown();
+                }, 0.5f, "OIIAI sync kill cd");
                 Utils.MarkEveryoneDirtySettings();
                 Logger.Info($"{killer.GetNameWithRole()} 被Oiiai了", "Oiiai");
             }

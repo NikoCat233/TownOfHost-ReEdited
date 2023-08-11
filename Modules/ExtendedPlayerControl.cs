@@ -195,12 +195,12 @@ static class ExtendedPlayerControl
     public static void SetKillCooldown(this PlayerControl player, float time = -1f)
     {
         if (player == null) return;
-        if (!player.CanUseKillButton()) return;
+        //if (!player.CanUseKillButton()) return;
         if (time >= 0f) Main.AllPlayerKillCooldown[player.PlayerId] = time * 2;
         else Main.AllPlayerKillCooldown[player.PlayerId] *= 2;
         player.SyncSettings();
-        player.RpcGuardAndKill();
         player.ResetKillCooldown();
+        player.RpcGuardAndKill();
     }
     public static void SetKillCooldownV2(this PlayerControl player, float time = -1f, PlayerControl target = null, bool forceAnime = false)
     {
@@ -977,6 +977,9 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.Fraudster:
                 Main.AllPlayerKillCooldown[player.PlayerId] = Options.FraudsterKillCooldown.GetFloat();
+                break;
+            case CustomRoles.CrewmateTOHE:
+                Main.AllPlayerKillCooldown[player.PlayerId] = 666f;
                 break;
         }
         if (player.PlayerId == LastImpostor.currentId)
