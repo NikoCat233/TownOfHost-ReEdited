@@ -114,6 +114,12 @@ public static class Judge
                     else pc.ShowPopUp(Utils.ColorString(Color.cyan, GetString("MessageFromKPD")) + "\n" + GetString("LaughToWhoTrialSelf"));
                     judgeSuicide = true;
                 }
+                if (target.Is(CustomRoles.Onbound))
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessOnbound"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessOnbound"));
+                    return true;
+                }
                 else if (pc.Is(CustomRoles.Madmate)) judgeSuicide = false;
                 else if (pc.Is(CustomRoles.Charmed)) judgeSuicide = false;
                 else if (pc.Is(CustomRoles.Recruit)) judgeSuicide = false;

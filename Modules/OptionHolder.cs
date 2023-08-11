@@ -1700,10 +1700,10 @@ public static class Options
         NeutralCanBeWatcher = BooleanOptionItem.Create(15012, "NeutralCanBeWatcher", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Watcher]);
         SetupAdtRoleOptions(141355, CustomRoles.Fategiver, canSetNum: true);
-        SetupAdtRoleOptions(141455, CustomRoles.Oiiai, canSetNum: true);
-        ImpCanBeOiiai = BooleanOptionItem.Create(141456, "ImpCanBeOiiai", false, TabGroup.Addons, false)
+        SetupAdtRoleOptions(233000200, CustomRoles.Oiiai, canSetNum: true);
+        ImpCanBeOiiai = BooleanOptionItem.Create(233000201, "ImpCanBeOiiai", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Oiiai]);
-        NeutralCanBeOiiai = BooleanOptionItem.Create(141457, "NeutralCanBeOiiai", false, TabGroup.Addons, false)
+        NeutralCanBeOiiai = BooleanOptionItem.Create(233000202, "NeutralCanBeOiiai", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Oiiai]);
 
         TextOptionItem.Create(100015, "RoleType.Harmful", TabGroup.Addons) // HARMFUL

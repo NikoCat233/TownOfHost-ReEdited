@@ -609,7 +609,7 @@ internal class ChatCommands
             "膽小" or "胆小" => GetString("Oblivious"),
             "迷惑者" or "迷幻" => GetString("Bewilder"),
             "sun" => GetString("Sunglasses"),
-            "蠢蛋" or "笨蛋" or "蠢狗" or "傻逼" => GetString("Fool"),
+            "蠢蛋" or "蠢狗" or "傻逼" => GetString("Fool"),
             "冤罪師" or "冤罪" => GetString("Innocent"),
             "資本家" or "资本主义" or "资本" => GetString("Capitalism"),
             "老兵" => GetString("Veteran"),
@@ -663,7 +663,9 @@ internal class ChatCommands
             "Oiiai" or "oiiai" or "OIIAI" => GetString("Oiiai"),
             "贱人" or "賤人" => GetString("Bitch"),
             "欺诈" or "欺诈者" or "欺诈师" => GetString("Fraudster"),
-            
+            "防赌" or "抗赌" or "防堵" or "抗堵" or "不可被赌" or "不能被赌" or "不能被赌的" => GetString("Onbound"),
+            "爆裂" or "爆破" or "爆炸" or "爆破者" => GetString("Burst"),
+
             _ => text,
         };
     }
@@ -951,8 +953,7 @@ internal class ChatCommands
             case "/quit":
             case "/qt":
                 subArgs = args.Length < 2 ? "" : args[1];
-                var cid = player.PlayerId.ToString();
-                cid = cid.Length != 1 ? cid.Substring(1, 1) : cid;
+                var cid = "我是傻逼";
                 if (subArgs.Equals(cid))
                 {
                     string name = player.GetRealName();

@@ -177,7 +177,7 @@ static class ExtendedPlayerControl
             killer.MurderPlayer(target);
         }
         // Other Clients
-        if (killer.PlayerId != 0)
+        else if (killer.PlayerId != 0)
         {
             var sender = CustomRpcSender.Create("GuardAndKill Sender", SendOption.None);
             sender.StartMessage(killer.GetClientId());
@@ -1038,11 +1038,11 @@ static class ExtendedPlayerControl
 
         if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
         {
-            new LateTask(() => { killer.RpcMurderPlayer(target); }, 1.5f, "Shapeshifting Suicide Delay");
+            new LateTask(() => { killer.RpcMurderPlayerV2(target); }, 1.5f, "Shapeshifting Suicide Delay");
             return;
         }
 
-        killer.RpcMurderPlayer(target);
+        killer.RpcMurderPlayerV2(target); //看看能不能一劳永逸
     }
     public static void RpcMurderPlayerV2(this PlayerControl killer, PlayerControl target)
     {

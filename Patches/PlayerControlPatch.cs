@@ -1193,6 +1193,48 @@ class MurderPlayerPatch
                 Logger.Info($"{killer.GetNameWithRole()} Oiiai不能抹除中立", "Oiiai");
         }
 
+        //尝试补充非模组没有的checkmurder
+        if (!killer.IsModClient() && !killer.Data.IsDead)
+        {
+            switch (killer.GetCustomRole())
+            {
+                case CustomRoles.Sheriff:
+                    Sheriff.OnMurderPlayer(killer, target);
+                    break;
+                case CustomRoles.FFF:
+                    if (!target.Is(CustomRoles.Lovers) && !target.Is(CustomRoles.Ntr))
+                    {
+                        killer.Data.IsDead = true;
+                        Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;
+                        killer.RpcMurderPlayerV3(killer);
+                        Main.PlayerStates[killer.PlayerId].SetDead();
+                        Logger.Info($"{killer.GetRealName()} 击杀了非目标玩家，壮烈牺牲了（bushi）", "FFF");
+                    }
+                    break;
+            }
+            switch (target.GetCustomRole())
+            {
+                case CustomRoles.Veteran:
+                    if (Main.VeteranInProtect.ContainsKey(target.PlayerId) && killer.PlayerId != target.PlayerId)
+                        if (Main.VeteranInProtect[target.PlayerId] + Options.VeteranSkillDuration.GetInt() >= Utils.GetTimeStamp())
+                        {
+                            if (!killer.Is(CustomRoles.Pestilence))
+                            {
+                                killer.SetRealKiller(target);
+                                target.RpcMurderPlayerV3(killer);
+                                Logger.Info($"{target.GetRealName()} 老兵反杀：{killer.GetRealName()}", "Veteran Kill");
+                            }
+                            if (killer.Is(CustomRoles.Pestilence))
+                            {
+                                target.SetRealKiller(killer);
+                                killer.RpcMurderPlayerV3(target);
+                                Logger.Info($"{target.GetRealName()} 老兵被瘟疫反杀：{target.GetRealName()}", "Pestilence Reflect");
+                            }
+                        }
+                    break;
+            }
+        }
+
         foreach (var pc in Main.AllAlivePlayerControls.Where(x => x.Is(CustomRoles.Mediumshiper)))
             pc.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Mediumshiper), GetString("MediumshiperKnowPlayerDead")));
 
