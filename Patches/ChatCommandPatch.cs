@@ -665,9 +665,10 @@ internal class ChatCommands
             "欺诈" or "欺诈者" or "欺诈师" => GetString("Fraudster"),
             "防赌" or "抗赌" or "防堵" or "抗堵" or "不可被赌" or "不能被赌" or "不能被赌的" => GetString("Onbound"),
             "爆裂" or "爆破" or "爆炸" or "爆破者" => GetString("Burst"),
+            "集魂者" or "集魂" or "收魂" => GetString("SoulCollector"),
 
             _ => text,
-        };
+        } ;
     }
 
     public static bool GetRoleByName(string name, out CustomRoles role)

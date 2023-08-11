@@ -195,7 +195,8 @@ static class ExtendedPlayerControl
     public static void SetKillCooldown(this PlayerControl player, float time = -1f)
     {
         if (player == null) return;
-        //if (!player.CanUseKillButton()) return;
+        if (player.Is(CustomRoles.GM)) return;
+        if (!player.CanUseKillButton() && !player.Is(CustomRoles.CrewmateTOHE)) return;
         if (time >= 0f) Main.AllPlayerKillCooldown[player.PlayerId] = time * 2;
         else Main.AllPlayerKillCooldown[player.PlayerId] *= 2;
         player.SyncSettings();
@@ -712,6 +713,8 @@ static class ExtendedPlayerControl
         Main.AllPlayerKillCooldown[player.PlayerId] = Options.DefaultKillCooldown; //キルクールをデフォルトキルクールに変更
         switch (player.GetCustomRole())
         {
+            case CustomRoles.GM:
+                return;
             case CustomRoles.SerialKiller:
                 SerialKiller.ApplyKillCooldown(player.PlayerId); //シリアルキラーはシリアルキラーのキルクールに。
                 break;
@@ -1007,6 +1010,7 @@ static class ExtendedPlayerControl
         Main.AllPlayerSpeed[killer.PlayerId] = Main.MinSpeed;    //tmpSpeedで後ほど値を戻すので代入しています。
         ReportDeadBodyPatch.CanReport[killer.PlayerId] = false;
         killer.MarkDirtySettings();
+        killer.Notify("TrapperMessage");
         new LateTask(() =>
         {
             Main.AllPlayerSpeed[killer.PlayerId] = Main.AllPlayerSpeed[killer.PlayerId] - Main.MinSpeed + tmpSpeed;
