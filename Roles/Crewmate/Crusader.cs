@@ -26,11 +26,12 @@ public static class Crusader
     {
         playerIdList = new();
         CrusaderLimit = new();
+        CurrentKillCooldown = new();
     }
     public static void Add(byte playerId)
     {
         playerIdList.Add(playerId);
-        CrusaderLimit.TryAdd(playerId, SkillLimitOpt.GetInt());
+        CrusaderLimit.Add(playerId, SkillLimitOpt.GetInt());
         CurrentKillCooldown.Add(playerId, SkillCooldown.GetFloat());
 
 
@@ -40,6 +41,7 @@ public static class Crusader
     }
 
     public static bool IsEnable => playerIdList.Any();
+
     public static void ReceiveRPC(MessageReader reader)
     {
         byte PlayerId = reader.ReadByte();

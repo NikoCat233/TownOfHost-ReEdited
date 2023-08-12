@@ -49,10 +49,11 @@ internal class CustomRoleSelector
 
         List<CustomRoles> NonNeutralKillingOnList = new();
         List<CustomRoles> NonNeutralKillingRateList = new();
-        List<CustomRoles> CovenOnList = new();
 
         List<CustomRoles> NeutralKillingOnList = new();
         List<CustomRoles> NeutralKillingRateList = new();
+
+        List<CustomRoles> CovenOnList = new();
         List<CustomRoles> CovenRateList = new();
 
         List<CustomRoles> roleRateList = new();
@@ -184,14 +185,14 @@ internal class CustomRoleSelector
             CovenOnList.Remove(select);
             rolesToAssign.Add(select);
             readyRoleNum++;
-            optCovenNum += select.GetCount();
+            readyCovenNum += select.GetCount();
             Logger.Info(select.ToString() + " 加入中立职业待选列表（优先）", "CustomRoleSelector");
             if (readyRoleNum >= playerCount) goto EndOfAssign;
             if (readyCovenNum >= optCovenNum) break;
         }
 
         // Select Coven "Random"
-        if (readyRoleNum < playerCount && readyNeutralKillingNum < optCovenNum)
+        if (readyRoleNum < playerCount && readyCovenNum < optCovenNum)
         {
             while (CovenRateList.Any() && optCovenNum > 0)
             {

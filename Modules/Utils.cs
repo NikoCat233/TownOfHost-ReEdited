@@ -1875,6 +1875,14 @@ public static class Utils
                     }
                 }
 
+                if (seer.Is(CustomRoles.Doomsayer))
+                {
+                    if (seer.IsAlive() && target.IsAlive() && GuesserIsForMeeting)
+                    {
+                        TargetPlayerName = ColorString(GetRoleColor(CustomRoles.Doomsayer), target.PlayerId.ToString()) + " " + TargetPlayerName;
+                    }
+                }
+
                 if (seer.Is(CustomRoles.Lookout))
                 {
                     if (seer.IsAlive() && target.IsAlive())
@@ -1937,7 +1945,7 @@ public static class Utils
                 }
                 else // Off Guesser Mode ID
                 {
-                    if (seer.Is(CustomRoles.NiceGuesser) || seer.Is(CustomRoles.EvilGuesser) || seer.Is(CustomRoles.Doomsayer) || seer.Is(CustomRoles.Guesser))
+                    if (seer.Is(CustomRoles.NiceGuesser) || seer.Is(CustomRoles.EvilGuesser) || seer.Is(CustomRoles.Guesser))
                     {
                         if (seer.IsAlive() && target.IsAlive() && GuesserIsForMeeting)
                         {
