@@ -1010,6 +1010,7 @@ internal class SelectRolesPatch
                 || pc.Is(CustomRoles.God) 
                 || pc.Is(CustomRoles.FFF) 
                 || pc.Is(CustomRoles.Sunnyboy)
+                || pc.Is(CustomRoles.Cleaner)
                 || pc.GetCustomRole().IsCoven()
                 || pc.Is(CustomRoles.Bomber)
                 || pc.Is(CustomRoles.Nuker) 

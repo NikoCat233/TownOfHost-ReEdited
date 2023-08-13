@@ -95,8 +95,34 @@ public static class Cleanser
             var targetid = CleanserTarget[pid];
             if (targetid == byte.MaxValue) continue;
             var targetpc = Utils.GetPlayerById(targetid);
-            if (targetpc == null) continue;
+            if (targetpc == null || targetpc.Data.IsDead) continue;
             //var allAddons = targetpc.GetCustomSubRoles();
+            if (targetpc.Is(CustomRoles.Lovers))
+            {
+                foreach (var loversPlayer in Main.LoversPlayers)
+                {
+                    //生きていて死ぬ予定でなければスキップ
+                    if (!loversPlayer.Data.IsDead && loversPlayer.PlayerId != targetpc.PlayerId) continue;
+
+                    foreach (var partnerPlayer in Main.LoversPlayers)
+                    {
+                        //本人ならスキップ
+                        if (loversPlayer.PlayerId == partnerPlayer.PlayerId) continue;
+
+                        //残った恋人を全て殺す(2人以上可)
+                        //生きていて死ぬ予定もない場合は心中
+                        if (partnerPlayer.PlayerId != targetpc.PlayerId && !partnerPlayer.Data.IsDead)
+                        {
+                            if (partnerPlayer.Is(CustomRoles.Lovers))
+                            {
+                                partnerPlayer.RpcSetCustomRole(CustomRoles.Cleansed);
+                                partnerPlayer.Notify(GetString("LostAddonByCleanser"));
+                                Logger.Info($"Removed all the add ons of {partnerPlayer.GetNameWithRole()}", "Cleanser-lover");
+                            }
+                        }
+                    }
+                }
+            }
             targetpc.RpcSetCustomRole(CustomRoles.Cleansed);
             Logger.Info($"Removed all the add ons of {targetpc.GetNameWithRole()}", "Cleanser");
             //foreach (var role in allAddons)

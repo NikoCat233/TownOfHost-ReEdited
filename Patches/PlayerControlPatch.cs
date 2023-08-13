@@ -1902,6 +1902,7 @@ class ReportDeadBodyPatch
         Main.MadGrenadierBlinding.Clear();
         Divinator.didVote.Clear();
         Oracle.didVote.Clear();
+        Jackal.didVote.Clear();
         Bloodhound.Clear();
         Vulture.Clear();
         Main.GodfatherTarget.Clear();

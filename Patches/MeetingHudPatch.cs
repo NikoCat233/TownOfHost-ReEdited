@@ -108,6 +108,11 @@ class CheckForEndVotingPatch
                                 if (pc == null || voteTarget == null) break;
                                 Main.GodfatherTarget.Add(voteTarget.PlayerId);
                                 break;
+                            case CustomRoles.Jackal:
+                                if (pc == null || voteTarget == null) break;
+                                Jackal.OnVote(pc, voteTarget);
+                                break;
+
                         }
                     }
                 }
