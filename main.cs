@@ -33,10 +33,10 @@ public class Main : BasePlugin
     public static ConfigEntry<string> DebugKeyInput { get; private set; }
     public static readonly string MainMenuText = " ";
     public const string PluginGuid = "com.karped1em.townofhostedited";
-    public const string PluginVersion = "8.11.001";
-    public const string PluginDisplayVersion = "8.11.001";
+    public const string PluginVersion = "8.14.001";
+    public const string PluginDisplayVersion = "8.14";
     public const int PluginCreate = 3;
-    public const bool Canary = false;
+    public const bool Canary = true;
 
     public static readonly bool ShowQQButton = true;
     public static readonly string QQInviteUrl = "https://jq.qq.com/?_wv=1027&k=2RpigaN6";
@@ -283,6 +283,7 @@ public class Main : BasePlugin
         Preset3 = Config.Bind("Preset Name Options", "Preset3", "Preset_3");
         Preset4 = Config.Bind("Preset Name Options", "Preset4", "Preset_4");
         Preset5 = Config.Bind("Preset Name Options", "Preset5", "Preset_5");
+        Preset5 = Config.Bind("Preset Name Options", "Preset6", "Preset_6");
         WebhookURL = Config.Bind("Other", "WebhookURL", "none");
         BetaBuildURL = Config.Bind("Other", "BetaBuildURL", "");
         MessageWait = Config.Bind("Other", "MessageWait", 1);

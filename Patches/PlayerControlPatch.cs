@@ -101,6 +101,12 @@ class CheckMurderPatch
             return false;
         }
 
+        if (killer.AmOwner)
+        {
+            killer.RpcMurderPlayer(target);
+            return false;
+        } // Skip all checks as host.
+
         var divice = Options.CurrentGameMode == CustomGameMode.SoloKombat ? 3000f : 2000f;
         float minTime = Mathf.Max(0.02f, AmongUsClient.Instance.Ping / divice * 6f); //※AmongUsClient.Instance.Pingの値はミリ秒(ms)なので÷1000
         //TimeSinceLastKillに値が保存されていない || 保存されている時間がminTime以上 => キルを許可
@@ -1528,6 +1534,15 @@ class ReportDeadBodyPatch
     public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
     {
+        if (target == null || GameStates.IsLobby)
+        {
+            AmongUsClient.Instance.KickPlayer(__instance.GetClientId(), false);
+            string msg0 = string.Format(GetString("Message.KickedByEAC"), __instance?.Data?.PlayerName, "非法举报尸体");
+            Logger.Warn(msg0, "EAC");
+            Logger.SendInGame(msg0);
+            Logger.Warn($"{__instance.GetNameWithRole()}:非法举报尸体", "ReportDeadBody");
+            return false;
+        }
         if (GameStates.IsMeeting) return false;
         if (Options.DisableMeeting.GetBool()) return false;
         if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return false;
@@ -2581,7 +2596,7 @@ class FixedUpdatePatch
                 else if (__instance.Is(CustomRoles.Sidekick) && (PlayerControl.LocalPlayer.Is(CustomRoles.Jackal) || PlayerControl.LocalPlayer.Is(CustomRoles.Recruit) || PlayerControl.LocalPlayer.Is(CustomRoles.Sidekick))) RoleText.enabled = true;
                 else if (__instance.Is(CustomRoles.Recruit) && (PlayerControl.LocalPlayer.Is(CustomRoles.Jackal) || PlayerControl.LocalPlayer.Is(CustomRoles.Sidekick) || PlayerControl.LocalPlayer.Is(CustomRoles.Recruit))) RoleText.enabled = true;
                 else if (__instance.Is(CustomRoles.Workaholic) && Options.WorkaholicVisibleToEveryone.GetBool()) RoleText.enabled = true;
-                else if (__instance.Is(CustomRoles.Doctor) && !__instance.GetCustomRole().IsEvilAddons() && Options.DoctorVisibleToEveryone.GetBool()) RoleText.enabled = true;
+                else if (__instance.Is(CustomRoles.Doctor) && !__instance.IsEvilAddons() && Options.DoctorVisibleToEveryone.GetBool()) RoleText.enabled = true;
                 else if (__instance.Is(CustomRoles.Mayor) && Options.MayorRevealWhenDoneTasks.GetBool() && __instance.GetPlayerTaskState().IsTaskFinished) RoleText.enabled = true;
                 else if (__instance.Is(CustomRoles.Marshall) && PlayerControl.LocalPlayer.Is(CustomRoleTypes.Crewmate) && __instance.GetPlayerTaskState().IsTaskFinished) RoleText.enabled = true;
                 else if (Totocalcio.KnowRole(PlayerControl.LocalPlayer, __instance)) RoleText.enabled = true;

@@ -112,10 +112,10 @@ class RepairSystemPatch
             if (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage.GetBool()) return true;
             if (player.Is(CustomRoles.Sidekick) && Jackal.CanUseSabotageSK.GetBool()) return true;
             if (player.Is(CustomRoles.Traitor) && Traitor.CanUseSabotage.GetBool()) return true;
-            if (player.Is(CustomRoles.Parasite) && (player.IsAlive())) return true;
-            if (player.Is(CustomRoles.Werewolf) && (player.IsAlive())) return true;
-            if (player.Is(CustomRoles.Refugee) && (player.IsAlive())) return true;
-            if (player.Is(CustomRoles.Glitch) && (player.IsAlive())) return true;
+            if (player.Is(CustomRoles.Parasite) && player.IsAlive()) return true;
+            if (player.Is(CustomRoles.Werewolf) && player.IsAlive()) return true;
+            if (player.Is(CustomRoles.Refugee) && player.IsAlive()) return true;
+            if (player.Is(CustomRoles.Glitch) && player.IsAlive()) return true;
             return false;
         }
       /*if (systemType == SystemTypes.Doors && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay)

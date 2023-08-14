@@ -635,7 +635,6 @@ static class ExtendedPlayerControl
             CustomRoles.Banshee or
             CustomRoles.Poisoner or
             CustomRoles.NSerialKiller or
-            CustomRoles.Werewolf or
             CustomRoles.Maverick or
             CustomRoles.NWitch or
             CustomRoles.CovenLeader or
@@ -660,6 +659,7 @@ static class ExtendedPlayerControl
             CustomRoles.Traitor => Traitor.CanUseSabotage.GetBool(),
             CustomRoles.Parasite => true,
             CustomRoles.Glitch => true,
+            CustomRoles.Werewolf => true,
             CustomRoles.Refugee => true,
             
 
@@ -1002,6 +1002,27 @@ static class ExtendedPlayerControl
             Main.AllPlayerKillCooldown[player.PlayerId] = kcd;
             Logger.Info($"kill cd of player set to {Main.AllPlayerKillCooldown[player.PlayerId]}", "Antidote");
         }
+    }
+
+    public static bool IsNonCrewSheriff(this PlayerControl sheriff)
+    {
+        return sheriff.Is(CustomRoles.Madmate)
+            || sheriff.Is(CustomRoles.Charmed)
+            || sheriff.Is(CustomRoles.Infected)
+            || sheriff.Is(CustomRoles.Contagious)
+            || sheriff.Is(CustomRoles.Egoist);
+    }
+    public static bool IsEvilAddons(this PlayerControl target)
+    {
+        return target.Is(CustomRoles.Madmate)
+            || target.Is(CustomRoles.Egoist)
+            || target.Is(CustomRoles.Charmed)
+            || target.Is(CustomRoles.Recruit)
+            || target.Is(CustomRoles.Infected)
+            || target.Is(CustomRoles.Contagious)
+            || target.Is(CustomRoles.Rogue)
+            || target.Is(CustomRoles.Rascal)
+            || target.Is(CustomRoles.Soulless);
     }
     public static void TrapperKilled(this PlayerControl killer, PlayerControl target)
     {
