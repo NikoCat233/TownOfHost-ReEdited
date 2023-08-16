@@ -206,7 +206,7 @@
 "Ludopath","速度者","Ludopath","Людопат","",""
 "Godfather","教父","Godfather","Крестный","",""
 "Chronomancer","天文学家","Chronomancer","Хрономант","",""
-"Pitfall","偷猎者","Pitfall","Ловушка","",""
+"Pitfall","设陷者","Pitfall","Ловушка","",""
 
 "# 船员阵营 / Crewmates"
 "Luckey","幸运儿","Luckey","Удачник","幸運兒","Suertudo"
@@ -812,7 +812,7 @@
 "LudopathInfoLong","（内鬼阵营）：\n速度者的击杀冷却时间是随机的。击杀冷却最小值为1秒，而最大值是你默认的击杀冷却时间","(Impostors):\nAs the Ludopath, your kill cooldown is randomized.\n\nMinimum it can be is 1 second, while the maximum is your default kill cooldown.","(Предатель):\nУ Людопата случайный откат убийства.\n\nМинимальное значение может составлять 1 секунду, а максимальное - это откат убийства установленный по умолчанию","",""
 "GodfatherInfoLong","（内鬼阵营）：\n教父投票给某人，让他们成为你的目标。在下一轮中，如果有人击杀了目标，凶手将变成逃亡者","(Impostors):\nAs the Godfather, you vote someone to make them your target.\nIn the next round if someone kills the target, the killer will turn into a Refugee.","(Предатель):\nКрестный голосует за кого-то, чтобы сделать его своей целью.\в следующем раунде, если кто-то убьет вашу цель, убийца превратится в Беженца","",""
 "ChronomancerInfoLong","(内鬼阵营）：\n天文学家可以为自己的击杀按钮充电。一旦激活，天文学家就可以无限使用他们的必杀按钮，直到电量耗尽为止","(Impostors):\nAs the Chronomancer, you can charge up your kill button. Once activated the Chronomancer can use their kill button infinitely until they run out of charge.","(Предатель):\nХрономант может зарядить свою кнопку ''Убить''. После активации Хрономант может использовать свою кнопку убийства бесконечно, пока у него не закончится заряд","",""
-"PitfallInfoLong","(内鬼阵营）：\n偷猎者可以通过变形放下陷阱，当有人经过陷阱时就会被困住一段时间！","(Impostors):\nAs the Pitfall, you use your shapeshift to mark the area around the shapeshift as a trap. Players who enter this area will be immobilized for a short period of time and their vision will be affected.","","",""
+"PitfallInfoLong","(内鬼阵营）：\n设陷者使用变形可以将变形周围的区域标记为陷阱。进入该区域的玩家会在短时间内无法动弹，视野也会受到影响","(Impostors):\nAs the Pitfall, you use your shapeshift to mark the area around the shapeshift as a trap. Players who enter this area will be immobilized for a short period of time and their vision will be affected.","","",""
 
 "# 船员阵营 / Crewmates descriptions"
 "LuckeyInfoLong","(船员阵营):\n幸运儿被击杀时，有概率抵挡这次死亡，具体概率根据房主设定。抵挡生效时凶手会看到幸运儿的身上出现护盾破碎的效果，但幸运儿自己什么都不会知道。","(Crewmates):\nWhen a player attempts to kill the Luckey, there is a probability for the Luckey to evade the kill, and the specific probability is set by the host. When the evasion takes effect, the killer will see the shield-animation on Luckey's body, but Luckey themselves will not know anything.","(Член Экипажа):\nУ Удачника будет возникать определенная вероятность того, что Убийца не сможет убить Удачника, вероятность устанавливается в зависимости от настроек Хоста. Убийца увидит эффект разрушения щита ангела на теле Удачника, но сам Удачник при этом ничего не узнает.","(船員陣營):\n幸運兒被嘗試殺死時，有機率抵擋這次死亡，具體機率依房主設定。抵擋生效時兇手會看到幸運兒身上出現盾牌破碎的效果，但幸運兒自己甚麼都不知道。此外，如果幸運兒被劊子手絞殺，那麼技能將不會生效。","(船员阵营):\n幸运儿被击杀时，有概率抵挡这次死亡，具体概率根据房主设定。抵挡生效时凶手会看到幸运儿的身上出现护盾破碎的效果，但幸运儿自己什么都不会知道。"
@@ -1205,7 +1205,7 @@
 "DisableAirshipMovingPlatform","禁用移动平台（飞艇地图）","Disable Moving Platform (Airship)","Отключить движущуюся платформу (Airship)","",""
 "AirshipVariableElectrical","电气室门随机关闭（飞艇地图）","Variable Electrical (Airship)","Двери в Электрощитовой меняются случайно (Airship)","電氣室門隨機關閉(The Airship)","电气室门随机关闭（飞艇地图）"
 "ApplyDenyNameList","踢出使用违规昵称的玩家","Apply DenyName List","Применить файл запрещённых имён (DenyName)","踢出使用違規暱稱的玩家","踢出使用违规昵称的玩家"
-"KickPlayerFriendCodeNotExist","踢出没有登录的玩家","Kick players who are not logged in","Кикнуть игроков у которых нет Кода Друга","踢出沒有登入的玩家","踢出没有登录的玩家"
+"KickPlayerFriendCodeNotExist","踢出没有好友id的玩家","Kick players who are not logged in","Кикнуть игроков у которых нет Кода Друга","踢出沒有登入的玩家","踢出没有登录的玩家"
 "ApplyBanList","踢出被封禁的玩家","Apply BanList","Применить файл с забаненными игроками (BanList)","踢出被封禁的玩家","踢出被封禁的玩家"
 "EndWhenPlayerBug","当有玩家因Bug无法游戏时终止游戏","End the game when a player has a critical error","Завершить игру когда у любого игрока возникла критическая ошибка","當有玩家因Bug無法開始遊戲時強制結束遊戲","当有玩家因Bug无法游戏时终止游戏"
 "KillFlashDuration","击杀闪烁持续时间","Kill-Flash Duration","Длительность Вспышки-Убийства","殺人閃光持續時間","击杀闪烁持续时间"
@@ -1358,6 +1358,7 @@
 "HideJesterVote","隐藏小丑的投票","Hide Jester's vote","Скрывать голоса","",""
 "ExecutionerCanTargetImpostor","<color=#ff1919>内鬼阵营</color>可以成为目标","Can Target <color=#ff1919>Impostors</color>","Может иметь цель изгнать <color=#ff1919>Предателя</color>","<color=#ff1919>偽裝者</color>可以成為目標","<color=#ff1919>内鬼</color>可以成为目标"
 "ExecutionerCanTargetNeutralKiller","带刀<color=#7f8c8d>中立</color>玩家可以成为目标","Can Target <color=#7f8c8d>Neutral</color> <color=#ff1919>Killing</color>","Может иметь цель изгнать <color=#7f8c8d>Нейтрального</color> <color=#ff1919>Убийцу</color>","帶刀<color=#7f8c8d>中立</color>玩家可以成為目標","带刀<color=#7f8c8d>中立</color>玩家可以成为目标"
+"ExecutionerCanTargetCoven","<color=#663399>巫师阵营</color>能够成为目标","Can Target <color=#663399>Coven</color> Members","","",""
 "ExecutionerChangeRolesAfterTargetKilled","目标死亡后将变为","When Target Dies, <color=#c0c0c0>Executioner</color> becomes","Роль после смерти его цели","目標死亡後將變為","目标死亡后将变为"
 "CanTargetNeutralBenign","目标可能是<color=#7f8c8d>中立不带刀</color>","Can Target <color=#7f8c8d>Neutral</color> <color=#046300>Benign</color>","Может иметь цель изгнать <color=#046300>Доброго</color> <color=#7f8c8d>Нейтрала</color>","",""
 "CanTargetNeutralEvil","目标可能是<color=#7f8c8d>中立邪恶</color>","Can Target <color=#7f8c8d>Neutral</color> <color=#912900>Evil</color>","Может иметь цель изгнать <color=#912900>Злого</color> <color=#7f8c8d>Нейтрала</color>","",""
@@ -2801,6 +2802,7 @@
 
 "## Pitfall Text Strings"
 "PitfallTrapCooldown","放置陷阱冷却","Trap Cooldown","","",""
+"PitfallMaxTrapCount","能放置的陷阱数量","Number of Traps that can be set","","",""
 "PitfallTrapMaxPlayerCount","每个陷阱能抓的人数","Number of Players that can be caught per Trap","","",""
 "PitfallTrapDuration","陷阱持续时间","Time the Trap remains active","","",""
 "PitfallTrapRadius","陷阱作用范围","Trap Radius","","",""
@@ -2808,6 +2810,7 @@
 "PitfallTrapCauseVision","踩到陷阱降低视野","Trap caused vision","","",""
 "PitfallTrapCauseVisionTime","踩到陷阱降低视野时间","Trap caused vision time","","",""
 "PitfallTrap","猎物，你中陷阱了！","You have fallen into a trap!","","",""
+
 
 "## Consigliere Text Strings"
 "DivinationMaxCount","最大显示次数","Maximum Reveals","Максимум раскрытий","",""
@@ -3001,6 +3004,13 @@
 "RoleType.Neut","★ 中立附加职业","★ Neutral Add-ons","★ Нейтральные Атрибуты","",""
 "RoleType.Coven","★ 巫师阵营职业","★ Coven Roles","★ Роли Ковенов","",""
 
+"## /r commond"
+"CrewmateRoles","【 ★ 船员职业 ★ 】","【 ★ Crewmate Roles ★ 】","","",""
+"ImpostorRoles","【 ★ 内鬼职业 ★ 】","【 ★ Impostor Roles ★ 】","","",""
+"NeutralRoles","<color=#7f8c8d>【 ★ 中立职业 ★ 】</color>","<color=#7f8c8d>【 ★ Neutral Roles ★ 】</color>","","",""
+"CovenRoles","<color=#663399>【 ★ 巫师职业 ★ 】</color>","<color=#663399>【 ★ Coven Roles ★ 】</color>","","",""
+"AddonRoles","<color=#ff9ace>【 ★ 附加职业 ★ 】</color>","<color=#ff9ace>【 ★ Add-ons ★ 】</color>","","",""
+
 "## 胜利界面职业名 / Winner Text"
 "WinnerRoleText.Impostor","内鬼胜利！","Impostors Win!","Предатели Победили!","偽裝者",""
 "WinnerRoleText.Crewmate","船员胜利！","Crewmates Win!","Члены Экипажа Победили!","船員",""
@@ -3113,3 +3123,5 @@
 "FategiverInfoLong","(附加职业)\n命运眷顾者的投票有几率变为0或1或2或3票，如果投票者是市长则加或减对应票数","(add-ons)\n Your vote may change to 1 ,2 or 0 tickets ."
 "BitchInfoLong","(附加职业)\n投给贱人的票数变为15，因为很贱:)\n小丑、处刑人、集票者不会成为贱人。\n由于模组bug，贱人被投的票数不显示，但是仍会被计算。","(Add-ons)\n If any one vote to bitch ,bitch will die ."
 "OiiaiInfoLong","(附加职业)\n当OIIAI被击杀时（被票出以及非常规击杀不算），OIIAI会抹除击杀者的职业，Oiiai无法抹除中立职业。\n房主可以设置内鬼或中立成为Oiiai","(Add-ons):\n When the OIIAI is killed (voted out and unconventional kills are not counted), the OIIAI will erase the killer's role."
+
+"MafiaKillCooldown","初始击杀冷却"
