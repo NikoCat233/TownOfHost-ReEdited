@@ -283,7 +283,6 @@ public class Main : BasePlugin
         Preset3 = Config.Bind("Preset Name Options", "Preset3", "Preset_3");
         Preset4 = Config.Bind("Preset Name Options", "Preset4", "Preset_4");
         Preset5 = Config.Bind("Preset Name Options", "Preset5", "Preset_5");
-        Preset5 = Config.Bind("Preset Name Options", "Preset6", "Preset_6");
         WebhookURL = Config.Bind("Other", "WebhookURL", "none");
         BetaBuildURL = Config.Bind("Other", "BetaBuildURL", "");
         MessageWait = Config.Bind("Other", "MessageWait", 1);

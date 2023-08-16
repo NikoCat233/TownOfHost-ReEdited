@@ -8,6 +8,7 @@ using HarmonyLib;
 using Hazel;
 using InnerNet;
 using MS.Internal.Xml.XPath;
+using Rewired.Utils;
 using TOHE.Modules;
 using TOHE.Roles.AddOns.Crewmate;
 using TOHE.Roles.Crewmate;
@@ -1532,17 +1533,9 @@ class ReportDeadBodyPatch
 {
     public static Dictionary<byte, bool> CanReport;
     public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
+    public static int ReportTimes = 0;
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
     {
-        if (target == null || GameStates.IsLobby)
-        {
-            AmongUsClient.Instance.KickPlayer(__instance.GetClientId(), false);
-            string msg0 = string.Format(GetString("Message.KickedByEAC"), __instance?.Data?.PlayerName, "非法举报尸体");
-            Logger.Warn(msg0, "EAC");
-            Logger.SendInGame(msg0);
-            Logger.Warn($"{__instance.GetNameWithRole()}:非法举报尸体", "ReportDeadBody");
-            return false;
-        }
         if (GameStates.IsMeeting) return false;
         if (Options.DisableMeeting.GetBool()) return false;
         if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return false;
@@ -1553,6 +1546,8 @@ class ReportDeadBodyPatch
             return false;
         }
 
+        if (__instance.IsNullOrDestroyed()) return false;
+        if (!AmongUsClient.Instance.AmHost) return true;
         Logger.Info($"{__instance.GetNameWithRole()} => {target?.Object?.GetNameWithRole() ?? "null"}", "ReportDeadBody");
 
         foreach (var kvp in Main.PlayerStates)
@@ -1560,8 +1555,6 @@ class ReportDeadBodyPatch
             var pc = Utils.GetPlayerById(kvp.Key);
             kvp.Value.LastRoom = pc.GetPlainShipRoom();
         }
-
-        if (!AmongUsClient.Instance.AmHost) return true;
 
         try
         {
