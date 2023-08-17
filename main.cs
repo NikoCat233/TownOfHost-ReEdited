@@ -33,9 +33,9 @@ public class Main : BasePlugin
     public static ConfigEntry<string> DebugKeyInput { get; private set; }
     public static readonly string MainMenuText = " ";
     public const string PluginGuid = "com.karped1em.townofhostedited";
-    public const string PluginVersion = "3.0.0.038";
-    public const string PluginDisplayVersion = "3.0.0 dev 3";
-    public const bool Canary = false;
+    public const string PluginVersion = "9.9.9.9";
+    public const string PluginDisplayVersion = "绿色游戏开发";
+    public const bool Canary = true;
 
     public static readonly bool ShowGitHubButton = true;
     public static readonly string GitHubInviteUrl = "https://github.com/Loonie-Toons/TownOfHost-ReEdited";

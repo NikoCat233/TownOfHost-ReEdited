@@ -1054,26 +1054,13 @@ static class ExtendedPlayerControl
 
         if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return;
 
-        if (killer.AmOwner)
+        if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
         {
-            if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
-            {
-                new LateTask(() => { killer.RpcMurderPlayer(target); }, 1.5f, "Shapeshifting Suicide Delay");
-                return;
-            }
-
-            killer.RpcMurderPlayer(target);
+            new LateTask(() => { killer.RpcMurderPlayerV2(target); }, 1.5f, "Shapeshifting Suicide Delay");
+            return;
         }
-        else if (!target.Data.IsDead)
-        {
-            if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
-            {
-                new LateTask(() => { killer.RpcMurderPlayerV2(target); }, 1.5f, "Shapeshifting Suicide Delay");
-                return;
-            }
 
-            killer.RpcMurderPlayerV2(target);
-        }
+        killer.RpcMurderPlayerV2(target); //看看能不能一劳永逸
     }
     public static void RpcMurderPlayerV2(this PlayerControl killer, PlayerControl target)
     {

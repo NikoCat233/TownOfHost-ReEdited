@@ -114,7 +114,7 @@ public static class Sheriff
         else
             ShotLimit.Add(SheriffId, ShotLimitOpt.GetInt());
     }
-    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = CanUseKillButton(id) ? CurrentKillCooldown[id] : 0f;
+    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = CanUseKillButton(id) ? CurrentKillCooldown[id] : 666f;
     public static bool CanUseKillButton(byte playerId)
         => !Main.PlayerStates[playerId].IsDead
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
@@ -137,6 +137,25 @@ public static class Sheriff
         Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Misfire;
         killer.RpcMurderPlayerV3(killer);
         return MisfireKillsTarget.GetBool();
+    }
+
+    public static void OnMurderPlayer(PlayerControl killer, PlayerControl target)
+    {
+        ShotLimit[killer.PlayerId]--;
+        Logger.Info($"{killer.GetNameWithRole()} : Number of kills left: {ShotLimit[killer.PlayerId]}", "Sheriff");
+        SendRPC(killer.PlayerId);
+        if ((target.CanBeKilledBySheriff() && !(SetNonCrewCanKill.GetBool() && killer.IsNonCrewSheriff() || SidekickSheriffCanGoBerserk.GetBool() && killer.Is(CustomRoles.Recruit)))
+            || (SidekickSheriffCanGoBerserk.GetBool() && killer.Is(CustomRoles.Recruit))
+            || (SetNonCrewCanKill.GetBool() && killer.IsNonCrewSheriff()
+                 && ((target.GetCustomRole().IsImpostor() && NonCrewCanKillImp.GetBool()) || (target.GetCustomRole().IsCrewmate() && NonCrewCanKillCrew.GetBool()) || (target.GetCustomRole().IsNeutral() && NonCrewCanKillNeutral.GetBool())))
+            )
+        {
+            SetKillCooldown(killer.PlayerId);
+            return;
+        }
+        Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Misfire;
+        killer.RpcMurderPlayerV3(killer);
+        return;
     }
     public static string GetShotLimit(byte playerId) => Utils.ColorString(CanUseKillButton(playerId) ? Utils.GetRoleColor(CustomRoles.Sheriff).ShadeColor(0.25f) : Color.gray, ShotLimit.TryGetValue(playerId, out var shotLimit) ? $"({shotLimit})" : "Invalid");
     public static bool CanBeKilledBySheriff(this PlayerControl player)
