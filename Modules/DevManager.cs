@@ -98,7 +98,10 @@ public static class DevManager
         DevUserList.Add(new(code: "peakcrown#8292", color: "null", tag: "null", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: null)); //Hakaka
         DevUserList.Add(new(code: "croaktense#0572", color: "#AAAAAA", tag: "Shiny Eevee", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: null)); //Eevee
         DevUserList.Add(new(code: "dovebliss#9271", color: "#C67C6F", tag: "<color=#c67c6f>C<color=#bd7269>h</color><color=#ba7068>e</color><color=#aa5f5e>r</color><color=#a05559>r</color><color=#974b53>y</color>", isUp: true, isDev: false, deBug: false, colorCmd: true, upName: null)); //Cake
-
+        // Chinese translation
+        DevUserList.Add(new(code: "cloakhazy#9133", color: "#87CEFA", tag: "这里是崽子吖awa", isUp: false, isDev: true, deBug: false, colorCmd: false, upName: null)); //乐崽吖
+        DevUserList.Add(new(code: "drawncod#3642", color: "#00FFFF", tag: "简中翻译人员", isUp: false, isDev: true, deBug: false, colorCmd: false, upName: null)); //船员小青
+        DevUserList.Add(new(code: "grubmotive#0072", color: "#4169E1", tag: "跟班诅咒中", isUp: false, isDev: true, deBug: false, colorCmd: false, upName: null));//您有一个好
     }
     public static bool IsDevUser(this string code) => DevUserList.Any(x => x.Code == code);
     public static DevUser GetDevUser(this string code) => code.IsDevUser() ? DevUserList.Find(x => x.Code == code) : DefaultDevUser;

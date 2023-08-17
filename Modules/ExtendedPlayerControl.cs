@@ -263,7 +263,7 @@ static class ExtendedPlayerControl
         }
         else
         {
-            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable, killer.GetClientId());
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None, killer.GetClientId());
             messageWriter.WriteNetObject(target);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
         }
@@ -1054,13 +1054,26 @@ static class ExtendedPlayerControl
 
         if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return;
 
-        if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
+        if (killer.AmOwner)
         {
-            new LateTask(() => { killer.RpcMurderPlayer(target); }, 1.5f, "Shapeshifting Suicide Delay");
-            return;
-        }
+            if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
+            {
+                new LateTask(() => { killer.RpcMurderPlayer(target); }, 1.5f, "Shapeshifting Suicide Delay");
+                return;
+            }
 
-        killer.RpcMurderPlayer(target);
+            killer.RpcMurderPlayer(target);
+        }
+        else if (!target.Data.IsDead)
+        {
+            if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
+            {
+                new LateTask(() => { killer.RpcMurderPlayerV2(target); }, 1.5f, "Shapeshifting Suicide Delay");
+                return;
+            }
+
+            killer.RpcMurderPlayerV2(target);
+        }
     }
     public static void RpcMurderPlayerV2(this PlayerControl killer, PlayerControl target)
     {

@@ -213,6 +213,7 @@ public static class Divinator
                 CustomRoles.Mario or
                 CustomRoles.Jester or
                 CustomRoles.Lurker or
+                CustomRoles.Jailer or
                 CustomRoles.Sunnyboy
                 => "Result17",
 

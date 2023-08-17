@@ -139,6 +139,24 @@ public static class HudSpritePatch
             case CustomRoles.ImperiusCurse:
                 newKillButton = CustomButton.Get("Teleport");
                 break;
+            case CustomRoles.Swooper:
+                newAbilityButton = CustomButton.Get("invisible");
+                break;
+            case CustomRoles.Chameleon:
+                newAbilityButton = CustomButton.Get("invisible");
+                break;
+            case CustomRoles.Shade:
+                newAbilityButton = CustomButton.Get("invisible");
+                break;
+            case CustomRoles.Wraith:
+                newAbilityButton = CustomButton.Get("invisible");
+                break;
+            case CustomRoles.Escapee:
+                newAbilityButton = CustomButton.Get("abscond");
+                break;
+            case CustomRoles.Farseer:
+                newKillButton = CustomButton.Get("prophecies");
+                break;
             case CustomRoles.Warlock:
                 if (!shapeshifting)
                 {
