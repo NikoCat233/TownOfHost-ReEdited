@@ -2307,7 +2307,6 @@
 "AntiBlackOutLoggerSendInGame","由于未知错误发生，将终止游戏以防止黑屏","Because of an unknown error, the game will end to prevent black screen.","Из-за неизвестной ошибки игра будет завершена, чтобы предотвратить появление черного экрана.","由於未知錯誤發生，將結束遊戲以防止黑屏","由于未知错误发生，将终止游戏以防止黑屏"
 "AntiBlackOutRequestHostToForceEnd","您触发了黑屏Bug，正在请求房主终止游戏...","You were the reason of the black screen, you are asking the host to stop the game...","Вы были причиной черного экрана, сейчас вы просите хоста остановить игру...","您觸發了黑屏Bug，正在請求房主結束遊戲...","您触发了黑屏Bug，正在请求房主终止游戏..."
 "AntiBlackOutHostRejectForceEnd","您触发了黑屏Bug，房主拒绝终止游戏，稍后将为您断开连接","You were the reason of the black screen, and the host is not going to end the game, we will disconnect you soon.","Вы были причиной черного экрана, хост отказывается завершать игру, и скоро мы вас отключим.","您觸發了黑屏Bug，房主拒絕結束遊戲，稍後將為您斷開連接","您触发了黑屏Bug，房主拒绝终止游戏，稍后将为您断开连接"
-"Website","模组官网","Website","Сайт","模組官網","模组官网"
 "NextPage","下一页","Next Page","Следующая страница","下一頁",""
 "PreviousPage","上一页","Previous Page","Прошлая страница","上一頁",""
 "EAC.CheatDetected.EAC","开挂（使用AUM）","Cheating usage detected (Using AUM)","Обнаружено использование читов (используется AUM)","開掛(使用AUM)","开挂（使用AUM）"
