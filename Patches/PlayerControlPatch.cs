@@ -70,8 +70,9 @@ class CheckMurderPatch
     {
         if (AmongUsClient.Instance.AmHost)
         {
-            Logger.Info("作为房主全部返回true", "CheckMurder");
-            return true; //Cancel all the checks as host LOL            
+            Logger.Info("作为房主全部通过", "CheckMurder");
+            __instance.RpcMurderPlayerV3(target);
+            return false; //Cancel all the checks as host LOL            
         }
 
         if (!AmongUsClient.Instance.AmHost) return false;
@@ -1219,12 +1220,12 @@ class MurderPlayerPatch
             }
         }
 
-        if (AmongUsClient.Instance.AmHost)
+        if (AmongUsClient.Instance.AmHost && killer.PlayerId != target.PlayerId)
         {
             switch (killer.GetCustomRole())
             {
                 case CustomRoles.Sheriff:
-                    Sheriff.OnMurderPlayer(killer, target);
+                        Sheriff.OnMurderPlayer(killer, target);
                     break;
                 case CustomRoles.FFF:
                     if (!target.Is(CustomRoles.Lovers) && !target.Is(CustomRoles.Ntr))

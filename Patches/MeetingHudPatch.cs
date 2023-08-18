@@ -707,7 +707,7 @@ class MeetingHudStartPatch
             if (Tracker.msgToSend.ContainsKey(pc.PlayerId))
                 AddMsg(Tracker.msgToSend[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Tracker), GetString("TrackerTitle")));
             //豺狼投票招募提示
-            if (pc.Is(CustomRoles.Jackal))
+            if (pc.Is(CustomRoles.Jackal) && pc.IsAlive())
                 if (Jackal.RecruitLimit[pc.PlayerId] > 0 && Jackal.SidekickAssignMode.GetValue() == 3)
                     AddMsg(GetString("JackalVoteTip"), pc.PlayerId);
         }
