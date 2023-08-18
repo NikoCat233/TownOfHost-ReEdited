@@ -1129,24 +1129,23 @@ class MeetingHudStartPatch
                             isLover = true;
                         }
                         break;
-                        /*      case CustomRoles.Guesser:
-                                  if (!target.Data.IsDead)
-                                  {
-                                      sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lookout), " " + target.PlayerId.ToString()) + " ");
-                                  }
-                                  break;
-                         /*     case CustomRoles.Sidekick:
-                              if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
+                    /*      case CustomRoles.Guesser:
+                              if (!target.Data.IsDead)
                               {
-                                  sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
-                              sb.Append(Snitch.GetWarningMark(seer, target));
+                                  sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lookout), " " + target.PlayerId.ToString()) + " ");
                               }
-                              break; */
-                        //   case CustomRoles.Guesser:
-                        //    if (!seer.Data.IsDead && !target.Data.IsDead)
-                        //       pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(seer.GetCustomRole()), target.PlayerId.ToString()) + " " + pva.NameText.text;
-
-                        //    break;
+                              break;
+                     /*     case CustomRoles.Sidekick:
+                          if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
+                          {
+                              sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
+                          sb.Append(Snitch.GetWarningMark(seer, target));
+                          }
+                          break; */
+                    case CustomRoles.Guesser:
+                        if (!seer.Data.IsDead && !target.Data.IsDead)
+                            pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(seer.GetCustomRole()), target.PlayerId.ToString()) + " " + pva.NameText.text;
+                        break;
                 }
             }
 
