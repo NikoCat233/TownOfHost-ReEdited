@@ -1025,13 +1025,10 @@ class MeetingHudStartPatch
                     if (!seer.Data.IsDead && !target.Data.IsDead)
                         pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(CustomRoles.ParityCop), target.PlayerId.ToString()) + " " + pva.NameText.text;
                     break;
-                
                 case CustomRoles.Councillor:
                     if (!seer.Data.IsDead && !target.Data.IsDead)
                         pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Councillor), target.PlayerId.ToString()) + " " + pva.NameText.text;
-
                     break;
-
                 case CustomRoles.Gamer:
                     sb.Append(Gamer.TargetMark(seer, target));
                     sb.Append(Snitch.GetWarningMark(seer, target));
