@@ -3272,3 +3272,4 @@
 "JackalVoteRecruit","你招募了<b>{0}</b>！"
 "JackalVoteRecruitTarget","你被豺狼<b>{0}</b>招募了！从你看到消息的这一刻起立刻生效，只是你的名字还未更新。你从现在开始就要帮助豺狼振兴！"
 "JackalVoteFailRecruit","你不能招募<b>{0}</b>，他可能死了、忠诚或者是中立!"
+"SidekickAssignMode.Meetings","会议招募"
