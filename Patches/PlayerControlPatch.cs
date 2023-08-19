@@ -81,6 +81,13 @@ class CheckMurderPatch
             return false;
         }
 
+        if (AmongUsClient.Instance.AmHost)
+        {        
+            Logger.Info("作为房主全部通过", "CheckMurder");
+            __instance.RpcMurderPlayerV3(target);
+            return false; //Cancel all the checks as host LOL            
+        }
+
         //不正キル防止処理
         if (target.Data == null || //PlayerDataがnullじゃないか確認
             target.inVent || target.inMovingPlat //targetの状態をチェック
