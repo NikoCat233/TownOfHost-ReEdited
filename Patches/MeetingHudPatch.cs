@@ -1043,9 +1043,20 @@ class MeetingHudStartPatch
             }
 
             bool isLover = false;
-            foreach (var subRole in target.GetCustomSubRoles())
+            foreach (var SeerSubRole in seer.GetCustomSubRoles())
             {
-                switch (subRole)
+                switch (SeerSubRole)
+                {
+                    case CustomRoles.Guesser:
+                        if (!seer.Data.IsDead && !target.Data.IsDead)
+                            pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Guesser), target.PlayerId.ToString()) + " " + pva.NameText.text;
+                        break;
+                }
+            }
+
+            foreach (var TargetSubRole in target.GetCustomSubRoles())
+            {
+                switch (TargetSubRole)
                 {
                     case CustomRoles.Lovers:
                         if (seer.Is(CustomRoles.Lovers) || seer.Data.IsDead)
@@ -1054,19 +1065,16 @@ class MeetingHudStartPatch
                             isLover = true;
                         }
                         break;
-                     /*     case CustomRoles.Sidekick:
-                          if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
-                          {
-                              sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
-                          sb.Append(Snitch.GetWarningMark(seer, target));
-                          }
-                          break; */
-                    case CustomRoles.Guesser:
-                        if (!seer.Data.IsDead && !target.Data.IsDead)
-                            pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Guesser), target.PlayerId.ToString()) + " " + pva.NameText.text;
-                        break;
+                        /*     case CustomRoles.Sidekick:
+                             if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
+                             {
+                                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
+                             sb.Append(Snitch.GetWarningMark(seer, target));
+                             }
+                             break; */
                 }
             }
+            //add checks for both seer and target's subrole, maybe one day we can use them...
 
             //海王相关显示
             if ((seer.Is(CustomRoles.Ntr) || target.Is(CustomRoles.Ntr)) && !seer.Data.IsDead && !isLover)
