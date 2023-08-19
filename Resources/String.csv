@@ -3265,3 +3265,10 @@
 "ForceEnd","强制结束游戏","Aborted","Прервано","強制結束遊戲","强制结束游戏"
 "EveryoneDied","无人生还","Everyone died","Все Мертвы","無人生還","无人生还"
 "ForceEndText","房主强制结束了游戏","Host has aborted the game","Хост завершил игру","房主強制結束了遊戲","房主强制结束了游戏
+
+"## 我的text"
+"JackalVoteMessageTitle","[ ★ 豺狼招募 ★ ]"
+"JackalVoteTip","当前招募模式为<color=#00b4eb><b>投票招募</b></color>，发现你还有招募机会，请适当投票完成招募。"
+"JackalVoteRecruit","你招募了<b>{0}</b>！"
+"JackalVoteRecruitTarget","你被豺狼<b>{0}</b>招募了！从你看到消息的这一刻起立刻生效，只是你的名字还未更新。你从现在开始就要帮助豺狼振兴！"
+"JackalVoteFailRecruit","你不能招募<b>{0}</b>，他可能死了、忠诚或者是中立!"

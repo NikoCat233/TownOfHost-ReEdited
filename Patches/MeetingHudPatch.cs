@@ -112,6 +112,9 @@ class CheckForEndVotingPatch
                             case CustomRoles.Jailer:
                                 Jailer.OnVote(pc, voteTarget);
                                 break;
+                            case CustomRoles.Jackal:
+                                Jackal.OnVote(pc, voteTarget);
+                                break;
                         }
                         if (voteTarget.Is(CustomRoles.Aware))
                         {
@@ -703,7 +706,11 @@ class MeetingHudStartPatch
                 AddMsg(Main.VirusNotify[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Virus), GetString("VirusNoticeTitle")));
             if (Tracker.msgToSend.ContainsKey(pc.PlayerId))
                 AddMsg(Tracker.msgToSend[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Tracker), GetString("TrackerTitle")));
+            if (pc.Is(CustomRoles.Jackal) && pc.IsAlive())
+                if (Jackal.RecruitLimit[pc.PlayerId] > 0 && Jackal.SidekickAssignMode.GetValue() == 3)
+                    AddMsg(GetString("JackalVoteTip"), pc.PlayerId);
         }
+
         //宝箱怪的消息（合并）
         if (MimicMsg != "")
         {
