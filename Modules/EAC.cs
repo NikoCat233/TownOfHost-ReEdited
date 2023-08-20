@@ -1,6 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using Hazel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using static TOHE.Translator;
 
@@ -10,6 +11,7 @@ internal class EAC
 {
     public static int MeetingTimes = 0;
     public static int DeNum = 0;
+    public static Dictionary<byte, int> ReportBodyTimes = new();
     public static void WarnHost(int denum = 1)
     {
         DeNum += denum;
@@ -97,6 +99,18 @@ internal class EAC
                 case RpcCalls.ReportDeadBody:
                     var p1 = Utils.GetPlayerById(sr.ReadByte());
                     Logger.Info(sr.ReadByte().ToString(), "EAC.reportdeadbody");
+                    if (!ReportBodyTimes.ContainsKey(pc.PlayerId) && !pc.IsDestroyedOrNull())
+                    {
+                        ReportBodyTimes.TryAdd(pc.PlayerId, 0);
+                    }
+                        ReportBodyTimes.Add(pc.PlayerId, 1);
+                    if (ReportBodyTimes[pc.PlayerId] > 10) //Shoud be enough to filter normal reports
+                    {
+                        WarnHost();
+                        Report(pc, "报告尸体次数过多");
+                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】报告尸体次数过多：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
+                        return true;
+                    }                    
                     if (((p1 != null && p1.IsAlive() && !p1.Is(CustomRoles.Paranoia) && !p1.Is(CustomRoles.GM))) || GameStates.IsLobby)
                     {
                         WarnHost();
@@ -104,7 +118,7 @@ internal class EAC
                         Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】非法报告尸体：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
                         return true;
                     }
-                    else if (GameStates.IsInGame && p1 == null && sr.ReadByte() != 0)
+                    else if (GameStates.IsInGame && p1 == null && sr.ReadByte() != 0 && !p1.Data.Disconnected)
                     {
                         WarnHost();
                         Report(pc, "非法报告尸体");                        
