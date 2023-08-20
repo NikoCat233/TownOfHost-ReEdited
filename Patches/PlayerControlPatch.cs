@@ -1246,9 +1246,9 @@ class MurderPlayerPatch
                 case CustomRoles.FFF:
                     if (!target.Is(CustomRoles.Lovers) && !target.Is(CustomRoles.Ntr))
                     {
-                        killer.Data.IsDead = true;
-                        Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;
                         killer.RpcMurderPlayerV3(killer);
+                        killer.Data.IsDead = true;
+                        Main.PlayerStates[killer.PlayerId].deathReason = PlayerState.DeathReason.Sacrifice;                        
                         Main.PlayerStates[killer.PlayerId].SetDead();
                         Logger.Info($"{killer.GetRealName()} 击杀了非目标玩家，壮烈牺牲了（bushi）", "FFF");
                     }
@@ -1276,7 +1276,7 @@ class MurderPlayerPatch
                         if (Main.VeteranInProtect[target.PlayerId] + Options.VeteranSkillDuration.GetInt() >= Utils.GetTimeStamp())
                         {
                             if (!killer.Is(CustomRoles.Pestilence))
-                            {
+                            {                                
                                 killer.SetRealKiller(target);
                                 target.RpcMurderPlayerV3(killer);
                                 Logger.Info($"{target.GetRealName()} 老兵反弹击杀：{killer.GetRealName()}", "Veteran Kill");

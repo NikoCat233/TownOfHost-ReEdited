@@ -1091,7 +1091,7 @@ static class ExtendedPlayerControl
 
             killer.RpcMurderPlayer(target);
         }
-        else if (!target.Data.IsDead)
+        else
         {
             if (killer.PlayerId == target.PlayerId && killer.shapeshifting)
             {
