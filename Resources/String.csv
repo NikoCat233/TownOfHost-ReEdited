@@ -1532,6 +1532,7 @@
 "JackalVoteRecruit","你招募了<b>{0}</b>！"
 "JackalVoteRecruitTarget","你被豺狼<b>{0}</b>招募了！从你看到消息的这一刻起立刻生效，只是你的名字还未更新。你从现在开始就要帮助豺狼！"
 "JackalVoteFailRecruit","你不能招募<b>{0}</b>，他可能死了或者是中立!"
+"JackalVoteTip","当前豺狼招募模式是<b><color=#00b4eb>投票招募</color></b>，发现你还有招募机会，请适当<b>投票完成招募</b>，不要把你跟班出了"
 "ContagiousCountMode","<color=#2E8B57>感染者</color>玩家视为","<color=#2E8B57>Contagious</color> players count as","<color=#2E8B57>Заразные</color> игроки считаются как","",""
 "ContagiousCountMode.None","不计人数","Nothing","Никто","不計人數",""
 "ContagiousCountMode.Virus","<color=#2E8B57>病毒</color>","<color=#2E8B57>Virus</color>","<color=#2E8B57>Заразных</color>","",""

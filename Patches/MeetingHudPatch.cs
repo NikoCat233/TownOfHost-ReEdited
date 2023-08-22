@@ -786,6 +786,11 @@ class MeetingHudStartPatch
                 AddMsg(Main.VirusNotify[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Virus), GetString("VirusNoticeTitle")));
             if (Tracker.msgToSend.ContainsKey(pc.PlayerId))
                 AddMsg(Tracker.msgToSend[pc.PlayerId], pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Tracker), GetString("TrackerTitle")));
+            if (pc.Is(CustomRoles.Jackal) && !pc.Data.IsDead)
+            {
+                if (Jackal.RecruitLimit[pc.PlayerId] > 0)
+                    AddMsg(GetString("JackalVoteTip"), pc.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("JackalVoteMessageTitle")));
+            }
         }
         //宝箱怪的消息（合并）
         if (MimicMsg != "")

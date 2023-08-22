@@ -1,5 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using Hazel;
+using InnerNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,32 +98,49 @@ internal class EAC
                     }
                     break;
                 case RpcCalls.ReportDeadBody:
-                    var p1 = Utils.GetPlayerById(sr.ReadByte());
-                    Logger.Info(sr.ReadByte().ToString(), "EAC.reportdeadbody");
+                    //var p1 = Utils.GetPlayerById(sr.ReadByte());
+                    //Logger.Info(sr.ReadSByte().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadByte().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadUInt16().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadInt16().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadUInt32().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadUInt64().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadSingle().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadString().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadBytesAndSize().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadPackedInt32().ToString(), "EAC.reportdeadbody");
+                    //Logger.Info(sr.ReadPackedUInt32().ToString(), "EAC.reportdeadbody");
                     if (!ReportBodyTimes.ContainsKey(pc.PlayerId) && !pc.IsDestroyedOrNull())
                     {
                         ReportBodyTimes.TryAdd(pc.PlayerId, 0);
                     }
-                        ReportBodyTimes.Add(pc.PlayerId, 1);
-                    if (ReportBodyTimes[pc.PlayerId] > 10) //Shoud be enough to filter normal reports
+                        ReportBodyTimes[pc.PlayerId]++;
+                    if (ReportBodyTimes[pc.PlayerId] > 5) //Shoud be enough to filter normal reports
                     {
                         WarnHost();
                         Report(pc, "报告尸体次数过多");
-                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】报告尸体次数过多：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
+                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】【报告尸体次数过多】，已驳回", "EAC");
                         return true;
                     }                    
-                    if (((p1 != null && p1.IsAlive() && !p1.Is(CustomRoles.Paranoia) && !p1.Is(CustomRoles.GM))) || GameStates.IsLobby)
+                    //if (((p1 != null && p1.IsAlive() && !p1.Is(CustomRoles.Paranoia) && !p1.Is(CustomRoles.GM))) || GameStates.IsLobby)
+                    //{
+                    //    WarnHost();
+                    //    Report(pc, "非法报告尸体");
+                    //    Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】非法报告尸体：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
+                    //    return true;
+                    //}
+                    //else if (GameStates.IsInGame && p1 == null && sr.ReadByte() != 0 && !p1.Data.Disconnected)
+                    //{
+                    //    WarnHost();
+                    //    Report(pc, "非法报告尸体");                        
+                    //    Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】非法报告尸体：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
+                    //    return true;
+                    //}
+                    if (GameStates.IsLobby)
                     {
                         WarnHost();
                         Report(pc, "非法报告尸体");
-                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】非法报告尸体：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
-                        return true;
-                    }
-                    else if (GameStates.IsInGame && p1 == null && sr.ReadByte() != 0 && !p1.Data.Disconnected)
-                    {
-                        WarnHost();
-                        Report(pc, "非法报告尸体");                        
-                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】非法报告尸体：【{p1?.GetNameWithRole() ?? "null"}】，已驳回", "EAC");
+                        Logger.Fatal($"玩家【{pc.GetClientId()}:{pc.GetRealName()}】【非法报告尸体】，已驳回", "EAC");
                         return true;
                     }
                     break;
@@ -155,7 +173,7 @@ internal class EAC
                     var AUMChat = sr.ReadString();
                     WarnHost();
                     Report(pc, "AUM");
-                    HandleCheat(pc, GetString("EAC.CheatDetected.EAC"));
+                    //HandleCheat(pc, GetString("EAC.CheatDetected.EAC"));
                     return true;
                 case 7:
                     if (!GameStates.IsLobby)
