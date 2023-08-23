@@ -20,6 +20,7 @@ public static class OptionsMenuBehaviourStartPatch
     private static ClientOptionItem SwitchVanilla;
     private static ClientOptionItem VersionCheat;
     private static ClientOptionItem GodMode;
+    private static ClientOptionItem ServerUpdatePatch;
 
     public static void Postfix(OptionsMenuBehaviour __instance)
     {
@@ -102,6 +103,11 @@ public static class OptionsMenuBehaviourStartPatch
         if ((GodMode == null || GodMode.ToggleButton == null) && DebugModeManager.AmDebugger)
         {
             GodMode = ClientOptionItem.Create("GodMode", Main.GodMode, __instance);
+        }
+
+        if ((ServerUpdatePatch == null || ServerUpdatePatch.ToggleButton == null) && DebugModeManager.AmDebugger)
+        {
+            ServerUpdatePatch = ClientOptionItem.Create("ServerUpdatePatch", Main.ServerUpdatePatch, __instance);
         }
     }
 }

@@ -3126,3 +3126,5 @@
 "OiiaiInfoLong","(附加职业)\n当OIIAI被击杀时（被票出以及非常规击杀不算），OIIAI会抹除击杀者的职业，Oiiai无法抹除中立职业。\n房主可以设置内鬼或中立成为Oiiai","(Add-ons):\n When the OIIAI is killed (voted out and unconventional kills are not counted), the OIIAI will erase the killer's role."
 
 "MafiaKillCooldown","初始击杀冷却"
+
+"ServerUpdatePatch","启用版本隔离"
