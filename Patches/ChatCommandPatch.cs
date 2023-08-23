@@ -865,17 +865,12 @@ internal class ChatCommands
                     subArgs = text.Remove(0, 3);
                     if (!Options.EnableUpMode.GetBool())
                     {
-                        Utils.SendMessage(string.Format(GetString("Message.YTPlanDisabled"), GetString("EnableYTPlan")));
-                        break;
-                    }
-                    if (!GameStates.IsLobby)
-                    {
-                        Utils.SendMessage(GetString("Message.OnlyCanUseInLobby"));
+                        Utils.SendMessage(string.Format(GetString("Message.YTPlanDisabled"), GetString("EnableYTPlan")), player.PlayerId);
                         break;
                     }
                     else
                     {
-                        Utils.SendMessage(GetString("Message.OnlyCanBeUsedByHost"));
+                        Utils.SendMessage(GetString("Message.OnlyCanBeUsedByHost"), player.PlayerId);
                         break;
                     }
 
@@ -954,7 +949,7 @@ internal class ChatCommands
             case "/quit":
             case "/qt":
                 subArgs = args.Length < 2 ? "" : args[1];
-                var cid = "我是傻逼";
+                var cid = "8964";
                 if (subArgs.Equals(cid))
                 {
                     string name = player.GetRealName();
