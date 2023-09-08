@@ -7,16 +7,16 @@ class ServerUpdatePatch
 {
     public static bool Prefix(ref int __result)
     {
-        if (GameStates.IsLocalGame)
-        {
+        //if (GameStates.IsLocalGame)
+        //{
             Logger.Info($"IsLocalGame: {__result}", "VersionServer");
             return true;
-        }
+        //}
 
         // Changing server version for AU mods
-        __result = Constants.GetVersion(2222, 0, 0, 0);
+        //__result = Constants.GetVersion(2222, 0, 0, 0);
 
-        Logger.Info($"IsOnlineGame: {__result}", "VersionServer");
-        return false;
+        //Logger.Info($"IsOnlineGame: {__result}", "VersionServer");
+        //return false;
     }
 }

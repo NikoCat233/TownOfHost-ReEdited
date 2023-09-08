@@ -489,6 +489,19 @@ public static class Options
     public static OptionItem NeutralCanBeDoubleShot;
     public static OptionItem MimicCanSeeDeadRoles;
 
+    public static OptionItem ImpCanbeFategiver;
+    public static OptionItem CrewCanbeFategiver;
+    public static OptionItem NeutralsCanbeFategiver;
+
+    public static OptionItem DoubleVoteChance;
+    public static OptionItem HalfVoteChance;
+    public static OptionItem CancelVoteChance;
+    public static OptionItem Add1VoteChance;
+    public static OptionItem Add2VoteChance;
+    public static OptionItem Minus1VoteChance;
+    public static OptionItem NormalVoteChance;
+    public static OptionItem DictatorVoteChance;
+
     //public static OptionItem NSerialKillerKillCD;
     //public static OptionItem NSerialKillerHasImpostorVision;
     //public static OptionItem NSerialKillerCanVent;
