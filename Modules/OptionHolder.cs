@@ -2206,6 +2206,30 @@ public static class Options
         NeutralCanBeFool = BooleanOptionItem.Create(19212, "NeutralCanBeFool", true, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Fool]);
 
+        SetupAdtRoleOptions(20000, CustomRoles.Fategiver, canSetNum: true, tab: TabGroup.OtherRoles);
+        ImpCanbeFategiver = BooleanOptionItem.Create(20000 + 10, "ImpCanbeFategiver", false, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]);
+        CrewCanbeFategiver = BooleanOptionItem.Create(20000 + 11, "CrewCanbeFategiver", true, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]);
+        NeutralsCanbeFategiver = BooleanOptionItem.Create(20000 + 12, "NeutralsCanbeFategiver", false, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]); //Also contains coven team
+        NormalVoteChance = IntegerOptionItem.Create(20000 + 13, "FgNormalVoteChance", new(0, 100, 5), 10, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        DoubleVoteChance = IntegerOptionItem.Create(20000 + 14, "FgDoubleVoteChance", new(0, 100, 5), 10, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        HalfVoteChance = IntegerOptionItem.Create(20000 + 15, "FgHalfVoteChance", new(0, 100, 5), 10, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        CancelVoteChance = IntegerOptionItem.Create(20000 + 16, "FgCancelVoteChance", new(0, 100, 5), 10, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        Add1VoteChance = IntegerOptionItem.Create(20000 + 17, "FgAdd1VoteChance", new(0, 100, 5), 20, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        Add2VoteChance = IntegerOptionItem.Create(20000 + 18, "FgAdd2VoteChance", new(0, 100, 5), 20, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        Minus1VoteChance = IntegerOptionItem.Create(20000 + 19, "FgMinus1VoteChance", new(0, 100, 5), 20, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+        DictatorVoteChance = IntegerOptionItem.Create(20000 + 20, "FgDictatorVoteChance", new(0, 100, 1), 0, TabGroup.OtherRoles, false)
+             .SetParent(CustomRoleSpawnChances[CustomRoles.Fategiver]).SetValueFormat(OptionFormat.Percent);
+
           
 
         #endregion
