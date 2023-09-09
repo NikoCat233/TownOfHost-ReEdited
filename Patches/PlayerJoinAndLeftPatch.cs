@@ -3,6 +3,7 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
+using Steamworks;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TOHE.Modules;
@@ -32,6 +33,7 @@ class OnGameJoinedPatch
 
         if (AmongUsClient.Instance.AmHost) //以下、ホストのみ実行
         {
+
             GameStartManagerPatch.GameStartManagerUpdatePatch.exitTimer = -1;
             Main.DoBlockNameChange = false;
             Main.newLobby = true;
@@ -45,6 +47,15 @@ class OnGameJoinedPatch
             AURoleOptions.SetOpt(Main.NormalOptions.Cast<IGameOptions>());
             if (AURoleOptions.ShapeshifterCooldown == 0f)
                 AURoleOptions.ShapeshifterCooldown = Main.LastShapeshifterCooldown.Value;
+
+            _ = new LateTask(() =>
+            {
+                if (BanManager.CheckEACList(PlayerControl.LocalPlayer.FriendCode) && GameStates.IsOnlineGame)
+                {
+                    AmongUsClient.Instance.ExitGame(DisconnectReasons.Banned);
+                    SceneChanger.ChangeScene("MainMenu");
+                }
+            }, 1f, "OnGameJoinedPatch");
         }
     }
 }

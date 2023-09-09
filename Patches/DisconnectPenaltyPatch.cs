@@ -6,7 +6,7 @@ namespace TOHE.Patches
     public static class DisconnectPenaltyPatch {
         public static bool Prefix(StatsManager __instance, ref int __result)
         {
-            if (!DebugModeManager.IsDebugMode)
+            if (!DebugModeManager.AmDebugger)
             {
                 return true;
             }

@@ -232,7 +232,7 @@ internal class EAC
     public static void Report(PlayerControl pc, string reason)
     {
         string msg = $"{pc.GetClientId()}|{pc.FriendCode}|{pc.Data.PlayerName}|{reason}";
-        Cloud.SendData(msg);
+        //Cloud.SendData(msg);
         Logger.Fatal($"EAC报告：{pc.GetRealName()}: {reason}", "EAC Cloud");
     }
     public static bool ReceiveInvalidRpc(PlayerControl pc, byte callId)
@@ -252,13 +252,13 @@ internal class EAC
         {
             case 0:
                 AmongUsClient.Instance.KickPlayer(pc.GetClientId(), true);
-                string msg0 = string.Format(GetString("Message.KickedByEAC"), pc?.Data?.PlayerName, text);
+                string msg0 = string.Format(GetString("Message.BanedByEAC"), pc?.Data?.PlayerName, text);
                 Logger.Warn(msg0, "EAC");
                 Logger.SendInGame(msg0);
                 break;
             case 1:
                 AmongUsClient.Instance.KickPlayer(pc.GetClientId(), false);
-                string msg1 = string.Format(GetString("Message.BanedByEAC"), pc?.Data?.PlayerName, text);
+                string msg1 = string.Format(GetString("Message.KickedByEAC"), pc?.Data?.PlayerName, text);
                 Logger.Warn(msg1, "EAC");
                 Logger.SendInGame(msg1);
                 break;
