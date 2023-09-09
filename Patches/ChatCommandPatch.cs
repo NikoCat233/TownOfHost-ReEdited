@@ -1127,7 +1127,7 @@ internal class ChatCommands
 
             case "/win":
             case "/winner":
-                if (!Main.winnerNameList.Any()) Utils.SendMessage(GetString("NoInfoExists"));
+                if (!Main.winnerNameList.Any()) Utils.SendMessage(GetString("NoInfoExists"), player.PlayerId);
                 else Utils.SendMessage("Winner: " + string.Join(", ", Main.winnerNameList), player.PlayerId);
                 break;
 
