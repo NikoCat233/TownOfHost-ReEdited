@@ -1228,7 +1228,7 @@
   "PoisonerKillDelay": "PoisonerKillDelay",
   "CanVent": "可以使用通風管",
   "CanKill": "",
-  "CanGuess": "",
+  "CanGuess": "可以在猜測模式下或作為賭怪進行猜測",
   "BombCooldown": "",
   "SniperCanKill": "",
   "CrewmatesCanBeSidekick": "",

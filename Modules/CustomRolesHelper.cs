@@ -2,6 +2,7 @@ using AmongUs.GameOptions;
 using System.Linq;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TOHE;
 
@@ -949,6 +950,7 @@ internal static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Trapper)
                     || pc.Is(CustomRoles.Unreportable)
                     || pc.Is(CustomRoles.Burst)
+                    || (pc.Is(CustomRoles.Onbound) && Options.BaitNotification.GetBool())
                     || pc.Is(CustomRoles.GuardianAngelTOHE))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeBait.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeBait.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeBait.GetBool()))
@@ -977,13 +979,21 @@ internal static class CustomRolesHelper
                     || pc.Is(CustomRoles.Councillor)
                     || pc.Is(CustomRoles.GuardianAngelTOHE))
                     return false;
+                if ((pc.Is(CustomRoles.Phantom) && !Options.PhantomCanGuess.GetBool())
+                    || (pc.Is(CustomRoles.Terrorist) && (!Options.TerroristCanGuess.GetBool() || Options.CanTerroristSuicideWin.GetBool()))
+                    || (pc.Is(CustomRoles.Workaholic) && !Options.WorkaholicCanGuess.GetBool())
+                    || (pc.Is(CustomRoles.God) && !Options.GodCanGuess.GetBool()))
+                    return false; //Based on guess manager
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeGuesser.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeGuesser.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeGuesser.GetBool()))
                     return false;
                 break;
 
             case CustomRoles.Onbound:
-                if (pc.Is(CustomRoles.SuperStar))
-                    return false;
+                if (pc.Is(CustomRoles.SuperStar)
+                    || (pc.Is(CustomRoles.Doctor) && Options.DoctorVisibleToEveryone.GetBool())
+                    || (pc.Is(CustomRoles.Bait) && Options.BaitNotification.GetBool())
+                    || pc.Is(CustomRoles.Glow) || pc.Is(CustomRoles.LastImpostor) || pc.Is(CustomRoles.Mare))
+                    return false; //Based on guess manager
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeOnbound.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeOnbound.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeOnbound.GetBool()))
                     return false;
                 break;
@@ -1252,7 +1262,8 @@ internal static class CustomRolesHelper
                     || pc.Is(CustomRoles.Bomber)
                     || pc.Is(CustomRoles.Nuker)
                     || pc.Is(CustomRoles.BoobyTrap)
-                    || pc.Is(CustomRoles.Capitalism))
+                    || pc.Is(CustomRoles.Capitalism)
+                    || pc.Is(CustomRoles.Onbound))
                     return false;
                 if (!pc.GetCustomRole().IsImpostor())
                     return false;
@@ -1338,6 +1349,7 @@ internal static class CustomRolesHelper
                 break;
 
             case CustomRoles.Glow:
+                if (pc.Is(CustomRoles.Onbound)) return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeGlow.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeGlow.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeGlow.GetBool()))
                     return false;
                 break;

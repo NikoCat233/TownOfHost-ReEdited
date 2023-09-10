@@ -1228,7 +1228,7 @@
   "PoisonerKillDelay": "毒杀延迟",
   "CanVent": "可以使用通风管道",
   "CanKill": "可以击杀",
-  "CanGuess": "可以在猜测模式下进行猜测",
+  "CanGuess": "可以在猜测模式下或作为赌怪进行猜测",
   "BombCooldown": "炸弹冷却",
   "SniperCanKill": "<color=#ff1919>狙击手</color>可以在还有剩余子弹的情况下杀人",
   "CrewmatesCanBeSidekick": "<color=#8cffff>船员阵营</color>可以成为<color=#00b4eb>跟班</color>",
