@@ -24,21 +24,21 @@ public static class BanManager
 
             if (!File.Exists(BAN_LIST_PATH))
             {
-                Logger.Warn("创建新的 BanList.txt 文件", "BanManager");
+                Logger.Warn("Create a new BanList.txt file", "BanManager");
                 File.Create(BAN_LIST_PATH).Close();
             }
             if (!File.Exists(DENY_NAME_LIST_PATH))
             {
-                Logger.Warn("创建新的 DenyName.txt 文件", "BanManager");
+                Logger.Warn("Create a new DenyName.txt file", "BanManager");
                 File.Create(DENY_NAME_LIST_PATH).Close();
                 File.WriteAllText(DENY_NAME_LIST_PATH, GetResourcesTxt("TOHE.Resources.Config.DenyName.txt"));
             }
             if (!File.Exists(MODERATOR_LIST_PATH))
-                            {
+            {
                 Logger.Warn("Creating a new Moderators.txt file", "BanManager");
                 File.Create(MODERATOR_LIST_PATH).Close();
                 File.WriteAllText(MODERATOR_LIST_PATH, GetResourcesTxt("TOHE.Resources.Config.Moderators.txt"));
-                            }
+            }
 
             //读取EAC名单
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TOHE.Resources.Config.EACList.txt");
@@ -48,7 +48,7 @@ public static class BanManager
             while ((line = sr.ReadLine()) != null)
             {
                 if (line == "" || line.StartsWith("#")) continue;
-      //          if (line.Contains("actorour#0029")) continue;
+      //         if (line.Contains("actorour#0029")) continue;
                 if (line.Contains("gnuedaphic#7196")) continue;
                 if (line.Contains("loonietoons")) continue;
                 EACList.Add(line);
@@ -150,7 +150,7 @@ public static class BanManager
             while ((line = sr.ReadLine()) != null)
             {
                 if (line == "") continue;
-           //     if (line.Contains("actorour#0029")) continue;
+                //     if (line.Contains("actorour#0029")) continue;
                 if (line.Contains("gnuedaphic#7196")) continue;
                 if (line.Contains("loonietoons")) continue;
                 if (line.Contains(code)) return true;

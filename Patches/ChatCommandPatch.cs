@@ -1590,9 +1590,9 @@ internal class ChatCommands
                 break;
 
             default:
+                if (SpamManager.CheckSpam(player, text)) return;
                 break;
         }
-        //  if (SpamManager.CheckSpam(player, text)) return;
     }
 }
 [HarmonyPatch(typeof(ChatController), nameof(ChatController.Update))]

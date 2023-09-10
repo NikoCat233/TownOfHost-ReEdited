@@ -1025,11 +1025,6 @@ public static class Utils
             SendMessage(GetString("Message.HideGameSettings"), PlayerId);
             return;
         }
-        if (Options.DIYGameSettings.GetBool())
-        {
-            SendMessage(GetString("Message.NowOverrideText"), PlayerId);
-            return;
-        }
 
         var sb = new StringBuilder();
         sb.Append(" ★ " + GetString("TabGroup.SystemSettings"));
@@ -1058,11 +1053,6 @@ public static class Utils
         if (Options.HideGameSettings.GetBool() && PlayerId != byte.MaxValue)
         {
             SendMessage(GetString("Message.HideGameSettings"), PlayerId);
-            return;
-        }
-        if (Options.DIYGameSettings.GetBool())
-        {
-            SendMessage(GetString("Message.NowOverrideText"), PlayerId);
             return;
         }
         var sb = new StringBuilder();
