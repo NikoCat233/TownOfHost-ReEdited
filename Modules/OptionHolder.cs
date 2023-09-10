@@ -855,7 +855,6 @@ public static class Options
     public static OptionItem ApplyReminderMsg;
     public static OptionItem TimeForReminder;
 
-    public static OptionItem DIYGameSettings;
     public static OptionItem PlayerCanSetColor;
 
     //Add-Ons
@@ -2330,7 +2329,7 @@ public static class Options
         SuffixMode = StringOptionItem.Create(19324, "SuffixMode", suffixModes, 0, TabGroup.SystemSettings, true)
             .SetHeader(true);
         HideGameSettings = BooleanOptionItem.Create(19400, "HideGameSettings", false, TabGroup.SystemSettings, false);
-        DIYGameSettings = BooleanOptionItem.Create(19401, "DIYGameSettings", false, TabGroup.SystemSettings, false);
+        //DIYGameSettings = BooleanOptionItem.Create(19401, "DIYGameSettings", false, TabGroup.SystemSettings, false);
         PlayerCanSetColor = BooleanOptionItem.Create(19402, "PlayerCanSetColor", false, TabGroup.SystemSettings, false);
         FormatNameMode = StringOptionItem.Create(19403, "FormatNameMode", formatNameModes, 0, TabGroup.SystemSettings, false);
         DisableEmojiName = BooleanOptionItem.Create(19404, "DisableEmojiName", true, TabGroup.SystemSettings, false);

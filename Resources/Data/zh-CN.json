@@ -1745,6 +1745,13 @@
   "Command.icons": "<size=85%><u>图标含义</u></size>\n<size=60%>† - 这名玩家被一个<color=#ff1919>女巫</color>的诅咒获得\n如果<color=#ff1919>女巫</color>在会议结束时未被驱逐或死亡，那么该玩家就会在会议结束后死亡\n<color=#663399>乂</color> - 这名玩家被一个<color=#663399>巫师</color>的诅咒获得\n如果 <color=#663399>巫师</color>在会议结束时未被驱逐或死亡，那么该玩家就会在会议结束后死亡\n<color=#375d91>❖</color> - 这名玩家被一个<color=#375d91>神秘者</color>的诅咒获得\n如果<color=#375d91>神秘者</color>在会议结束时未被驱逐或死亡，那么该玩家就会在会议结束后死亡\n<color=#6697FF>◈</color> - 这名玩家被一个<color=#6697FF>裹尸布</color>包裹住了\n如果<color=#6697FF>裹尸布</color>在会议结束时未被驱逐或死亡，那么该玩家就会在会议结束后死亡\n<color=#EDC240>⦿</color> - 这名玩家被一个<color=#EDC240>决斗者</color>挑战\n<color=#ff9ace>♥</color> - 这名玩家是个<color=#ff9ace>恋人</color>\n<color=#b8fb4f>⚠</color> - 这名玩家是个<color=#b8fb4f>告密者</color>\n已经完成任务了</size>",
   "Command.iconinfo": "→ 显示会议中图标的信息",
   "Command.iconhelp": "→ 向每个人显示会议中图标的信息",
+  "Remaining.ImpostorCount": "<color=#ff1919>内鬼</color> 剩余: ",
+  "Remaining.NeutralCount": "<color=#7f8c8d>带刀中立</color> 剩余: ",
+  "Remaining.CovenCount": "<color=#663399>巫师阵营</color> 剩余: ",
+  "EnableKillerLeftCommand": "启用 /kcount 指令",
+  "ShowNeutralCount": "显示剩余<color=#7f8c8d>带刀中立</color>的数量",
+  "ShowCovenCount": "显示剩余<color=#663399>巫师阵营</color>的数量",
+  "SeeEjectedRolesInMeeting": "查看驱逐时的会议身份",
   "DisableSunnyboy": "禁用<color=#ff9902>阳光开朗大男孩</color>",
   "DisableBard": "禁用<color=#ff1919>呤游诗人</color>",
   "DisableSaboteur": "禁用<color=#ff1919>破坏者</color>",
@@ -2983,12 +2990,5 @@
   "ErrorEndTextDescription": "为避免卡房已强制结束",
   "ForceEnd": "强制结束游戏",
   "EveryoneDied": "无人生还",
-  "ForceEndText": "房主强制结束了游戏",
-  "Remaining.ImpostorCount": "<color=#ff1919>内鬼</color> 剩余: ",
-  "Remaining.NeutralCount": "<color=#7f8c8d>带刀中立</color> 剩余: ",
-  "Remaining.CovenCount": "<color=#663399>巫师阵营</color> 剩余: ",
-  "EnableKillerLeftCommand": "启用 /kcount 指令",
-  "ShowNeutralCount": "显示剩余<color=#7f8c8d>带刀中立</color>的数量",
-  "ShowCovenCount": "显示剩余<color=#663399>巫师阵营</color>的数量",
-  "SeeEjectedRolesInMeeting": "查看驱逐时的会议身份"
+  "ForceEndText": "房主强制结束了游戏"
 }
