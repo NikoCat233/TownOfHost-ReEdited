@@ -3005,5 +3005,11 @@
   "ErrorEndTextDescription": "为避免卡房已强制结束",
   "ForceEnd": "强制结束游戏",
   "EveryoneDied": "无人生还",
-  "ForceEndText": "房主强制结束了游戏"
+  "ForceEndText": "房主强制结束了游戏",
+  "JackalVoteRecruit": "你招募了<b>{0}</b>！",
+  "JackalVoteRecruitTarget": "你被豺狼<b>{0}</b>招募了！从你看到消息的这一刻起立刻生效，只是你的名字还未更新。你从现在开始就要帮助豺狼！",
+  "JackalVoteFailRecruit": "你不能招募<b>{0}</b>，他可能死了或者是中立或者有特殊附加职业!",
+  "JackalVoteTip": "当前豺狼招募模式是<b><color=#00b4eb>投票招募</color></b>，发现你还有招募机会，请适当<b>投票完成招募</b>，不要把你跟班出了",
+  "JackalVoteMessageTitle": "[ ★ 豺狼招募 ★ ]",
+  "SidekickAssignMode.VoteRecruit": "投票<color=#00b4eb>招募</color>"
 }
