@@ -127,7 +127,7 @@ class RpcSetTasksPatch
         }
 
         //管理员和摆烂人没有任务
-        if (pc.Is(CustomRoles.GM) || pc.Is(CustomRoles.Needy) || Options.CurrentGameMode == CustomGameMode.SoloKombat || pc.Is(CustomRoles.Lazy))
+        if (pc.Is(CustomRoles.GM) || pc.Is(CustomRoles.Needy) || pc.Is(CustomRoles.Lazy))
         {
             hasCommonTasks = false;
             NumShortTasks = 0;

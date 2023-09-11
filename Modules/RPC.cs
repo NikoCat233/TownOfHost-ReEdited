@@ -121,14 +121,8 @@ enum CustomRPC
     SetSeekerTarget,
     SetSeekerPoints,
     SetPoliceLimlit,
-
-    //SoloKombat
-    SyncKBPlayer,
-    SyncKBBackCountdown,
-    SyncKBNameNotify,
     SetPotionMaster,
     SetChameleonTimer,
-    DoPoison,
     SetAdmireLimit,
     SetRememberLimit,
 }
@@ -504,20 +498,11 @@ internal class RPCHandlerPatch
                 float time = reader.ReadSingle();
                 PlayerControl.LocalPlayer.SetKillTimer(time);
                 break;
-            case CustomRPC.SyncKBPlayer:
-                SoloKombatManager.ReceiveRPCSyncKBPlayer(reader);
-                break;
             case CustomRPC.SyncAllPlayerNames:
                 Main.AllPlayerNames = new();
                 int num = reader.ReadInt32();
                 for (int i = 0; i < num; i++)
                     Main.AllPlayerNames.TryAdd(reader.ReadByte(), reader.ReadString());
-                break;
-            case CustomRPC.SyncKBBackCountdown:
-                SoloKombatManager.ReceiveRPCSyncBackCountdown(reader);
-                break;
-            case CustomRPC.SyncKBNameNotify:
-                SoloKombatManager.ReceiveRPCSyncNameNotify(reader);
                 break;
             case CustomRPC.SetMorticianArrow:
                 Mortician.ReceiveRPC(reader);
@@ -606,9 +591,6 @@ internal class RPCHandlerPatch
                 break;
             case CustomRPC.SetVultureArrow:
                 Vulture.ReceiveRPC(reader);
-                break;
-            case CustomRPC.DoPoison:
-                Baker.ReceiveRPC(reader);
                 break;
             case CustomRPC.SetSpiritcallerSpiritLimit:
                 Spiritcaller.ReceiveRPC(reader);
@@ -987,9 +969,6 @@ internal static class RPC
                 break;
             case CustomRoles.ParityCop:
                 ParityCop.Add(targetId);
-                break;
-            case CustomRoles.Baker:
-                Baker.Add(targetId);
                 break;
             case CustomRoles.Councillor:
                 Councillor.Add(targetId);

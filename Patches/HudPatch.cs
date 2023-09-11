@@ -277,10 +277,6 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         Hacker.GetAbilityButtonText(__instance, player.PlayerId);
                         break;
-                    case CustomRoles.KB_Normal:
-                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
-                        __instance.KillButton.OverrideText(GetString("GamerButtonText"));
-                        break;
                     case CustomRoles.Cleaner:
                         __instance.ReportButton.OverrideText(GetString("CleanerReportButtonText"));
                         break;
@@ -436,11 +432,7 @@ class HudManagerPatch
                     LowerInfoText.fontSizeMax = 2.0f;
                 }
 
-                if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-                {
-                    LowerInfoText.text = SoloKombatManager.GetHudText();
-                }
-                else if (player.Is(CustomRoles.BountyHunter))
+                if (player.Is(CustomRoles.BountyHunter))
                 {
                     LowerInfoText.text = BountyHunter.GetTargetText(player, true);
                 }
@@ -633,7 +625,6 @@ class SetHudActivePatch
                 break;
 
             case CustomRoles.Minimalism:
-            case CustomRoles.KB_Normal:
                 __instance.SabotageButton.ToggleVisible(false);
                 __instance.AbilityButton.ToggleVisible(false);
                 __instance.ReportButton.ToggleVisible(false);
@@ -744,7 +735,6 @@ class TaskPanelBehaviourPatch
                             text = $"{ Utils.ColorString(Utils.GetRoleColor(player.GetCustomRole()).ShadeColor(0.2f), GetString("FakeTask"))}\r\n{text}";
                         AllText += $"\r\n\r\n<size=85%>{text}</size>";
                     }
-
                     if (MeetingStates.FirstMeeting)
                     {
                         AllText += $"\r\n\r\n</color><size=70%>{GetString("PressF1ShowMainRoleDes")}";
@@ -752,35 +742,6 @@ class TaskPanelBehaviourPatch
                             AllText += $"\r\n{GetString("PressF2ShowAddRoleDes")}";
                         AllText += "</size>";
                     }
-
-                    break;
-
-                case CustomGameMode.SoloKombat:
-
-                    var lpc = PlayerControl.LocalPlayer;
-
-                    AllText += "\r\n";
-                    AllText += $"\r\n{GetString("PVP.ATK")}: {lpc.ATK()}";
-                    AllText += $"\r\n{GetString("PVP.DF")}: {lpc.DF()}";
-                    AllText += $"\r\n{GetString("PVP.RCO")}: {lpc.HPRECO()}";
-                    AllText += "\r\n";
-
-                    Dictionary<byte, string> SummaryText = new();
-                    foreach (var id in Main.PlayerStates.Keys)
-                    {
-                        string name = Main.AllPlayerNames[id].RemoveHtmlTags().Replace("\r\n", string.Empty);
-                        string summary = $"{Utils.GetProgressText(id)}  {Utils.ColorString(Main.PlayerColors[id], name)}";
-                        if (Utils.GetProgressText(id).Trim() == "") continue;
-                        SummaryText[id] = summary;
-                    }
-
-                    List<(int, byte)> list = new();
-                    foreach (var id in Main.PlayerStates.Keys) list.Add((SoloKombatManager.GetRankOfScore(id), id));
-                    list.Sort();
-                    foreach (var id in list.Where(x => SummaryText.ContainsKey(x.Item2))) AllText += "\r\n" + SummaryText[id.Item2];
-
-                    AllText = $"<size=80%>{AllText}</size>";
-
                     break;
             }
 

@@ -1449,6 +1449,7 @@
   "BaitDelayNotify": "Предупредить убийцу, что он собирается зарепортить труп",
   "BaitNotification": "Раскрыть <color=#00f7ff>Байта</color> на первой встрече",
   "BaitAdviceAlive": "<b>{0}</b> — является Байтом. Тот, кто его убьет, совершит саморепорт",
+  "BaitCanBeReportedUnderAllConditions": "Байт может быть зарепорчен при любых условиях",
   "CounterfeiterSkillCooldown": "Откат навыка",
   "CounterfeiterSkillLimitTimes": "Количество навыков",
   "PursuerSkillCooldown": "Откат навыка",

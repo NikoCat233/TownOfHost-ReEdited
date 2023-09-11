@@ -446,8 +446,6 @@ public class Main : BasePlugin
                 {CustomRoles.Traitor, "#BA2E05"},
                 {CustomRoles.Vulture, "#556B2F"},
                 {CustomRoles.Medusa, "#663399"},
-                {CustomRoles.Baker, "#b58428"},
-                {CustomRoles.Famine, "#cb4d4d"},
                 {CustomRoles.Spiritcaller, "#003366"},
                 {CustomRoles.EvilSpirit, "#003366"},
                 {CustomRoles.Convict, "#ff1919"},
@@ -530,9 +528,6 @@ public class Main : BasePlugin
 
              //   {CustomRoles.QuickFix, "#3333ff"},
 
-
-                //SoloKombat
-                {CustomRoles.KB_Normal, "#f55252"}
             };
             foreach (var role in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>())
             {
@@ -788,8 +783,6 @@ public enum CustomRoles
     Pestilence,
     Medusa,
     Sidekick,
-    Baker,
-    Famine,
     Spiritcaller,
     Amnesiac,
     Doomsayer,
@@ -804,9 +797,6 @@ public enum CustomRoles
     Shade,
    // Sorcerer,
    // Flux,
-    
-    //SoloKombat
-    KB_Normal,
 
     //GM
     GM,
@@ -929,7 +919,6 @@ public enum CustomWinner
     Vulture = CustomRoles.Vulture,
     Pestilence = CustomRoles.Pestilence,
     Medusa = CustomRoles.Medusa,
-    Famine = CustomRoles.Famine,
     Spiritcaller = CustomRoles.Spiritcaller,
     Glitch = CustomRoles.Glitch,
     Plaguebearer = CustomRoles.PlagueBearer,

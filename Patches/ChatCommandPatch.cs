@@ -641,7 +641,7 @@ internal class ChatCommands
                     canceled = true;
                     subArgs = text.Remove(0, 8);
                     var setRole = FixRoleNameInput(subArgs.Trim());
-                    foreach (CustomRoles rl in Enum.GetValues(typeof(CustomRoles)))
+                    foreach (var rl in CustomRolesHelper.AllRoles)
                     {
                         if (rl.IsVanilla()) continue;
                         var roleName = GetString(rl.ToString()).ToLower().Trim();
@@ -937,7 +937,7 @@ internal class ChatCommands
         }
         else name = name.Trim().ToLower();
 
-        foreach (CustomRoles rl in Enum.GetValues(typeof(CustomRoles)))
+        foreach (var rl in CustomRolesHelper.AllRoles)
         {
             if (rl.IsVanilla()) continue;
             var roleName = GetString(rl.ToString()).ToLower().Trim().Replace(" ", "");
@@ -952,12 +952,6 @@ internal class ChatCommands
     }
     public static void SendRolesInfo(string role, byte playerId, bool isDev = false, bool isUp = false)
     {
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-        {
-            Utils.SendMessage(GetString("ModeDescribe.SoloKombat"), playerId);
-            return;
-        }
-
         role = role.Trim().ToLower();
         if (role.StartsWith("/r")) role.Replace("/r", string.Empty);
         if (role.StartsWith("/up")) role.Replace("/up", string.Empty);
@@ -972,7 +966,7 @@ internal class ChatCommands
 
         role = FixRoleNameInput(role).ToLower().Trim().Replace(" ", string.Empty);
 
-        foreach (CustomRoles rl in Enum.GetValues(typeof(CustomRoles)))
+        foreach (var rl in CustomRolesHelper.AllRoles)
         {
             if (rl.IsVanilla()) continue;
             var roleName = GetString(rl.ToString());

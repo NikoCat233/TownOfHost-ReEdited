@@ -127,18 +127,6 @@ class SetEverythingUpPatch
         string AdditionalWinnerText = "";
         string CustomWinnerColor = Utils.GetRoleColorCode(CustomRoles.Crewmate);
 
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-        {
-            var winnerId = CustomWinnerHolder.WinnerIds.FirstOrDefault();
-            __instance.WinText.text = Main.AllPlayerNames[winnerId] + GetString("Win");
-            __instance.WinText.fontSize -= 5f;
-            __instance.WinText.color = Main.PlayerColors[winnerId];
-            __instance.BackgroundBar.material.color = new Color32(245, 82, 82, 255);
-            WinnerText.text = $"<color=#f55252>{GetString("ModeSoloKombat")}</color>";
-            WinnerText.color = Color.red;
-            goto EndOfText;
-        }
-
         var winnerRole = (CustomRoles)CustomWinnerHolder.WinnerTeam;
         if (winnerRole >= 0)
         {
@@ -239,8 +227,6 @@ class SetEverythingUpPatch
             return name;
         }
 
-    EndOfText:
-
         LastWinsText = WinnerText.text.RemoveHtmlTags();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,22 +248,12 @@ class SetEverythingUpPatch
             sb.Append($"\n<color={CustomWinnerColor}>★</color> ").Append(EndGamePatch.SummaryText[id]);
             cloneRoles.Remove(id);
         }
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
+        foreach (var id in cloneRoles)
         {
-            List<(int, byte)> list = new();
-            foreach (var id in cloneRoles) list.Add((SoloKombatManager.GetRankOfScore(id), id));
-            list.Sort();
-            foreach (var id in list.Where(x => EndGamePatch.SummaryText.ContainsKey(x.Item2)))
-                sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id.Item2]);
+            if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
+            sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
         }
-        else
-        {
-            foreach (var id in cloneRoles)
-            {
-                if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
-                sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
-            }
-        }
+
         var RoleSummary = RoleSummaryObject.GetComponent<TMPro.TextMeshPro>();
         {
             RoleSummary.alignment = TMPro.TextAlignmentOptions.TopLeft;

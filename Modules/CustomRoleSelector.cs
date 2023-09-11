@@ -58,17 +58,9 @@ internal class CustomRoleSelector
 
         List<CustomRoles> roleRateList = new();
 
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
+        foreach (var cr in CustomRolesHelper.AllRoles)
         {
-            RoleResult = new();
-            foreach (var pc in Main.AllAlivePlayerControls)
-                RoleResult.Add(pc, CustomRoles.KB_Normal);
-            return;
-        }
-
-        foreach (var cr in Enum.GetValues(typeof(CustomRoles)))
-        {
-            CustomRoles role = (CustomRoles)Enum.Parse(typeof(CustomRoles), cr.ToString());
+            var role = (CustomRoles)Enum.Parse(typeof(CustomRoles), cr.ToString());
             if (role.IsVanilla() || role.IsAdditionRole()) continue;
             if (role is CustomRoles.GM or CustomRoles.NotAssigned) continue;
             for (int i = 0; i < role.GetCount(); i++)
@@ -372,10 +364,8 @@ internal class CustomRoleSelector
     public static List<CustomRoles> AddonRolesList = new();
     public static void SelectAddonRoles()
     {
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return;
-
         AddonRolesList = new();
-        foreach (var cr in Enum.GetValues(typeof(CustomRoles)))
+        foreach (var cr in CustomRolesHelper.AllRoles)
         {
             CustomRoles role = (CustomRoles)Enum.Parse(typeof(CustomRoles), cr.ToString());
             if (!role.IsAdditionRole()) continue;

@@ -1449,6 +1449,7 @@
   "BaitDelayNotify": "警告兇手即將報告",
   "BaitNotification": "",
   "BaitAdviceAlive": "",
+  "BaitCanBeReportedUnderAllConditions": "",
   "CounterfeiterSkillCooldown": "販賣贗品冷卻",
   "CounterfeiterSkillLimitTimes": "販賣贗品的次數上限",
   "PursuerSkillCooldown": "販賣贗品冷卻",

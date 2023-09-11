@@ -86,10 +86,10 @@ public static class Translator
 
         // 翻訳テンプレートの作成
         CreateTemplateFile();
-        foreach (var lang in Enum.GetValues(typeof(SupportedLangs)))
+        foreach (var lang in EnumHelper.GetAllValues<SupportedLangs>())
         {
             if (File.Exists(@$"./{LANGUAGE_FOLDER_NAME}/{lang}.dat"))
-                LoadCustomTranslation($"{lang}.dat", (SupportedLangs)lang);
+                LoadCustomTranslation($"{lang}.dat", lang);
         }
     }
     static void MergeJsonIntoTranslationMap(Dictionary<string, Dictionary<int, string>> translationMaps, int languageId, Dictionary<string, string> jsonDictionary)
@@ -189,7 +189,7 @@ public static class Translator
             }
             if (!translateMaps.ContainsKey(str)) //translateMapsにない場合、StringNamesにあれば取得する
             {
-                var stringNames = Enum.GetValues(typeof(StringNames)).Cast<StringNames>().Where(x => x.ToString() == str);
+                var stringNames = EnumHelper.GetAllValues<StringNames>().Where(x => x.ToString() == str);
                 if (stringNames != null && stringNames.Any())
                     res = GetString(stringNames.FirstOrDefault());
             }

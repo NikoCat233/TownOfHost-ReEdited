@@ -78,26 +78,28 @@ class ExileControllerWrapUpPatch
                     DecidedWinner = true;
                 }
             }
-            foreach (var pc in Main.AllPlayerControls)
-                //判断小丑胜利 (EAC封禁名单成为小丑达成胜利条件无法胜利)
-                if (role == CustomRoles.Jester)
-                    if (DecidedWinner) CustomWinnerHolder.ShiftWinnerAndSetWinner(CustomWinner.Jester);
-                    else CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Jester);
-                    CustomWinnerHolder.WinnerIds.Add(exiled.PlayerId);
-                    DecidedWinner = true;
+            if (role == CustomRoles.Jester && AmongUsClient.Instance.AmHost)
+            {
+                CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Jester);
+                CustomWinnerHolder.WinnerIds.Add(exiled.PlayerId);
+                foreach (var executioner in Executioner.playerIdList)
+                {
+                    var GetValue = Executioner.Target.TryGetValue(executioner, out var targetId);
+                    if (GetValue && exiled.PlayerId == targetId)
+                    {
+                        CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Executioner);
+                        CustomWinnerHolder.WinnerIds.Add(executioner);
+                    }
+                }
+                DecidedWinner = true;
+            }
+            Executioner.CheckExileTarget(exiled, DecidedWinner);
 
-
-            //判断处刑人胜利
-            foreach (var pc in Main.AllPlayerControls)
-                if (pc.Is(CustomRoles.Executioner))
-                    if (Executioner.CheckExileTarget(pc,exiled, DecidedWinner)) DecidedWinner = true;
-
-            if (Lawyer.CheckExileTarget(exiled, DecidedWinner)) DecidedWinner = false;
-
-            //判断恐怖分子胜利
             if (role == CustomRoles.Terrorist) Utils.CheckTerroristWin(exiled);
 
             if (role == CustomRoles.Devourer) Devourer.OnDevourerDied(exiled.PlayerId);
+
+            if (Lawyer.CheckExileTarget(exiled, DecidedWinner)) DecidedWinner = false;
 
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Terrorist) Main.PlayerStates[exiled.PlayerId].SetDead();
         }
@@ -188,7 +190,7 @@ class ExileControllerWrapUpPatch
 
             Main.ShroudList.Clear();
 
-            if (Options.RandomSpawn.GetBool() || Options.CurrentGameMode == CustomGameMode.SoloKombat)
+            if (Options.RandomSpawn.GetBool())
             {
                 RandomSpawn.SpawnMap map;
                 switch (Main.NormalOptions.MapId)
@@ -247,6 +249,8 @@ class ExileControllerWrapUpPatch
                         player?.SetRealKiller(player, true);
                     if (Main.ResetCamPlayerList.Contains(x.Key))
                         player?.ResetPlayerCam(1f);
+                    if (Executioner.Target.ContainsValue(x.Key))
+                        Executioner.ChangeRoleByTarget(player);
                     Utils.AfterPlayerDeathTasks(player);
                 });
                 Main.AfterMeetingDeathPlayers.Clear();

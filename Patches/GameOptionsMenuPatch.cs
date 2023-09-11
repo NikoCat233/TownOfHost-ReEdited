@@ -65,7 +65,7 @@ public static class GameOptionsMenuPatch
         var gameTab = GameObject.Find("GameTab");
         List<GameObject> tabs = new() { gameTab, roleTab };
 
-        foreach (var tab in Enum.GetValues(typeof(TabGroup)))
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
             var obj = gameSettings.transform.parent.Find(tab + "Tab");
             if (obj != null)
@@ -186,7 +186,7 @@ public class GameOptionsMenuUpdatePatch
     public static void Postfix(GameOptionsMenu __instance)
     {
         if (__instance.transform.parent.parent.name == "Game Settings") return;
-        foreach (var tab in Enum.GetValues(typeof(TabGroup)))
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
             string tabcolor = "";
             tabcolor = tab switch
@@ -414,17 +414,6 @@ public static class SetRecommendationsPatch
         __instance.roleOptions.SetRoleRecommended(RoleTypes.GuardianAngel);
         __instance.roleOptions.SetRoleRecommended(RoleTypes.Engineer);
 
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat) //SoloKombat
-        {
-            __instance.PlayerSpeedMod = 1.75f;
-            __instance.CrewLightMod = 1f;
-            __instance.ImpostorLightMod = 1f;
-            __instance.NumImpostors = 3;
-            __instance.NumCommonTasks = 0;
-            __instance.NumLongTasks = 0;
-            __instance.NumShortTasks = 0;
-            __instance.KillCooldown = 0f;
-        }
         return false;
     }
 }

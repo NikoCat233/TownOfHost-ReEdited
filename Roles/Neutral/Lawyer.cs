@@ -175,6 +175,8 @@ public static class Lawyer
     }
     public static bool CheckExileTarget(GameData.PlayerInfo exiled, bool DecidedWinner, bool Check = false)
     {
+        if (!IsEnable) return false;
+
         foreach (var kvp in Target.Where(x => x.Value == exiled.PlayerId))
         {
             var lawyer = Utils.GetPlayerById(kvp.Key);

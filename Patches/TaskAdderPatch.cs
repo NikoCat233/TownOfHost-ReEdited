@@ -1,7 +1,6 @@
+using System.Linq;
 using AmongUs.GameOptions;
 using HarmonyLib;
-using System;
-using System.Linq;
 using UnityEngine;
 
 namespace TOHE;
@@ -33,9 +32,8 @@ class ShowFolderPatch
         if (CustomRolesFolder != null && CustomRolesFolder.FolderName == taskFolder.FolderName)
         {
             var crewBehaviour = DestroyableSingleton<RoleManager>.Instance.AllRoles.Where(role => role.Role == RoleTypes.Crewmate).FirstOrDefault();
-            foreach (var cRoleID in Enum.GetValues(typeof(CustomRoles)))
+            foreach (var cRole in CustomRolesHelper.AllRoles)
             {
-                CustomRoles cRole = (CustomRoles)cRoleID;
                 /*if(cRole == CustomRoles.Crewmate ||
                 cRole == CustomRoles.Impostor ||
                 cRole == CustomRoles.Scientist ||

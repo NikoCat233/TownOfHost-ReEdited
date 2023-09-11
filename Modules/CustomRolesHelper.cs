@@ -2,12 +2,14 @@ using AmongUs.GameOptions;
 using System.Linq;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TOHE;
 
-internal static class CustomRolesHelper
+static class CustomRolesHelper
 {
+    public static readonly CustomRoles[] AllRoles = EnumHelper.GetAllValues<CustomRoles>();
+    public static readonly CustomRoleTypes[] AllRoleTypes = EnumHelper.GetAllValues<CustomRoleTypes>();
+
     public static CustomRoles GetVNRole(this CustomRoles role) // RoleBase: Impostor, Shapeshifter, Crewmate, Engineer, Scientist
     {
         return role.IsVanilla()
@@ -200,9 +202,6 @@ internal static class CustomRolesHelper
     {
         return role switch
         {
-            //SoloKombat
-            CustomRoles.KB_Normal => RoleTypes.Impostor,
-
             //Standard
             CustomRoles.Sheriff => RoleTypes.Impostor,
             CustomRoles.Jailer => RoleTypes.Impostor,
@@ -470,8 +469,6 @@ internal static class CustomRolesHelper
             CustomRoles.God or
             CustomRoles.Mario or
             CustomRoles.Revolutionist or
-            CustomRoles.Famine or
-            CustomRoles.Baker or
             CustomRoles.Romantic or
             CustomRoles.VengefulRomantic or
             CustomRoles.Provocateur;
@@ -517,8 +514,6 @@ internal static class CustomRolesHelper
             CustomRoles.Terrorist or
             CustomRoles.Vulture or
             CustomRoles.Workaholic or
-            CustomRoles.Famine or
-            CustomRoles.Baker or
             CustomRoles.Revolutionist or
             CustomRoles.Provocateur;
     }
@@ -647,9 +642,6 @@ internal static class CustomRolesHelper
     public static bool IsNeutral(this CustomRoles role)
     {
         return role is
-            //SoloKombat
-            CustomRoles.KB_Normal or
-            //Standard
             CustomRoles.Jester or
             CustomRoles.Opportunist or
             CustomRoles.Mario or
@@ -657,8 +649,6 @@ internal static class CustomRolesHelper
             CustomRoles.Amnesiac or
             CustomRoles.Medusa or
             CustomRoles.Ritualist or
-            CustomRoles.Famine or
-            CustomRoles.Baker or
             CustomRoles.HexMaster or
             CustomRoles.Occultist or
             CustomRoles.Glitch or
@@ -800,9 +790,6 @@ internal static class CustomRolesHelper
     public static bool IsNeutralWithGuessAccess(this CustomRoles role)
     {
         return role is
-            //SoloKombat
-            CustomRoles.KB_Normal or
-            //Standard
             CustomRoles.Jester or
             CustomRoles.Opportunist or
             CustomRoles.Mario or
@@ -974,7 +961,6 @@ internal static class CustomRolesHelper
                     || pc.Is(CustomRoles.Judge)
                     || pc.Is(CustomRoles.CopyCat)
                     || pc.Is(CustomRoles.Doomsayer)
-                    || pc.Is(CustomRoles.DoubleShot)
                     || pc.Is(CustomRoles.Mafia)
                     || pc.Is(CustomRoles.Councillor)
                     || pc.Is(CustomRoles.GuardianAngelTOHE))

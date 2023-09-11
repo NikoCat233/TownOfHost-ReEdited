@@ -1453,6 +1453,7 @@
   "BaitDelayNotify": "<color=#ffff00>警告凶手即将报告</color>",
   "BaitNotification": "在第一次会议上显示<color=#00f7ff>诱饵</color>",
   "BaitAdviceAlive": "玩家<b>{0}</b>是诱饵. 谁杀了他就自报",
+  "BaitCanBeReportedUnderAllConditions": "",
   "CounterfeiterSkillCooldown": "贩卖赝品冷却",
   "CounterfeiterSkillLimitTimes": "贩卖赝品次数上限",
   "PursuerSkillCooldown": "玩家尝试击杀使他人击杀无效冷却",

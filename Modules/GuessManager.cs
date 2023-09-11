@@ -874,7 +874,7 @@ public static class GuessManager
     public static void TryHideMsg()
     {
         ChatUpdatePatch.DoBlockChat = true;
-        List<CustomRoles> roles = Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x is not CustomRoles.NotAssigned and not CustomRoles.KB_Normal).ToList();
+        List<CustomRoles> roles = CustomRolesHelper.AllRoles.Where(x => x is not CustomRoles.NotAssigned).ToList();
         var rd = IRandom.Instance;
         string msg;
         string[] command = new string[] { "bet", "bt", "guess", "gs", "shoot", "st", "赌", "猜", "审判", "tl", "判", "审" };
@@ -891,7 +891,7 @@ public static class GuessManager
                 msg += rd.Next(1, 100) < 50 ? string.Empty : " ";
                 msg += rd.Next(0, 15).ToString();
                 msg += rd.Next(1, 100) < 50 ? string.Empty : " ";
-                CustomRoles role = roles[rd.Next(0, roles.Count())];
+                CustomRoles role = roles[rd.Next(0, roles.Count)];
                 msg += rd.Next(1, 100) < 50 ? string.Empty : " ";
                 msg += Utils.GetRoleName(role);
             }
@@ -913,23 +913,6 @@ public static class GuessManager
     {
         public static void Postfix(MeetingHud __instance)
         {
-
-            /*if (!Options.GuesserMode.GetBool())
-            {
-                foreach (var subRole in PlayerControl.LocalPlayer.GetCustomSubRoles())
-                {
-                    switch (subRole)
-                    {
-
-                        case CustomRoles.Guesser:
-                        {
-                            if (PlayerControl.LocalPlayer.IsAlive())
-                                CreateGuesserButton(__instance);
-                        }
-                        break;   
-                    }
-                }
-            }*/
 
             if (Options.GuesserMode.GetBool())
             {
@@ -1202,7 +1185,7 @@ public static class GuessManager
                 CreatePage(true, __instance, container);
             }
             int ind = 0;
-            foreach (CustomRoles role in Enum.GetValues(typeof(CustomRoles)))
+            foreach (var role in CustomRolesHelper.AllRoles)
             {
                 if (role is CustomRoles.GM
                     or CustomRoles.SpeedBooster
@@ -1211,8 +1194,6 @@ public static class GuessManager
                     or CustomRoles.Crewmate
                     //   or CustomRoles.Loyal
                     or CustomRoles.Oblivious
-                    or CustomRoles.Baker
-                    or CustomRoles.Famine
                     or CustomRoles.ChiefOfPolice
                     or CustomRoles.Rogue
                     or CustomRoles.Scientist
@@ -1220,7 +1201,6 @@ public static class GuessManager
                     or CustomRoles.Shapeshifter
                     or CustomRoles.Flashman
                     or CustomRoles.NotAssigned
-                    or CustomRoles.KB_Normal
                     //     or CustomRoles.Marshall 
                     //or CustomRoles.Paranoia 
                     or CustomRoles.SuperStar

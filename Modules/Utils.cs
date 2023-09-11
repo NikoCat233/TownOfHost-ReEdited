@@ -435,7 +435,7 @@ public static class Utils
         if (p.Disconnected) return false;
         if (p.Role.IsImpostor)
             hasTasks = false; //タスクはCustomRoleを元に判定する
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat) return false;
+
         if (p.IsDead && Options.GhostIgnoreTasks.GetBool()) hasTasks = false;
         var role = States.MainRole;
         switch (role)
@@ -467,8 +467,6 @@ public static class Utils
     //        case CustomRoles.Minion:
             case CustomRoles.Jester:
             case CustomRoles.Pirate:
-         //   case CustomRoles.Baker:
-            case CustomRoles.Famine:
             case CustomRoles.NWitch:
             case CustomRoles.Shroud:
             case CustomRoles.Mario:
@@ -527,8 +525,6 @@ public static class Utils
             case CustomRoles.Convict:
             case CustomRoles.Opportunist:
             case CustomRoles.Phantom:
-            case CustomRoles.Baker:
-         //   case CustomRoles.Famine:
                 if (ForRecompute)
                     hasTasks = false;
                     break;
@@ -539,7 +535,7 @@ public static class Utils
                     hasTasks = false;
                 break;
             case CustomRoles.Executioner:
-                if (Executioner.ChangeRolesAfterTargetKilled.GetValue() != 1)
+                if (Executioner.ChangeRolesAfterTargetKilled.GetValue() <= 5)
                     hasTasks = !ForRecompute;
                 else hasTasks = false;
                 break;
@@ -922,9 +918,6 @@ public static class Utils
             case CustomRoles.Hacker:
                 ProgressText.Append(Hacker.GetHackLimit(playerId));
                 break;
-            case CustomRoles.KB_Normal:
-                ProgressText.Append(SoloKombatManager.GetDisplayScore(playerId));
-                break;
             case CustomRoles.Totocalcio:
                 ProgressText.Append(Totocalcio.GetProgressText(playerId));
                 break;
@@ -1011,7 +1004,8 @@ public static class Utils
         if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
         if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
         if (Main.EnableGM.Value) { SendMessage(GetRoleName(CustomRoles.GM) + GetString("GMInfoLong"), PlayerId); }
-        foreach (var role in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>())
+        
+        foreach (var role in CustomRolesHelper.AllRoles)
         {
             if (role.IsEnable() && !role.IsVanilla()) SendMessage(GetRoleName(role) + GetRoleMode(role) + GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong"), PlayerId);
         }
@@ -1135,7 +1129,7 @@ public static class Utils
         //var crewsb = new StringBuilder();
         //var addonsb = new StringBuilder();
         //int headCount = -1;
-        foreach (CustomRoles role in Enum.GetValues(typeof(CustomRoles)))
+        foreach (var role in CustomRolesHelper.AllRoles)
         {
             string mode = role.GetMode() == 1 ? GetString("RoleRateNoColor") : GetString("RoleOnNoColor");
             if (role.IsEnable())
@@ -1225,21 +1219,10 @@ public static class Utils
             sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
             cloneRoles.Remove(id);
         }
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
+        foreach (var id in cloneRoles)
         {
-            List<(int, byte)> list = new();
-            foreach (var id in cloneRoles) list.Add((SoloKombatManager.GetRankOfScore(id), id));
-            list.Sort();
-            foreach (var id in list)
-                sb.Append($"\n　").Append(EndGamePatch.SummaryText[id.Item2]);
-        }
-        else
-        {
-            foreach (var id in cloneRoles)
-            {
-                if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
-                sb.Append($"\n　").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
-            }
+            if (EndGamePatch.SummaryText[id].Contains("<INVALID:NotAssigned>")) continue;
+            sb.Append($"\n　").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
         }
         SendMessage(sb.ToString(), PlayerId);
     }
@@ -1262,7 +1245,7 @@ public static class Utils
         var sb = new StringBuilder();
         if (SetEverythingUpPatch.LastWinsText != "") sb.Append($"{GetString("LastResult")}: {SetEverythingUpPatch.LastWinsText}");
         if (SetEverythingUpPatch.LastWinsReason != "") sb.Append($"\n{GetString("LastEndReason")}: {SetEverythingUpPatch.LastWinsReason}");
-        if (sb.Length > 0 && Options.CurrentGameMode != CustomGameMode.SoloKombat) SendMessage(sb.ToString(), PlayerId);
+        if (sb.Length > 0) SendMessage(sb.ToString(), PlayerId);
     }
     public static string GetSubRolesText(byte id, bool disableColor = false, bool intro = false, bool summary = false)
     {
@@ -1669,9 +1652,6 @@ public static class Utils
                         name = $"<color={GetString("HostColor")}>{GetString("HostText")}</color><color={GetString("IconColor")}>{GetString("Icon")}</color><color={GetString("NameColor")}>{name}</color>";
 
                     //name = $"<color=#902efd>{GetString("HostText")}</color><color=#4bf4ff>♥</color>" + name;
-
-                    if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-                        name = $"<color=#f55252><size=1.7>{GetString("ModeSoloKombat")}</size></color>\r\n" + name;
                 }
             }
             if (player.FriendCode == "gnuedaphic#7196") // Loonie
@@ -1831,9 +1811,6 @@ public static class Utils
 
             SelfSuffix.Append(Deathpact.GetDeathpactPlayerArrow(seer));
 
-            if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-                SelfSuffix.Append(SoloKombatManager.GetDisplayHealth(seer));
-
             if (!isForMeeting) // Only during game
             {
                 switch (seerRole)
@@ -1925,9 +1902,6 @@ public static class Utils
             {
                 if (seer.IsAlive())
                 {
-                    if (Baker.IsEnable && Baker.IsPoisoned(seer))
-                        SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Famine), "θ"));
-
                     if (Shroud.IsEnable && Main.ShroudList.ContainsKey(seer.PlayerId))
                         SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Shroud), "◈"));
                 }
@@ -2030,12 +2004,7 @@ public static class Utils
                 SelfName = $"<size=0%>{SelfName}</size>";
 
 
-            if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-            {
-                SoloKombatManager.GetNameNotify(seer, ref SelfName);
-                SelfName = $"<size={fontSize}>{SelfTaskText}</size>\r\n{SelfName}";
-            }
-            else SelfName = SelfRoleName + "\r\n" + SelfName;
+            SelfName = SelfRoleName + "\r\n" + SelfName;
 
             SelfName += SelfSuffix.ToString() == "" ? "" : "\r\n " + SelfSuffix.ToString();
 
@@ -2045,9 +2014,9 @@ public static class Utils
 
 
             // Start run loop for target only if condition is "true"
-            if (seer.Data.IsDead ||
-                NoCache ||
-                ForceLoop)
+            if (seer.Data.IsDead
+                || NoCache
+                || ForceLoop)
                 foreach (var target in Main.AllPlayerControls)
                 {
                     // if the target is the seer itself, do nothing
@@ -2189,46 +2158,8 @@ public static class Utils
 
                 // ====== Seer know target role ======
 
-                    string TargetRoleText =
-                        (seer.Data.IsDead && Options.GhostCanSeeOtherRoles.GetBool()) ||
-                        (seer.Is(CustomRoles.Mimic) && target.Data.IsDead && Options.MimicCanSeeDeadRoles.GetBool()) ||
-                        (seer.Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers) && Options.LoverKnowRoles.GetBool()) ||
-                        (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoleTypes.Impostor) && Options.ImpKnowAlliesRole.GetBool()) ||
-                        (seer.GetCustomRole().IsCoven() && target.GetCustomRole().IsCoven() && Options.CovenKnowAlliesRole.GetBool()) ||
-                        (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoleTypes.Impostor) && Options.MadmateKnowWhosImp.GetBool()) ||
-                        (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Madmate) && Options.ImpKnowWhosMadmate.GetBool()) ||
-                        (seer.Is(CustomRoles.Crewpostor) && target.Is(CustomRoleTypes.Impostor) && Options.CrewpostorKnowsAllies.GetBool()) ||
-                        (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Crewpostor) && Options.AlliesKnowCrewpostor.GetBool()) ||
-                        (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Madmate) && Options.MadmateKnowWhosMadmate.GetBool()) ||
-                        (seer.Is(CustomRoles.Rogue) && target.Is(CustomRoles.Rogue) && Options.RogueKnowEachOther.GetBool() && Options.RogueKnowEachOtherRoles.GetBool()) ||
-                        (seer.Is(CustomRoles.Jackal) && (target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) ||
-                        (seer.Is(CustomRoles.Sidekick) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Recruit) || target.Is(CustomRoles.Sidekick))) ||
-                        (seer.Is(CustomRoles.Recruit) && (target.Is(CustomRoles.Jackal) || target.Is(CustomRoles.Sidekick) || target.Is(CustomRoles.Recruit))) ||
-                        (seer.Is(CustomRoleTypes.Crewmate) && target.Is(CustomRoles.Marshall) && target.GetPlayerTaskState().IsTaskFinished) ||
-                        (seer.IsRevealedPlayer(target) && !target.Is(CustomRoles.Trickster)) ||
-                        (seer.Is(CustomRoles.God) || target.Is(CustomRoles.GM)) ||
-                        (target.Is(CustomRoles.Workaholic) && Options.WorkaholicVisibleToEveryone.GetBool()) ||
-                        (target.Is(CustomRoles.Doctor) && !target.IsEvilAddons() && Options.DoctorVisibleToEveryone.GetBool()) ||
-                        (target.Is(CustomRoles.Mayor) && Options.MayorRevealWhenDoneTasks.GetBool() && target.GetPlayerTaskState().IsTaskFinished) ||
-                        (target.Is(CustomRoles.Gravestone) && target.Data.IsDead) ||
-                        (target.Is(CustomRoles.Ntr) && Options.LoverKnowRoles.GetBool()) ||
-                        (Main.PlayerStates[target.PlayerId].deathReason == PlayerState.DeathReason.Vote && Options.SeeEjectedRolesInMeeting.GetBool()) ||
-                        Totocalcio.KnowRole(seer, target) ||
-                        Romantic.KnowRole(seer, target) ||
-                        Lawyer.KnowRole(seer, target) ||
-                        EvilDiviner.IsShowTargetRole(seer, target) ||
-                        PotionMaster.IsShowTargetRole(seer, target) ||
-                        Executioner.KnowRole(seer, target) ||
-                        Succubus.KnowRole(seer, target) ||
-                        CursedSoul.KnowRole(seer, target) ||
-                        Admirer.KnowRole(seer, target) ||
-                        Amnesiac.KnowRole(seer, target) ||
-                        Infectious.KnowRole(seer, target) ||
-                        Virus.KnowRole(seer, target)
+                    string TargetRoleText = ExtendedPlayerControl.KnowRoleTraget(seer, target)
                             ? $"<size={fontSize}>{target.GetDisplayRoleName(seer.PlayerId != target.PlayerId && !seer.Data.IsDead)}{GetProgressText(target)}</size>\r\n" : "";
-
-                    if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-                        TargetRoleText = $"<size={fontSize}>{GetProgressText(target)}</size>\r\n";
 
 
                     if (!seer.Data.IsDead && seer.IsRevealedPlayer(target) && target.Is(CustomRoles.Trickster))
@@ -2373,9 +2304,6 @@ public static class Utils
                 // ====== Add TargetSuffix for target (TargetSuffix visible ​​only to the seer) ======
                     TargetSuffix.Clear();
 
-                    if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-                        TargetSuffix.Append(SoloKombatManager.GetDisplayHealth(target));
-
                 
                 // ====== Target Death Reason for target (Death Reason visible ​​only to the seer) ======
                     string TargetDeathReason = "";
@@ -2477,13 +2405,6 @@ public static class Utils
                 Logger.Info(target?.Data?.PlayerName + "はTerroristだった", "MurderPlayer");
                 CheckTerroristWin(target.Data);
                 break;
-            case CustomRoles.Executioner:
-                if (Executioner.Target.ContainsKey(target.PlayerId))
-                {
-                    Executioner.Target.Remove(target.PlayerId);
-                    Executioner.SendRPC(target.PlayerId);
-                }
-                break;
             case CustomRoles.Lawyer:
                 if (Lawyer.Target.ContainsKey(target.PlayerId))
                 {
@@ -2563,7 +2484,7 @@ public static class Utils
         if (sendLog)
         {
             var sb = new StringBuilder(100);
-            foreach (var countTypes in Enum.GetValues(typeof(CountTypes)).Cast<CountTypes>())
+            foreach (var countTypes in EnumHelper.GetAllValues<CountTypes>())
             {
                 var playersCount = PlayersCount(countTypes);
                 if (playersCount == 0) continue;
@@ -2697,13 +2618,7 @@ public static class Utils
         if (id == PlayerControl.LocalPlayer.PlayerId) name = DataManager.player.Customization.Name;
         else name = GetPlayerById(id)?.Data.PlayerName ?? name;
         string summary = $"{ColorString(Main.PlayerColors[id], name)}<pos=14%>{GetProgressText(id)}</pos><pos=24%> {GetKillCountText(id)}</pos><pos={22 + KillsPos}%> {GetVitalText(id, true)}</pos><pos={RolePos + KillsPos}%> {GetDisplayRoleName(id, true)}{GetSubRolesText(id, summary: true)}</pos>";
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-        {
-            if (TranslationController.Instance.currentLanguage.languageID is SupportedLangs.SChinese or SupportedLangs.TChinese)
-                summary = $"{GetProgressText(id)}\t<pos=22%>{ColorString(Main.PlayerColors[id], name)}</pos>";
-            else summary = $"{ColorString(Main.PlayerColors[id], name)}<pos=30%>{GetProgressText(id)}</pos>";
-            if (GetProgressText(id).Trim() == "") return "INVALID";
-        }
+
         return check && GetDisplayRoleName(id, true).RemoveHtmlTags().Contains("INVALID:NotAssigned")
             ? "INVALID"
             : disableColor ? summary.RemoveHtmlTags() : summary;
@@ -2716,13 +2631,7 @@ public static class Utils
         if (id == PlayerControl.LocalPlayer.PlayerId) name = DataManager.player.Customization.Name;
         else name = GetPlayerById(id)?.Data.PlayerName ?? name;
         string summary = $"{ColorString(Main.PlayerColors[id], name)} - {GetDisplayRoleName(id, true)}{GetSubRolesText(id, summary: true)} ({GetVitalText(id, true)}) {GetKillCountText(id)}";
-        if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
-        {
-            if (TranslationController.Instance.currentLanguage.languageID is SupportedLangs.SChinese or SupportedLangs.TChinese)
-                summary = $"{GetProgressText(id)}\t<pos=22%>{ColorString(Main.PlayerColors[id], name)}</pos>";
-            else summary = $"{ColorString(Main.PlayerColors[id], name)}<pos=30%>{GetProgressText(id)}</pos>";
-            if (GetProgressText(id).Trim() == "") return "INVALID";
-        }
+
         return check && GetDisplayRoleName(id, true).RemoveHtmlTags().Contains("INVALID:NotAssigned")
             ? "INVALID"
             : disableColor ? summary.RemoveHtmlTags() : summary;

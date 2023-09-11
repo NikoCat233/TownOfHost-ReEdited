@@ -175,6 +175,7 @@ public class ModNewsHistory
                             "\n     - Setting for Oracle that determines the chance of showing an incorrect result" +
                             "\n     - Settings for Mechanic that determine how many uses it takes to fix Reactor/O2 and Lights/Comms" +
                             "\n     - Setting for Swooper, Wraith, Chameleon, and Shade that determines if the player can vent normally when invisibility is on cooldown" +
+                            "\n     - Setting: Bait Can Be Reported Under All Conditions" +
                             "\n     - Chameleon uses the engineer vent cooldown" +
                             "\n     - Vampire and Poisoner now have their cooldowns reset when the bitten/poisoned player dies\n\r" +
 
@@ -413,6 +414,7 @@ public class ModNewsHistory
                             "\n     - Настройка Оракла, определяющая вероятность отображения неверного результата" +
                             "\n     - Настройки для Ремонтника позволет отнять количество способности при починке саботажа Реактора/O2 и Свет/Связь" +
                             "\n     - Настройка для Невидимки, Wraith, Хамелеона и Shade которая позволяет прыгать в вентиляцию когда невидимость находится в откате" +
+                            "\n     - Настройка: Байт может быть зарепорчен при любых условиях" +
                             "\n     - Хамелеон использует откат вентиляции инженера" +
                             "\n     - Откат Вампира и Отравителя теперь сбрасывается, когда укушенный/отравленный игрок умирает\n\r" +
 

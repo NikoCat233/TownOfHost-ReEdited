@@ -18,7 +18,6 @@ namespace TOHE;
 public enum CustomGameMode
 {
     Standard = 0x01,
-    SoloKombat = 0x02,
     All = int.MaxValue
 }
 
@@ -52,13 +51,12 @@ public static class Options
     public static CustomGameMode CurrentGameMode
         => GameMode.GetInt() switch
         {
-            1 => CustomGameMode.SoloKombat,
             _ => CustomGameMode.Standard
         };
 
     public static readonly string[] gameModes =
     {
-        "Standard", "SoloKombat"
+        "Standard"
     };
 
     // MapActive
@@ -224,6 +222,7 @@ public static class Options
     public static OptionItem WorkaholicVisibleToEveryone;
     public static OptionItem WorkaholicGiveAdviceAlive;
     public static OptionItem BaitNotification;
+    public static OptionItem BaitCanBeReportedUnderAllConditions;
     public static OptionItem DoctorVisibleToEveryone;
     public static OptionItem JackalWinWithSidekick;
     public static OptionItem ArsonistDouseTime;
@@ -941,7 +940,7 @@ public static class Options
         roleCounts = new Dictionary<CustomRoles, int>();
         roleSpawnChances = new Dictionary<CustomRoles, float>();
 
-        foreach (var role in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>())
+        foreach (var role in CustomRolesHelper.AllRoles)
         {
             roleCounts.Add(role, 0);
             roleSpawnChances.Add(role, 0);
@@ -991,6 +990,7 @@ public static class Options
 
         // 游戏模式
         GameMode = StringOptionItem.Create(1, "GameMode", gameModes, 0, TabGroup.GameSettings, false)
+            .SetHidden(true)
             .SetHeader(true);
 
         #region 职业详细设置
@@ -1772,10 +1772,13 @@ public static class Options
         BaitDelayMax = FloatOptionItem.Create(13714, "BaitDelayMax", new(0f, 10f, 1f), 0f, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bait])
             .SetValueFormat(OptionFormat.Seconds);
-        BaitDelayNotify = BooleanOptionItem.Create(13715, "BaitDelayNotify", true, TabGroup.Addons, false)
+        BaitDelayNotify = BooleanOptionItem.Create(13715, "BaitDelayNotify", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bait]);
         BaitNotification = BooleanOptionItem.Create(13716, "BaitNotification", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Bait]);
+        BaitCanBeReportedUnderAllConditions = BooleanOptionItem.Create(13717, "BaitCanBeReportedUnderAllConditions", false, TabGroup.Addons, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Bait]);
+
         SetupAdtRoleOptions(13800, CustomRoles.Trapper, canSetNum: true);
         ImpCanBeTrapper = BooleanOptionItem.Create(13810, "ImpCanBeTrapper", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Trapper]);
@@ -2358,10 +2361,6 @@ public static class Options
         #endregion 
 
         #region 游戏设置
-
-        //SoloKombat
-        SoloKombatManager.SetupCustomOption();
-
 
         //驱逐相关设定
         TextOptionItem.Create(100023, "MenuTitle.Ejections", TabGroup.GameSettings)
