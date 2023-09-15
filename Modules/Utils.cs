@@ -121,8 +121,15 @@ public static class Utils
     }
     public static bool IsActive(SystemTypes type)
     {
-        //Logger.Info($"SystemTypes:{type}", "IsActive");
         int mapId = Main.NormalOptions.MapId;
+        /*
+            The Skeld    = 0
+            MIRA HQ      = 1
+            Polus        = 2
+            Dleks        = 3 (Not used)
+            The Airship  = 4
+            Fungle       = 5?
+        */
         switch (type)
         {
             case SystemTypes.Electrical:
@@ -1792,7 +1799,7 @@ public static class Utils
             if (BallLightning.IsEnable && BallLightning.IsGhost(seer))
                 SelfMark.Append(ColorString(GetRoleColor(CustomRoles.BallLightning), "■"));
 
-            if (Medic.IsEnable && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() == 0 || Medic.WhoCanSeeProtect.GetInt() == 2))
+            if (Medic.IsEnable && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() is 0 or 2))
                 SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Medic), "✚"));
 
 
@@ -1902,13 +1909,12 @@ public static class Utils
             {
                 if (seer.IsAlive())
                 {
-                    if (Shroud.IsEnable && Main.ShroudList.ContainsKey(seer.PlayerId))
+                    if (Shroud.IsEnable && Shroud.ShroudList.ContainsValue(seer.PlayerId))
                         SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Shroud), "◈"));
                 }
 
                 if (seer.PlayerId == Pirate.PirateTarget)
                     SelfMark.Append(Pirate.GetPlunderedMark(seer.PlayerId, true));
-
 
                 SelfMark.Append(Witch.GetSpelledMark(seer.PlayerId, true));
 
@@ -2038,16 +2044,11 @@ public static class Utils
 
                         TargetMark.Append(Occultist.GetCursedMark(target.PlayerId, true));
 
-                        if (Main.ShroudList.ContainsKey(target.PlayerId) && target.IsAlive())
-                            TargetMark.Append(ColorString(GetRoleColor(CustomRoles.Shroud), "◈"));
-
-                        if (target.PlayerId == Pirate.PirateTarget)
+                        if (Pirate.IsEnable)
                             TargetMark.Append(Pirate.GetPlunderedMark(target.PlayerId, true));
-                    }
-                    else
-                    {
-                        if (seer.Is(CustomRoles.Shroud) && Main.ShroudList.ContainsValue(seer.PlayerId) && Main.ShroudList.ContainsKey(target.PlayerId))
-                            TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Shroud)}>◈</color>");
+
+                        if (target.IsAlive()) 
+                            TargetMark.Append(Shroud.GetShroudMark(target.PlayerId, true));
                     }
 
                     if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Snitch) && target.Is(CustomRoles.Madmate) && target.GetPlayerTaskState().IsTaskFinished)
@@ -2058,7 +2059,6 @@ public static class Utils
 
                     if (target.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
                         TargetMark.Append(ColorString(GetRoleColor(CustomRoles.SuperStar), "★"));
-
 
                     if (BallLightning.IsEnable && BallLightning.IsGhost(target))
                         TargetMark.Append(ColorString(GetRoleColor(CustomRoles.BallLightning), "■"));
@@ -2099,7 +2099,7 @@ public static class Utils
                     }
 
 
-                    if (seer.Is(CustomRoles.Medic) && (Medic.WhoCanSeeProtect.GetInt() == 0 || Medic.WhoCanSeeProtect.GetInt() == 1) && (Medic.InProtect(target.PlayerId) || Medic.TempMarkProtected == target.PlayerId))
+                    if (seer.Is(CustomRoles.Medic) && (Medic.WhoCanSeeProtect.GetInt() is 0 or 1) && (Medic.InProtect(target.PlayerId) || Medic.TempMarkProtected == target.PlayerId))
                     {
                         TargetMark.Append(ColorString(GetRoleColor(CustomRoles.Medic), "✚"));
                     }
@@ -2140,25 +2140,26 @@ public static class Utils
                             break;
 
                         case CustomRoles.Puppeteer:
-                            if (Main.PuppeteerList.ContainsValue(seer.PlayerId) && Main.PuppeteerList.ContainsKey(target.PlayerId))
-                                TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Impostor)}>◆</color>");
+                            TargetMark.Append(Puppeteer.TargetMark(seer, target));
                             break;
 
                         case CustomRoles.CovenLeader:
-                            if (Main.CovenLeaderList.ContainsValue(seer.PlayerId) && Main.CovenLeaderList.ContainsKey(target.PlayerId))
-                                TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.CovenLeader)}>◆</color>");
+                            TargetMark.Append(CovenLeader.TargetMark(seer, target));
+                            break;
+
+                        case CustomRoles.Shroud:
+                            TargetMark.Append(Shroud.TargetMark(seer, target));
                             break;
 
                         case CustomRoles.NWitch:
-                            if (Main.TaglockedList.ContainsValue(seer.PlayerId) && Main.TaglockedList.ContainsKey(target.PlayerId))
-                                TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.NWitch)}>◆</color>");
+                            TargetMark.Append(NWitch.TargetMark(seer, target));
                             break;
                     }
 
 
                 // ====== Seer know target role ======
 
-                    string TargetRoleText = ExtendedPlayerControl.KnowRoleTraget(seer, target)
+                    string TargetRoleText = ExtendedPlayerControl.KnowRoleTarget(seer, target)
                             ? $"<size={fontSize}>{target.GetDisplayRoleName(seer.PlayerId != target.PlayerId && !seer.Data.IsDead)}{GetProgressText(target)}</size>\r\n" : "";
 
 

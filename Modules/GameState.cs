@@ -287,6 +287,7 @@ public class PlayerState
         Mauled,
         Drained,
         Shattered,
+        Trap,
 
         etc = -1,
     }

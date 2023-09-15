@@ -73,9 +73,13 @@ class RepairSystemPatch
                     }
                 }
         
-        //SabotageMaster
+        // Mechanic
         if (player.Is(CustomRoles.SabotageMaster))
             SabotageMaster.RepairSystem(__instance, systemType, amount);
+
+        // Repairman
+        if (player.Is(CustomRoles.Repairman))
+            Repairman.RepairSystem(__instance, systemType, amount);
 
         if (systemType == SystemTypes.Electrical && 0 <= amount && amount <= 4)
         {
@@ -163,6 +167,8 @@ class SwitchSystemRepairPatch
     {
         if (player.Is(CustomRoles.SabotageMaster))
             SabotageMaster.SwitchSystemRepair(__instance, amount);
+        if (player.Is(CustomRoles.Repairman))
+            Repairman.SwitchSystemRepair(__instance, amount);
     }
 }
 [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]

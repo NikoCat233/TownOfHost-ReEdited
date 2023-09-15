@@ -242,6 +242,47 @@ internal class CustomRoleSelector
          //   if (rd.Next(0, 100) < NSerialKiller.ChanceToSpawnAnother.GetInt()) rolesToAssign.Add(CustomRoles.NSerialKiller);
         }
 
+        if (CustomRoles.Autopsy.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.Doctor))
+                    {
+                        rolesToAssign.Remove(CustomRoles.Doctor);
+                        rolesToAssign.Add(CustomRoles.ScientistTOHE);
+                    }
+        }
+        if (CustomRoles.Lazy.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.Needy))
+                    {
+                        rolesToAssign.Remove(CustomRoles.Needy);
+                        rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                    }
+        }
+        if (CustomRoles.Lucky.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.Luckey))
+                    {
+                        rolesToAssign.Remove(CustomRoles.Luckey);
+                        rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                    }
+        }
+        if (CustomRoles.Sleuth.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.Detective))
+                    {
+                        rolesToAssign.Remove(CustomRoles.Detective);
+                        rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                    }
+        }
+        if (CustomRoles.Repairman.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.SabotageMaster))
+                    {
+                        rolesToAssign.Remove(CustomRoles.SabotageMaster);
+                        rolesToAssign.Add(CustomRoles.EngineerTOHE);
+                    }
+        }
+
         if (Romantic.IsEnable)
         {
             if (rolesToAssign.Contains(CustomRoles.Romantic))

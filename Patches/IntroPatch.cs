@@ -240,6 +240,10 @@ class BeginCrewmatePatch
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Crewmate);
                 break;
 
+            case CustomRoles.EngineerTOHE:
+                PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Engineer);
+                break;
+
             case CustomRoles.SabotageMaster:
             case CustomRoles.Provocateur:
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = ShipStatus.Instance.SabotageSound;
@@ -247,6 +251,7 @@ class BeginCrewmatePatch
 
             case CustomRoles.Doctor:
             case CustomRoles.Medic:
+            case CustomRoles.ScientistTOHE:
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Scientist);
                 break;
 

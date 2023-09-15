@@ -68,7 +68,7 @@ public class ModNewsHistory
                             "\n     - Ludopath" +
                             "\n     - Berserker\n\r" +
 
-                        "\n\r<b><i>Crewmate: (16 roles)</i></b>" +
+                        "\n\r<b><i>Crewmate: (13 roles)</i></b>" +
                             "\n     - Admirer" +
                             "\n     - Copycat" +
                             "\n     - Time Master" +
@@ -80,12 +80,10 @@ public class ModNewsHistory
                             "\n     - Cleanser" +
                             "\n     - Lighter (Add-on: Lighter renamed to Torch)" +
                             "\n     - Task Manager" +
-                            "\n     - Romantic (Vengeful Romantic & Ruthless Romantic)" +
                             "\n     - Jailor" +
-                            "\n     - Swapper (Experimental role)" +
-                            "\n     - Police Commissioner\n\r" +
+                            "\n     - Swapper (Experimental role)\n\r" +
 
-                        "\n\r<b><i>Neutral: (13 roles)</i></b>" +
+                        "\n\r<b><i>Neutral: (17 roles)</i></b>" +
                             "\n     - Amnesiac" +
                             "\n     - Plaguebearer/Pestilence" +
                             "\n     - Masochist" +
@@ -96,6 +94,7 @@ public class ModNewsHistory
                             "\n     - Shaman" +
                             "\n     - Occultist" +
                             "\n     - Shade" +
+                            "\n     - Romantic (Vengeful Romantic & Ruthless Romantic)" +
                             "\n     - Seeker" +
                             "\n     - Agitater" +
                             "\n     - Soul Collector\n\r" +
@@ -112,10 +111,10 @@ public class ModNewsHistory
                             "\n     - Moved Ritualist to coven" +
                             "\n     - Moved Wraith to coven\n\r" +
 
-                        "\n\r<b><i>Add-on: (11 add-ons)</i></b>" +
+                        "\n\r<b><i>Add-on: (12 add-ons)</i></b>" +
                             "\n     - Ghoul" +
                             "\n     - Unlucky" +
-                            "\n     - Oblivious (returnet)" +
+                            "\n     - Oblivious (returned)" +
                             "\n     - Diseased" +
                             "\n     - Antidote" +
                             "\n     - Burst" +
@@ -123,12 +122,14 @@ public class ModNewsHistory
                             "\n     - Sleuth" +
                             "\n     - Aware" +
                             "\n     - Fragile" +
+                            "\n     - Repairman" +
                             "\n     - Void Ballot\n\r" +
 
                         "\n\r<b>【Rework Roles/Add-ons】</b>" +
                             "\n     - Bomber" +
                             "\n     - Medic" +
                             "\n     - Jackal" +
+                            "\n     - Trapster" +
                             "\n     - Mare (is now an add-on)\n\r" +
 
                         "\n\r<b>【Bug Fixes】</b>" +
@@ -146,6 +147,7 @@ public class ModNewsHistory
                             "\n     - Fixed bug where role Tracefinder sometime did not have arrows" +
                             "\n     - Fixed bug when setting \"Neutrals Win Together\" doesn't work" +
                             "\n     - Fixed Bug When Some Neutrals Cant Click Sabotage Button (Host)" +
+                            "\n     - Fixed Bug When Puppeteer and Witch Dont Sees Target Mark" +
                             "\n     - Fixed Zoom" +
                             "\n     - Some fixes black screen" +
                             "\n     - Some Fix for Sheriff" +
@@ -204,11 +206,13 @@ public class ModNewsHistory
                             "\n     - Tasks from a crewmate lover now count towards a task win" +
                             "\n     - Infected players now die after a meeting if there's no alive Infectious" +
                             "\n     - Body reports during camouflage is now separated" +
-                            "\n     - Vector, Egoist, Revolutionist, Provocateur, Guesser are no longer experimental" +
+                            "\n     - Trapster, Vector, Egoist, Revolutionist, Provocateur, Guesser are no longer experimental" +
                             "\n     - Added ability to change settings by 5 instead of 1 when holding the Left/Right Shift key" +
                             "\n     - All ability cooldowns are now reset after meetings" +
-                            "\n     - Lovers сan not become Sunnyboy" +
-                            "\n     - Tasks bar always set to none" +
+                            "\n     - Lovers can not become Sunnyboy" +
+                            "\n     - Task bar always set to none" +
+                            "\n     - Hangman moved to experimental due to bugs" +
+                            "\n     - Roles with an add-on equivalent will not spawn if the add-on is enabled" +
                             "\n     - \"/r\" command has been improved\n\r" +
 
                         "\n\r<b>【New Features】</b>" +
@@ -224,9 +228,14 @@ public class ModNewsHistory
                             "\n     - Default template file has been updated" +
                             "\n     - Reworked end game summary (In the settings you can also return the old)" +
                             "\n     - Improvement platform kick" +
-                            "\n     - Check Supported Version Among Us",
+                            "\n     - Check Supported Version Among Us\n\r" +
 
-                    Date = "2023-9-10T00:00:00Z"
+                        "\n\r<b>【Removals】</b>" +
+                            "\n     - Removed Solo PVP mode" +
+                            "\n     - Removed Neptune" +
+                            "\n     - Removed Capitalist",
+
+                    Date = "2023-9-16T00:00:00Z"
 
                 };
                 AllModNews.Add(news);
@@ -307,7 +316,7 @@ public class ModNewsHistory
                             "\n     - Людопат" +
                             "\n     - Берсерк\n\r" +
 
-                        "\n\r<b><i>Член Экипажа: (16 ролей)</i></b>" +
+                        "\n\r<b><i>Член Экипажа: (13 ролей)</i></b>" +
                             "\n     - Поклонник" +
                             "\n     - Подражатель" +
                             "\n     - Повелитель Времени" +
@@ -319,12 +328,10 @@ public class ModNewsHistory
                             "\n     - Очиститель" +
                             "\n     - Зажигалка" +
                             "\n     - Мастер Задач" +
-                            "\n     - Романтик (Мстительный Романтик & Безжалостный Романтик)" +
                             "\n     - Тюремщик" +
-                            "\n     - Обменник (Эксперементальная роль)" +
-                            "\n     - Комиссар\n\r" +
+                            "\n     - Обменник (Эксперементальная роль)\n\r" +
 
-                        "\n\r<b><i>Нейтрал: (13 ролей)</i></b>" +
+                        "\n\r<b><i>Нейтрал: (17 ролей)</i></b>" +
                             "\n     - Амнезияк" +
                             "\n     - Носитель Чумы/Чума" +
                             "\n     - Мазохист" +
@@ -334,6 +341,7 @@ public class ModNewsHistory
                             "\n     - Оборотень" +
                             "\n     - Шаман" +
                             "\n     - Окультист" +
+                            "\n     - Романтик (Мстительный Романтик & Безжалостный Романтик)" +
                             "\n     - Тень" +
                             "\n     - Ищущий" +
                             "\n     - Агитатор" +
@@ -351,7 +359,7 @@ public class ModNewsHistory
                             "\n     - Фокусник теперь роль Ковена" +
                             "\n     - Дух теперь роль Ковена\n\r" +
 
-                        "\n\r<b><i>Атрибут: (11 атрибутов)</i></b>" +
+                        "\n\r<b><i>Атрибут: (12 атрибутов)</i></b>" +
                             "\n     - Гуль" +
                             "\n     - Неудачный" +
                             "\n     - Забывчивый (возвращён)" +
@@ -362,12 +370,14 @@ public class ModNewsHistory
                             "\n     - Сыщик" +
                             "\n     - Внимательный" +
                             "\n     - Пустой" +
+                            "\n     - Механик" +
                             "\n     - Хрупкий\n\r" +
 
                         "\n\r<b>【Переработка Ролей/Атрибутов】</b>" +
                             "\n     - Бомбер" +
                             "\n     - Медик" +
                             "\n     - Шакал" +
+                            "\n     - Ловец" +
                             "\n     - Ночной (теперь это атрибут)\n\r" +
 
                         "\n\r<b>【Исправление Багов】</b>" +
@@ -384,6 +394,7 @@ public class ModNewsHistory
                             "\n     - Исправлена ​​ошибка, из-за которой у роли Искателя иногда не было стрелок" +
                             "\n     - Исправлена ​​ошибка, из-за которой настройка «Нейтралы побеждают вместе» не работала." +
                             "\n     - Исправлена ​​ошибка, когда некоторые нейтральные роли не могли нажать кнопку саботажа (Хост)." +
+                            "\n     - Исправлена ​​ошибка, когда Кукловод и Заклинатель не могли видеть марку у цели." +
                             "\n     - Исправлен сломанный Зум" +
                             "\n     - Некоторые исправления черного экрана (И некоторая защита)" +
                             "\n     - Некоторые исправления у Шерифа" +
@@ -443,11 +454,13 @@ public class ModNewsHistory
                             "\n     - Задания от Членов Экипажа Любовников теперь засчитываются в счет победы по заданиям" +
                             "\n     - Зараженные игроки теперь умирают после встречи, если в живых нет Заразного" +
                             "\n     - Репорт трупа во время камуфляжа теперь разделены" +
-                            "\n     - Вектор, Эгоист, Революционист, Провокатор, Угадыватель больше не являются эксперементальными ролями" +
+                            "\n     - Ловец, Вектор, Эгоист, Революционист, Провокатор, Угадыватель больше не являются эксперементальными ролями" +
                             "\n     - Добавлена ​​возможность менять настройки на 5 вместо 1 при удержании Левого/Правого Shift." +
                             "\n     - Откат всех способностей теперь сбрасывается после встреч" +
                             "\n     - Любовники больше не могут стать Солнечным Мальчиком" +
                             "\n     - Панель задач теперь всегда отключена" +
+                            "\n     - Вешатель перемещён в экспериментальные роли из-за багов" +
+                            "\n     - Роли которые имеют те же способности что и Атрибуты не будут появляться, если эти Атрибуты включены" +
                             "\n     - Команда \"/r\" была улучшена\n\r" +
 
                         "\n\r<b>【Новые Функции】</b>" +
@@ -464,6 +477,11 @@ public class ModNewsHistory
                             "\n     - Переработанн результат игры (В настройках клиента также можно вернуть старую)" +
                             "\n     - Улучшена настройка позволяющая кикать игроков играющих на дргуих платформах" +
                             "\n     - Добавлена проверка поддерживаемой версии Among Us\n\r" +
+
+                            "\n\r<b>【Уделаены】</b>" +
+                            "\n     - Удалён Режим ПВП" +
+                            "\n     - Удалён атрибут Нептуна" +
+                            "\n     - Удалена роль Капиталиста\n\r" +
 
                     "\n**Возможно указаны не все изменения, так как мог что-то упустить из виду**",
 

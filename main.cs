@@ -36,8 +36,10 @@ public class Main : BasePlugin
     public static readonly string MainMenuText = " ";
 
     public const string PluginGuid = "com.karped1em.townofhostedited";
-    public const string PluginVersion = "9.0.0.135";
-    public const string PluginDisplayVersion = "3.0.0 c6 Niko";
+
+    public const string PluginVersion = "3.0.0.209";
+    public const string PluginDisplayVersion = "3.0.0 Pre-release 3";
+
     public static readonly string SupportedVersionAU = "2023.7.11";
     public const bool Canary = false;
 
@@ -171,10 +173,6 @@ public class Main : BasePlugin
     public static Dictionary<byte, long> RevolutionistStart = new();
     public static Dictionary<byte, long> RevolutionistLastTime = new();
     public static Dictionary<byte, int> RevolutionistCountdown = new();
-    public static Dictionary<byte, byte> PuppeteerList = new();
-    public static Dictionary<byte, byte> CovenLeaderList = new();
-    public static Dictionary<byte, byte> TaglockedList = new();
-    public static Dictionary<byte, byte> ShroudList = new();
     public static Dictionary<byte, byte> SpeedBoostTarget = new();
     public static Dictionary<byte, int> MayorUsedButtonCount = new();
     public static Dictionary<byte, int> ParaUsedButtonCount = new();
@@ -522,7 +520,9 @@ public class Main : BasePlugin
                 {CustomRoles.Sleuth, "#803333" },
                 {CustomRoles.Clumsy, "#ff1919"},
                 {CustomRoles.Nimble, "#FFFAA6"},
-                {CustomRoles.Fategiver,"#FFB6C1" },
+
+                {CustomRoles.Repairman, "#3333ff"},
+
 
           //      {CustomRoles.Cyber, "#ee4a55" },
 
@@ -862,7 +862,9 @@ public enum CustomRoles
     Sleuth,
     Clumsy,
     Nimble,
-    Fategiver,
+
+    Repairman,
+
   //  Cyber,
     // QuickFix
 }

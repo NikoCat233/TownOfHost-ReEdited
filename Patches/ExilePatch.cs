@@ -1,8 +1,9 @@
 using AmongUs.Data;
 using HarmonyLib;
 using System.Linq;
-using TOHE.Roles.Crewmate;
+
 using TOHE.Roles.Impostor;
+using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
 
 namespace TOHE;
@@ -173,22 +174,18 @@ class ExileControllerWrapUpPatch
                 CustomRoles.Bomber
                 ) pc.RpcResetAbilityCooldown();
 
-            if (pc.Is(CustomRoles.Infected) && pc.IsAlive() && !CustomRoles.Infectious.RoleExist())
-            {
-                pc.RpcMurderPlayerV3(pc);
-                Main.PlayerStates[pc.PlayerId].deathReason = PlayerState.DeathReason.Suicide;
-            }
-            if (Main.ShroudList.ContainsKey(pc.PlayerId) && CustomRoles.Shroud.RoleExist())
-            {
-                pc.RpcMurderPlayerV3(pc);
-                Main.PlayerStates[pc.PlayerId].deathReason = PlayerState.DeathReason.Suicide;
-                Main.ShroudList.Clear();
 
+            if (Infectious.IsEnable)
+            {
+                Infectious.MurderInfectedPlayers(pc);
+            }
+
+            if (Shroud.IsEnable)
+            {
+                Shroud.MurderShroudedPlayers(pc);
             }
 
             pc.RpcRemovePet();
-
-            Main.ShroudList.Clear();
 
             if (Options.RandomSpawn.GetBool())
             {

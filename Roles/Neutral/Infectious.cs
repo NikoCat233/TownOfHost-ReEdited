@@ -1,7 +1,5 @@
-﻿using Hazel;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
+
 using static TOHE.Options;
 using static TOHE.Translator;
 
@@ -10,8 +8,9 @@ namespace TOHE.Roles.Neutral;
 public static class Infectious
 {
     private static readonly int Id = 12000;
-    private static List<byte> playerIdList = new();
     public static bool IsEnable = false;
+
+    private static int BiteLimit;
 
     public static OptionItem BiteCooldown;
    // public static OptionItem BiteCooldownIncrese;
@@ -23,48 +22,31 @@ public static class Infectious
     public static OptionItem HideBittenRolesOnEject;
     
 
-    private static int BiteLimit = new();
-
     public static void SetupCustomOption()
     {
         SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Infectious, 1, zeroOne: false);
         BiteCooldown = FloatOptionItem.Create(Id + 10, "InfectiousBiteCooldown", new(0f, 180f, 2.5f), 30f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious])
             .SetValueFormat(OptionFormat.Seconds);
-     //   BiteCooldownIncrese = FloatOptionItem.Create(Id + 11, "InfectiousBiteCooldownIncrese", new(0f, 180f, 2.5f), 0f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious])
-    //        .SetValueFormat(OptionFormat.Seconds);
         BiteMax = IntegerOptionItem.Create(Id + 12, "InfectiousBiteMax", new(1, 15, 1), 15, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious])
             .SetValueFormat(OptionFormat.Times);
         KnowTargetRole = BooleanOptionItem.Create(Id + 13, "InfectiousKnowTargetRole", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);
         TargetKnowOtherTarget = BooleanOptionItem.Create(Id + 14, "InfectiousTargetKnowOtherTarget", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);
         HasImpostorVision = BooleanOptionItem.Create(Id + 15, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);
-        CanVent = BooleanOptionItem.Create(Id + 17, "CanVent", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);
-     //   HideBittenRolesOnEject = BooleanOptionItem.Create(Id + 17, "HideBittenRolesOnEject", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);        
+        CanVent = BooleanOptionItem.Create(Id + 17, "CanVent", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Infectious]);        
     }
     public static void Init()
     {
-        playerIdList = new();
-        BiteLimit = new();
+        BiteLimit = 0;
         IsEnable = false;
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
         BiteLimit = BiteMax.GetInt();
         IsEnable = true;
 
         if (!AmongUsClient.Instance.AmHost) return;
         if (!Main.ResetCamPlayerList.Contains(playerId))
             Main.ResetCamPlayerList.Add(playerId);
-    }
-    private static void SendRPC()
-    {
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetInfectiousBiteLimit, SendOption.Reliable, -1);
-        writer.Write(BiteLimit);
-        AmongUsClient.Instance.FinishRpcImmediately(writer);
-    }
-    public static void ReceiveRPC(MessageReader reader)
-    {
-        BiteLimit = reader.ReadInt32();
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = BiteCooldown.GetFloat();
     public static bool CanUseKillButton(PlayerControl player) => !player.Data.IsDead && BiteLimit >= 1;
@@ -86,25 +68,43 @@ public static class Infectious
 
             killer.ResetKillCooldown();
             killer.SetKillCooldown();
-            if (!Options.DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(target);
+            if (!DisableShieldAnimations.GetBool()) killer.RpcGuardAndKill(target);
             target.RpcGuardAndKill(killer);
             target.RpcGuardAndKill(target);
 
             Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.Infected.ToString(), "Assign " + CustomRoles.Infected.ToString());
+            
             if (BiteLimit < 0)
+            {
                 HudManager.Instance.KillButton.OverrideText($"{GetString("KillButtonText")}");
+            }
+
             Logger.Info($"{killer.GetNameWithRole()} : 剩余{BiteLimit}次招募机会", "Infectious");
             return true;
         }
+
         if (!CanBeBitten(target) && !target.Is(CustomRoles.Infected))
         {
             killer.RpcMurderPlayerV3(target);
         }
+
         if (BiteLimit < 0)
+        {
             HudManager.Instance.KillButton.OverrideText($"{GetString("KillButtonText")}");
+        }
+
         killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Infectious), GetString("InfectiousInvalidTarget")));
+
         Logger.Info($"{killer.GetNameWithRole()} : 剩余{BiteLimit}次招募机会", "Infectious");
         return false;
+    }
+    public static void MurderInfectedPlayers(PlayerControl infected)
+    {
+        if (infected.Is(CustomRoles.Infected) && infected.IsAlive())
+        {
+            infected.RpcMurderPlayerV3(infected);
+            Main.PlayerStates[infected.PlayerId].deathReason = PlayerState.DeathReason.Infected;
+        }
     }
     public static bool KnowRole(PlayerControl player, PlayerControl target)
     {
