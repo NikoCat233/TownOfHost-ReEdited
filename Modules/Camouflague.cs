@@ -96,7 +96,7 @@ public static class Camouflage
             {
                 RpcSetSkin(pc);
 
-                if (!IsCamouflage)
+                if (!IsCamouflage && !pc.IsAlive())
                 {
                     pc.RpcRemovePet();
                 }

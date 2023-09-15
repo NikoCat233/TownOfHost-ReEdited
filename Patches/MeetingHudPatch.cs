@@ -860,7 +860,7 @@ class MeetingHudStartPatch
             roleTextMeeting.color = RoleTextData.Item2;
             roleTextMeeting.gameObject.name = "RoleTextMeeting";
             roleTextMeeting.enableWordWrapping = false;
-            roleTextMeeting.enabled = pc.AmOwner || ExtendedPlayerControl.KnowRoleTraget(PlayerControl.LocalPlayer, pc);
+            roleTextMeeting.enabled = pc.AmOwner || ExtendedPlayerControl.KnowRoleTarget(PlayerControl.LocalPlayer, pc);
 
             if (!PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.IsRevealedPlayer(pc) && pc.Is(CustomRoles.Trickster))
             {
@@ -1161,11 +1161,7 @@ class MeetingHudStartPatch
             sb.Append(Witch.GetSpelledMark(target.PlayerId, true));
             sb.Append(HexMaster.GetHexedMark(target.PlayerId, true));
             sb.Append(Occultist.GetCursedMark(target.PlayerId, true));
-
-            if (Main.ShroudList.ContainsKey(target.PlayerId))
-                sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Shroud), "◈")); 
-          //      Utils.SendMessage(string.Format(GetString("Message.Shrouded"), target.PlayerId));
-            
+            sb.Append(Shroud.GetShroudMark(target.PlayerId, true));            
             
             if (target.PlayerId == Pirate.PirateTarget)
                 sb.Append(Pirate.GetPlunderedMark(target.PlayerId, true));
@@ -1180,10 +1176,10 @@ class MeetingHudStartPatch
                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.BallLightning), "■"));
 
             //医生护盾提示
-            if (seer.PlayerId == target.PlayerId && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() == 0 || Medic.WhoCanSeeProtect.GetInt() == 2))
+            if (seer.PlayerId == target.PlayerId && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() is 0 or 2))
                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Medic), "✚"));
 
-            if (seer.Is(CustomRoles.Medic) && (Medic.InProtect(target.PlayerId) || Medic.TempMarkProtected == target.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() == 0 || Medic.WhoCanSeeProtect.GetInt() == 1))
+            if (seer.Is(CustomRoles.Medic) && (Medic.InProtect(target.PlayerId) || Medic.TempMarkProtected == target.PlayerId) && (Medic.WhoCanSeeProtect.GetInt() is 0 or 1))
                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Medic), "✚"));
 
             if (seer.Data.IsDead && Medic.InProtect(target.PlayerId) && !seer.Is(CustomRoles.Medic))

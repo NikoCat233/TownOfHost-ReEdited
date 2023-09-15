@@ -118,9 +118,9 @@ public static class PlagueBearer
 
     public static bool IsIndirectKill(PlayerControl killer)
     {
-        return Main.PuppeteerList.ContainsKey(killer.PlayerId) ||
-            Main.TaglockedList.ContainsKey(killer.PlayerId) ||
-            Main.ShroudList.ContainsKey(killer.PlayerId) ||
+        return Puppeteer.PuppeteerList.ContainsKey(killer.PlayerId) ||
+            NWitch.TaglockedList.ContainsKey(killer.PlayerId) ||
+            Shroud.ShroudList.ContainsKey(killer.PlayerId) ||
             Main.CursedPlayers.ContainsValue(killer) ||
             Sniper.snipeTarget.ContainsValue(killer.PlayerId);
     }

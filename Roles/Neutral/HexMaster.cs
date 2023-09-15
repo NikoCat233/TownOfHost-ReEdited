@@ -162,8 +162,8 @@ public static class HexMaster
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
         if (Medic.ProtectList.Contains(target.PlayerId)) return false;
-        if (target.Is(CustomRoles.Pestilence)) return true;
-        if (target.Is(CustomRoles.HexMaster)) return true;
+        if (target.Is(CustomRoles.Pestilence)) return false;
+        if (target.Is(CustomRoles.HexMaster)) return false;
         if (target.GetCustomRole().IsCoven()) return false;
 
         if (NowSwitchTrigger == SwitchTrigger.DoubleTrigger)

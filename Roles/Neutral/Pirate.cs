@@ -94,7 +94,7 @@ public static class Pirate
     }
     public static string GetPlunderedMark(byte target, bool isMeeting)
     {
-        if (isMeeting && PirateTarget != byte.MaxValue)
+        if (isMeeting && target == PirateTarget)
         {
             return Utils.ColorString(Utils.GetRoleColor(CustomRoles.Pirate), " ⦿");
         }
