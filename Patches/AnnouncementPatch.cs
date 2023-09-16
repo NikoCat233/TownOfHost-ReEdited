@@ -500,178 +500,188 @@ public class ModNewsHistory
                 {
                     Number = 80002,
                     Title = "Town of Host Re-Edited v3.0.0",
-                    SubTitle = "★★The next big update!★★",
+                    SubTitle = "★★下一次的重大更新！★★",
                     ShortTitle = "★TOH-RE v3.0.0",
-                    Text = "<size=150%>Welcome to TOHE v3.0.0!</size>\n\n<size=125%>Support for Among Us v2023.7.11 and v2023.7.12</size>\n"
+                    Text = "<size=150%>欢迎来到 TOHE v3.0.0!</size>\n\n<size=125%>支持 Among Us v2023.7.11 和 v2023.7.12</size>\n"
 
-                        + "\n<b>【Base】</b>\n - Base on TOH v4.1.2\r\n"
+                        + "\n<b>【对应官方版本】</b>\n - 基于官方版本 v4.1.2\r\n"
 
-                        + "\n<b>【New Roles】</b>" +
-                        "\n\r<b><i>Impostor: (5 roles)</i></b>" +
-                            "\n     - Nuker (hidden)" +
-                            "\n     - Pitfall" +
-                            "\n     - Godfather" +
-                            "\n     - Ludopath" +
-                            "\n     - Berserker\n\r" +
+                        + "\n<b>【身份新增】</b>" +
+                        "\n\r<b><i>内鬼: (5 个新身份)</i></b>" +
+                            "\n     - 核武器 (隐藏)" +
+                            "\n     - 设陷者" +
+                            "\n     - 教父" +
+                            "\n     - 速度者" +
+                            "\n     - 狂战士\n\r" +
 
-                        "\n\r<b><i>Crewmate: (16 roles)</i></b>" +
-                            "\n     - Admirer" +
-                            "\n     - Copycat" +
-                            "\n     - Time Master" +
-                            "\n     - Crusader" +
-                            "\n     - Reverie" +
-                            "\n     - Lookout" +
-                            "\n     - Telecommunication" +
-                            "\n     - Chameleon" +
-                            "\n     - Cleanser" +
-                            "\n     - Lighter (Add-on: Lighter renamed to Torch)" +
-                            "\n     - Task Manager" +
-                            "\n     - Romantic (Vengeful Romantic & Ruthless Romantic)" +
-                            "\n     - Jailor" +
-                            "\n     - Swapper (Experimental role)" +
-                            "\n     - Police Commissioner\n\r" +
+                        "\n\r<b><i>船员: (13 个新身份)</i></b>" +
+                            "\n     - 仰慕者" +
+                            "\n     - 模仿猫" +
+                            "\n     - 时间之主" +
+                            "\n     - 十字军" +
+                            "\n     - 遐想者" +
+                            "\n     - 瞭望员" +
+                            "\n     - 通信员" +
+                            "\n     - 变色龙" +
+                            "\n     - 清洗者" +
+                            "\n     - 执灯人 (附加职业: 执灯人改名为火炬)" +
+                            "\n     - 任务管理者" +
+                            "\n     - 狱警" +
+                            "\n     - 换票师 (实验性身份)" +
 
-                        "\n\r<b><i>Neutral: (13 roles)</i></b>" +
-                            "\n     - Amnesiac" +
-                            "\n     - Plaguebearer/Pestilence" +
-                            "\n     - Masochist" +
-                            "\n     - Doomsayer" +
-                            "\n     - Pirate" +
-                            "\n     - Shroud" +
-                            "\n     - Werewolf" +
-                            "\n     - Shaman" +
-                            "\n     - Occultist" +
-                            "\n     - Shade" +
-                            "\n     - Seeker" +
-                            "\n     - Agitater" +
-                            "\n     - Soul Collector\n\r" +
+                        "\n\r<b><i>中立: (17 个新身份)</i></b>" +
+                            "\n     - 失忆者" +
+                            "\n     - 瘟疫使者/瘟疫" +
+                            "\n     - 受虐狂" +
+                            "\n     - 末日赌怪" +
+                            "\n     - 决斗者" +
+                            "\n     - 裹尸布" +
+                            "\n     - 月下狼人" +
+                            "\n     - 萨满" +
+                            "\n     - 神秘者" +
+                            "\n     - 遮蔽着" +
+                            "\n     - 搜寻者" +
+                            "\n     - 煽动者" +
+                            "\n     - 浪漫者 (复仇浪漫者 & 无情浪漫者)" +
+                            "\n     - 灵魂收集者\n\r" +
 
-                        "\n\r<b><i>Added new faction: Coven: (10 roles)</i></b>" +
-                            "\n     - Banshee" +
-                            "\n     - Coven Leader" +
-                            "\n     - Necromancer" +
-                            "\n     - Potion Master" +
-                            "\n     - Moved Jinx to coven" +
-                            "\n     - Moved Hex Master to coven" +
-                            "\n     - Moved Medusa to coven" +
-                            "\n     - Moved Poisoner to coven" +
-                            "\n     - Moved Ritualist to coven" +
-                            "\n     - Moved Wraith to coven\n\r" +
+                        "\n\r<b><i>新增阵营: 巫师: (10 个新身份)</i></b>" +
+                            "\n     - 护盾巫师" +
+                            "\n     - 巫师首领" +
+                            "\n     - 亡灵巫师" +
+                            "\n     - 药剂师" +
+                            "\n     - 将扫把星移至巫师阵营" +
+                            "\n     - 将巫师移至巫师阵营" +
+                            "\n     - 将美杜莎移至巫师阵营" +
+                            "\n     - 将投毒者移至巫师阵营" +
+                            "\n     - 将祭祀者移至巫师阵营" +
+                            "\n     - 将魅影移至巫师阵营\n\r" +
 
-                        "\n\r<b><i>Add-on: (11 add-ons)</i></b>" +
-                            "\n     - Ghoul" +
-                            "\n     - Unlucky" +
-                            "\n     - Oblivious (returnet)" +
-                            "\n     - Diseased" +
-                            "\n     - Antidote" +
-                            "\n     - Burst" +
-                            "\n     - Clumsy" +
-                            "\n     - Sleuth" +
-                            "\n     - Aware" +
-                            "\n     - Fragile" +
-                            "\n     - Void Ballot\n\r" +
+                        "\n\r<b><i>附加职业: (12 附加职业)</i></b>" +
+                            "\n     - 食尸鬼" +
+                            "\n     - 倒霉蛋" +
+                            "\n     - 不受重视 (返厂)" +
+                            "\n     - 患病" +
+                            "\n     - 健康" +
+                            "\n     - 爆破者" +
+                            "\n     - 笨蛋" +
+                            "\n     - 侦察员" +
+                            "\n     - 意识到" +
+                            "\n     - 脆弱" +
+                            "\n     - 维修员" +
+                            "\n     - 无效投票\n\r" +
 
-                        "\n\r<b>【Rework Roles/Add-ons】</b>" +
-                            "\n     - Bomber" +
-                            "\n     - Medic" +
-                            "\n     - Jackal" +
-                            "\n     - Mare (is now an add-on)\n\r" +
+                        "\n\r<b>【身份/附加职业 重做】</b>" +
+                            "\n     - 自爆兵" +
+                            "\n     - 医生" +
+                            "\n     - 豺狼" +
+                            "\n     - 诡雷" +
+                            "\n     - 梦魇 (现在是附加职业)\n\r" +
 
-                        "\n\r<b>【Bug Fixes】</b>" +
-                            "\n     - Fixed Torch" +
-                            "\n     - Fixed fatal error on Crusader" +
-                            "\n     - Fixed long loading time for game with mod" +
-                            "\n     - Jinx should no longer be able to somehow jinx themself" +
-                            "\n     - Cursed Wolf should no longer be able to somehow curse themself" +
-                            "\n     - Fixed bug when extra title appears in settings mod" +
-                            "\n     - Fixed bug when modded non-host can't guess add-ons and some roles" +
-                            "\n     - Fixed bug when some roles could not get Add-ons" +
-                            "\n     - Fixed a bug where the text \"Devoured\" did not appear for the player" +
-                            "\n     - Fixed bug where non-Lovers players would dead together" +
-                            "\n     - Fixed bug when shield in-lobby caused by Vulture cooldown up" +
-                            "\n     - Fixed bug where role Tracefinder sometime did not have arrows" +
-                            "\n     - Fixed bug when setting \"Neutrals Win Together\" doesn't work" +
-                            "\n     - Fixed Bug When Some Neutrals Cant Click Sabotage Button (Host)" +
-                            "\n     - Fixed Zoom" +
-                            "\n     - Some fixes black screen" +
-                            "\n     - Some Fix for Sheriff" +
-                            "\n     - Fixed Tracker Arrow" +
-                            "\n     - Fixed Divinator" +
-                            "\n     - Fixed some add-on conflicts" +
-                            "\n     - Fixed Report Button Icon\n\r" +
+                        "\n\r<b>【Bug修复】</b>" +
+                            "\n     - 修复了火炬" +
+                            "\n     - 修复了十字军致命Bug" +
+                            "\n     - 修复了装有 MOD 的玩家游戏加载时间过长的问题" +
+                            "\n     - 扫把星不会再莫名其妙地给自己带来厄运" +
+                            "\n     - 呪狼不会再以某种方式诅咒自己" +
+                            "\n     - 修复了设置模式中出现额外标题时的Bug" +
+                            "\n     - 修复了修改后的非房主无法猜测附加职业和某些身份的Bug" +
+                            "\n     - 修复了某些身份无法获得附加职业的Bug" +
+                            "\n     - 修复了玩家的 \" 小 黑 人 \"文本不会出现的Bug" +
+                            "\n     - 修复了非恋人玩家会死在一起的Bug" +
+                            "\n     - 修复了秃鹫冷却时间增加导致护盾失效时的Bug" +
+                            "\n     - 修复了寻迹者有时没有箭头的Bug" +
+                            "\n     - 修复了设置 \"中立玩家共赢\" 不起作用" +
+                            "\n     - 修复了一些中立玩家无法点击破坏按钮的Bug (房主)" +
+                            "\n     - 修复了傀儡师和女巫看不到目标标记时的Bug" +
+                            "\n     - 修复了僵尸" +
+                            "\n     - 一些黑屏修复" +
+                            "\n     - 警长的一些修复" +
+                            "\n     - 修复了追踪者的箭头" +
+                            "\n     - 修复了调查员" +
+                            "\n     - 修复了一些附加职业的冲突" +
+                            "\n     - 修复了报告按钮图标\n\r" +
 
-                        "\n\r<b>【Improvements Roles】</b>" +
-                            "\n     - Fortune Teller" +
-                            "\n     - Serial Killer" +
-                            "\n     - Camouflager" +
-                            "\n     - Retributionist Balancing" +
-                            "\n     - Setting: Arsonist keeps the game going" +
-                            "\n     - Vector setting: Vent Cooldown" +
-                            "\n     - Jester setting: Impostor Vision" +
-                            "\n     - Avenger setting: Crewmates/Neutrals can become Avenger" +
-                            "\n     - Judge Can TrialIs Coven" +
-                            "\n     - Setting: Torch is affected by Lights Sabotage" +
-                            "\n     - SS Duration and CD setting for Miner and Escapist" +
-                            "\n     - Added ability use limit for Time Master and Grenadier" +
-                            "\n     - Added the ability to increase abilities when completing tasks for: Coroner, Chameleon, Tracker, Mechanic, Oracle, Inspector, Medium, Fortune Teller, Grenadier, Veteran, Time Master, and Pacifist" +
-                            "\n     - Setting to hide the shot limit for Sheriff" +
-                            "\n     - Setting for Fortune Teller whether it shows specific roles instead of clues on task completion" +
-                            "\n     - Settings for Tracefinder that determine a delay in when the arrows show up" +
-                            "\n     - Setting for Mortician whether it has arrows toward bodies or not" +
-                            "\n     - Setting for Oracle that determines the chance of showing an incorrect result" +
-                            "\n     - Settings for Mechanic that determine how many uses it takes to fix Reactor/O2 and Lights/Comms" +
-                            "\n     - Setting for Swooper, Wraith, Chameleon, and Shade that determines if the player can vent normally when invisibility is on cooldown" +
-                            "\n     - Chameleon uses the engineer vent cooldown" +
-                            "\n     - Vampire and Poisoner now have their cooldowns reset when the bitten/poisoned player dies\n\r" +
+                        "\n\r<b>【身份更改】</b>" +
+                            "\n     - 占卜师" +
+                            "\n     - 连环杀手" +
+                            "\n     - 隐蔽者" +
+                            "\n     - 惩罚者得到了平衡" +
+                            "\n     - 设置: 纵火犯让游戏继续进行" +
+                            "\n     - 马里奥设置: 使用通风管冷却时间" +
+                            "\n     - 豺狼设置: 内鬼视野" +
+                            "\n     - 复仇者设置: 船员阵营/中立阵营 可以成为复仇者" +
+                            "\n     - 法官现在可以审判巫师阵营" +
+                            "\n     - 设置: 火炬会受到灯光破坏的影响" +
+                            "\n     - 矿工和逃逸者的持续时间和CD设置" +
+                            "\n     - 添加了时间之主和掷弹兵技能使用限制" +
+                            "\n     - 添加了在完成任务时增加技能次数的身份： 验尸官、变色龙、正义追踪者、修理工、神谕、检查员、通灵师、占卜师、掷弹兵、老兵、时间之主和和平之鸽" +
+                            "\n     - 隐藏警长执法次数显示的设置" +
+                            "\n     - 添加了调查员是否显示具体身份的设置" +
+                            "\n     - 添加了寻迹者的箭头显示延迟时间的设置" +
+                            "\n     - 添加了入殓师是否有箭头指向尸体的设置" +
+                            "\n     - 添加了神谕查验的显示错误结果概率的设置" +
+                            "\n     - 添加了修理工修复 反应堆/氧气 和 灯光/通信 所需的技能次数的设置" +
+                            "\n     - 添加了隐匿者、魅影、变色龙 和 遮蔽者 的玩家在隐形冷却时是否可以正常使用通风管的设置" +
+                            "\n     - 设置：在任何情况下都可以强制报告诱饵尸体" +
+                            "\n     - 变色龙使用工程师通风口冷却时间" +
+                            "\n     - 吸血鬼和投毒者现在会在 被咬/中毒 的玩家死亡时重置冷却时间\n\r" +
 
-                        "\n\r<b>【New Client Settings】</b>" +
-                            "\n     - Show FPS" +
-                            "\n     - Game Master (GM) (has been moved)" +
-                            "\n     - Text Overlay" +
-                            "\n     - Small Screen Mode" +
-                            "\n     - Old Role Summary\n\r" +
+                        "\n\r<b>【新客户端(Mod)选项】</b>" +
+                            "\n     - 显示 FPS (帧数)" +
+                            "\n     - 管理员(GM) (已被转移)" +
+                            "\n     - 文本覆盖" +
+                            "\n     - 小屏幕模式" +
+                            "\n     - 显示游戏结果\n\r" +
 
-                        "\n\r<b>【New Mod Settings】</b>" +
-                            "\n     - Use Protection Anti Blackout" +
-                            "\n     - Killer count command (Also includes /kcount command)" +
-                            "\n     - See ejected roles in meetings" +
-                            "\n     - Remove pets at dead players (Vanilla bug fix)" +
-                            "\n     - Setting to disable unnecessary shield animations" +
-                            "\n     - Setting to hide the kill animation when guesses happen" +
-                            "\n     - Disable comms camouflage on some maps" +
-                            "\n     - Block Switches When They Are Up" +
-                            "\n     - Sabotage Cooldown Control" +
-                            "\n     - Reset Doors After Meeting (Airship/Polus)\n\r" +
+                        "\n\r<b>【新Mod设置】</b>" +
+                            "\n     - 使用保护功能，防止黑屏" +
+                            "\n     - 带刀玩家统计指令（还包括 /kcount 指令）" +
+                            "\n     - 查看驱逐时的会议身份" +
+                            "\n     - 移除死亡玩家的宠物的设置(修复原版Bug)" +
+                            "\n     - 禁用不必要的护盾动画的设置" +
+                            "\n     - 禁用猜测时隐藏击杀动画的设置" +
+                            "\n     - 在特定地图上禁用破坏通信伪装的设置" +
+                            "\n     - 当电力恢复后阻止关闭的设置" +
+                            "\n     - 修理冷却时限" +
+                            "\n     - 会议后重置门的开关(飞艇地图/波鲁斯）\n\r" +
 
-                        "\n\r<b>【Some Changes】</b>" +
-                            "\n     - Victory and Defeat text is no longer role colored" +
-                            "\n     - Last Impostor can no longer be guessed" +
-                            "\n     - Tasks from a crewmate lover now count towards a task win" +
-                            "\n     - Infected players now die after a meeting if there's no alive Infectious" +
-                            "\n     - Body reports during camouflage is now separated" +
-                            "\n     - Vector, Egoist, Revolutionist, Provocateur, Guesser are no longer experimental" +
-                            "\n     - Added ability to change settings by 5 instead of 1 when holding the Left/Right Shift key" +
-                            "\n     - All ability cooldowns are now reset after meetings" +
-                            "\n     - Lovers сan not become Sunnyboy" +
-                            "\n     - Tasks bar always set to none" +
-                            "\n     - \"/r\" command has been improved\n\r" +
+                        "\n\r<b>【一些改变】</b>" +
+                            "\n     - 胜利和失败文本不再使用身份颜色" +
+                            "\n     - 仅存内鬼无法被赌" +
+                            "\n     - 船员恋人的任务现在可计入任务胜利" +
+                            "\n     - 如果没有活着的感染者，被感染的玩家现在会在会议后死亡" +
+                            "\n     - 隐蔽过程中的尸体报告现已分离" +
+                            "\n     - 诡雷、马里奥、利己主义者、革命家、自爆卡车、赌怪 不再是实验性身份" +
+                            "\n     - 添加了按住 左/右 Shift 键时以 5 而不是 1 更改设置的功能" +
+                            "\n     - 所有职业的技能冷却时间都会在会议后重置" +
+                            "\n     - 恋人不能成为阳光开朗大男孩" +
+                            "\n     - 任务进度条更新进度始终设置为 无" +
+                            "\n     - 由于存在错误，刽子手已移至实验性身份" +
+                            "\n     - 如果启用了附加职业，具有等效附加组件的身份将不会生成" +
+                            "\n     - \"/r\" 指令进行了改进\n\r" +
 
-                        "\n\r<b>【New Features】</b>" +
-                            "\n     - Load time reduced significantly" +
-                            "\n     - The mod has been translated to Spanish (Partially)" +
-                            "\n     - The mod has been translated to Chinese" +
-                            "\n     - Improvement Random Map" +
-                            "\n     - Main menu has been changed" +
-                            "\n     - Added new buttons in main menu" +
-                            "\n     - Added Auto starting features" +
-                            "\n     - Reworked Discord Rich Presence" +
-                            "\n     - Moderator and Sponsor improvement (/kick, /ban, /warn, and Moderator tags)" +
-                            "\n     - Default template file has been updated" +
-                            "\n     - Reworked end game summary (In the settings you can also return the old)" +
-                            "\n     - Improvement platform kick" +
-                            "\n     - Check Supported Version Among Us",
+                        "\n\r<b>【新功能】</b>" +
+                            "\n     - 加载时间大幅缩短" +
+                            "\n     - 该 Mod 已被翻译成西班牙语（部分）" +
+                            "\n     - 该 Mod 已被翻译成简体中文" +
+                            "\n     - 改进随机地图" +
+                            "\n     - 主菜单已更改" +
+                            "\n     - 在主菜单中添加了新按钮" +
+                            "\n     - 添加了自动启动功能" +
+                            "\n     - 在Discord状态栏显示房间代码" +
+                            "\n     - 改进协管和赞助商（/kick、/ban、/warn 和协管标签）" +
+                            "\n     - 已更新默认template文件" +
+                            "\n     - 重做了游戏结束时的总结（在设置中也可以返回旧版总结）" +
+                            "\n     - 改进除pc外的设备踢出" +
+                            "\n     - 检查 Among Us 支持的Mod版本\n\r" +
 
-                    Date = "2023-9-10T00:00:00Z"
+                            "\n\r<b>【删除】</b>" +
+                            "\n     - 删除了个人竞技模式" +
+                            "\n     - 删除海王" +
+                            "\n     - 删除资本家",
+                            
+                    Date = "2023-9-16T00:00:00Z"
 
                 };
                 AllModNews.Add(news);

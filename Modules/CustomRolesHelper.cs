@@ -145,56 +145,19 @@ static class CustomRolesHelper
                 _ => role.IsImpostor() ? CustomRoles.Impostor : CustomRoles.Crewmate,
             };
     }
-
-    public static CustomRoles GetErasedRole(this CustomRoles role) // Erased RoleBase - Crewmate or Engineer or Scientist
+    // Erased RoleType - Impostor, Shapeshifter, Crewmate, Engineer, Scientist (Not Neutrals/Covens)
+    public static CustomRoles GetErasedRole(RoleTypes roleType, CustomRoles role)
     {
         return role.IsVanilla()
             ? role
-            : role switch
+            : roleType switch
             {
-                CustomRoles.Tracker => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mayor => Options.MayorHasPortableButton.GetBool() ? CustomRoles.EngineerTOHE : CustomRoles.CrewmateTOHE,
-                CustomRoles.Monitor => Monitor.CanVent.GetBool() ? CustomRoles.EngineerTOHE : CustomRoles.CrewmateTOHE,
-                CustomRoles.Observer => CustomRoles.CrewmateTOHE,
-                CustomRoles.DovesOfNeace => CustomRoles.EngineerTOHE,
-                CustomRoles.Judge => CustomRoles.CrewmateTOHE,
-                CustomRoles.Cleanser => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mortician => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mediumshiper => CustomRoles.CrewmateTOHE,
-                CustomRoles.Bodyguard => CustomRoles.CrewmateTOHE,
-                CustomRoles.ParityCop => CustomRoles.CrewmateTOHE,
-                CustomRoles.Lookout => CustomRoles.CrewmateTOHE,
-                CustomRoles.Grenadier => CustomRoles.EngineerTOHE,
-                CustomRoles.Lighter => CustomRoles.EngineerTOHE,
-                CustomRoles.Transporter => CustomRoles.CrewmateTOHE,
-                CustomRoles.Veteran => CustomRoles.CrewmateTOHE,
-                CustomRoles.GuardianAngelTOHE => CustomRoles.GuardianAngel,
-                CustomRoles.Detective => CustomRoles.CrewmateTOHE,
-                CustomRoles.NiceGuesser => CustomRoles.CrewmateTOHE,
-                CustomRoles.Luckey => CustomRoles.CrewmateTOHE,
-                CustomRoles.CyberStar => CustomRoles.CrewmateTOHE,
-                CustomRoles.TaskManager => CustomRoles.CrewmateTOHE,
-                CustomRoles.Psychic => CustomRoles.CrewmateTOHE,
-                CustomRoles.Needy => CustomRoles.CrewmateTOHE,
-                CustomRoles.SuperStar => CustomRoles.CrewmateTOHE,
-                CustomRoles.Paranoia => CustomRoles.EngineerTOHE,
-                CustomRoles.EngineerTOHE => CustomRoles.EngineerTOHE,
-                CustomRoles.TimeMaster => CustomRoles.EngineerTOHE,
-                CustomRoles.CrewmateTOHE => CustomRoles.CrewmateTOHE,
-                CustomRoles.Doctor => CustomRoles.ScientistTOHE,
-                CustomRoles.ScientistTOHE => CustomRoles.ScientistTOHE,
-                CustomRoles.Tracefinder => CustomRoles.ScientistTOHE,
-                CustomRoles.SpeedBooster => CustomRoles.CrewmateTOHE,
-                CustomRoles.Dictator => CustomRoles.CrewmateTOHE,
-                CustomRoles.Snitch => CustomRoles.CrewmateTOHE,
-                CustomRoles.Marshall => CustomRoles.CrewmateTOHE,
-                CustomRoles.SabotageMaster => CustomRoles.EngineerTOHE,
-                CustomRoles.Retributionist => CustomRoles.Crewmate,
-                CustomRoles.Guardian => CustomRoles.CrewmateTOHE,
-                CustomRoles.Addict => CustomRoles.EngineerTOHE,
-                CustomRoles.Oracle => CustomRoles.CrewmateTOHE,
-                CustomRoles.Chameleon => CustomRoles.EngineerTOHE,
-                _ => role.IsImpostor() ? CustomRoles.ImpostorTOHE : CustomRoles.CrewmateTOHE,
+                RoleTypes.Crewmate => CustomRoles.CrewmateTOHE,
+                RoleTypes.Scientist => CustomRoles.ScientistTOHE,
+                RoleTypes.Engineer => CustomRoles.EngineerTOHE,
+                RoleTypes.Impostor => CustomRoles.ImpostorTOHE,
+                RoleTypes.Shapeshifter => CustomRoles.ShapeshifterTOHE,
+                _ => role,
             };
     }
 
@@ -883,6 +846,8 @@ static class CustomRolesHelper
             CustomRoles.Monarch or
             CustomRoles.Farseer or
             CustomRoles.SwordsMan or
+            CustomRoles.Admirer or
+            CustomRoles.Reverie or
             CustomRoles.Deputy;
     }
     public static bool IsTaskBasedCrewmate(this CustomRoles role)
