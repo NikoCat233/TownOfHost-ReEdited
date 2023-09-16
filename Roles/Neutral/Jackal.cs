@@ -41,6 +41,7 @@ public static class Jackal
         "SidekickAssignMode.SidekickAndRecruit",
         "SidekickAssignMode.Sidekick",
         "SidekickAssignMode.Recruit",
+        "SidekickAssignMode.VoteRecruit"
     };
 
 
@@ -61,7 +62,7 @@ public static class Jackal
         JackalCanKillSidekick = BooleanOptionItem.Create(Id + 15, "JackalCanKillSidekick", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Jackal]);
         CanRecruitSidekick = BooleanOptionItem.Create(Id + 30, "JackalCanRecruitSidekick", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Jackal]);
         SidekickAssignMode = StringOptionItem.Create(Id + 32, "SidekickAssignMode", sidekickAssignMode, 1, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
-                .SetHidden(true);
+                .SetHidden(false);
         SidekickRecruitLimitOpt = IntegerOptionItem.Create(Id + 31, "JackalSidekickRecruitLimit", new(0, 15, 1), 1, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
                 .SetValueFormat(OptionFormat.Times);
         KillCooldownSK = FloatOptionItem.Create(Id + 20, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
@@ -73,7 +74,7 @@ public static class Jackal
       //  SidekickKnowOtherSidekickRole = BooleanOptionItem.Create(6050590, "SidekickKnowOtherSidekickRole", false, TabGroup.NeutralRoles, false).SetParent(SidekickKnowOtherSidekick);
         SidekickCanKillSidekick = BooleanOptionItem.Create(Id + 24, "SidekickCanKillSidekick", false, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick);
         SidekickCountMode = StringOptionItem.Create(Id + 25, "SidekickCountMode", sidekickCountMode, 0, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
-            .SetHidden(true);
+            .SetHidden(false);
      //   SidekickCanWinWithOriginalTeam = BooleanOptionItem.Create(6050795, "SidekickCanWinWithOriginalTeam", false, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick);
     }
     public static void Init()
@@ -144,6 +145,7 @@ public static class Jackal
     {
         if (target.Is(CustomRoles.Pestilence)) return true;
         if (target.Is(CustomRoles.Jackal)) return true;
+        if (SidekickAssignMode.GetValue() == 3) return true;
 
         if (!CanRecruitSidekick.GetBool() || RecruitLimit[killer.PlayerId] < 1) return false;
         
@@ -210,6 +212,31 @@ public static class Jackal
         //killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("GangsterRecruitmentFailure")));
         Logger.Info($"{killer.GetNameWithRole()} : 剩余{RecruitLimit[killer.PlayerId]}次招募机会", "Jackal");
         return false;
+    }
+
+    public static void OnVote(PlayerControl player, PlayerControl target)
+    {
+        if (SidekickAssignMode.GetValue() != 3) return;
+        if (!CanRecruitSidekick.GetBool() || RecruitLimit[player.PlayerId] < 1) return;
+        if (player == null || target == null) return;
+
+        Logger.Info($"{player.GetNameWithRole()} : 豺狼投票招募开始", "Jackal");
+        if (!target.Is(CustomRoles.Sidekick) && !target.Is(CustomRoles.Recruit) && !target.Is(CustomRoles.Loyal) && !target.Is(CustomRoles.Admired) && !target.Data.IsDead && !target.GetCustomRole().IsNeutral())
+        {
+            RecruitLimit[player.PlayerId]--;
+            SendRPC(player.PlayerId);
+            target.RpcSetCustomRole(CustomRoles.Recruit);
+            Utils.NotifyRoles();
+            Utils.SendMessage(string.Format(GetString("JackalVoteRecruit"), target.GetRealName()), player.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("JackalVoteMessageTitle")));
+            Utils.SendMessage(string.Format(GetString("JackalVoteRecruitTarget"), player.GetRealName()), target.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("JackalVoteMessageTitle")));
+            Logger.Info("设置职业:" + target?.Data?.PlayerName + " = " + target.GetCustomRole().ToString() + " + " + CustomRoles.Sidekick.ToString(), "Recruit " + CustomRoles.Sidekick.ToString());
+        }
+        else
+        {
+            Utils.SendMessage(string.Format(GetString("JackalVoteFailRecruit"), target.GetRealName()), player.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), GetString("JackalVoteMessageTitle")));
+            Logger.Info($"{player.GetNameWithRole()} : 招募失败", "Jackal");
+        }
+        Logger.Info($"{player.GetNameWithRole()} : 剩余{RecruitLimit[player.PlayerId]}次招募机会", "Jackal");
     }
     public static string GetRecruitLimit(byte playerId) => Utils.ColorString(CanRecruit(playerId) ? Utils.GetRoleColor(CustomRoles.Jackal).ShadeColor(0.25f) : Color.gray, RecruitLimit.TryGetValue(playerId, out var recruitLimit) ? $"({recruitLimit})" : "Invalid");
 
