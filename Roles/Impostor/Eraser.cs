@@ -9,6 +9,7 @@ namespace TOHE.Roles.Impostor;
 internal static class Eraser
 {
     private static readonly int Id = 16800;
+    public static List<byte> playerIdList = new();
     public static bool IsEnable = false;
 
     private static OptionItem EraseLimitOpt;
@@ -27,14 +28,14 @@ internal static class Eraser
     }
     public static void Init()
     {
+        playerIdList = new();
         EraseLimit = new();
-        PlayerToErase = new();
-        didVote = new();
         IsEnable = false;
     }
     public static void Add(byte playerId)
     {
-        EraseLimit.Add(playerId, EraseLimitOpt.GetInt());
+        playerIdList.Add(playerId);
+        EraseLimit.TryAdd(playerId, EraseLimitOpt.GetInt());
         IsEnable = true;
 
         Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 剩余{EraseLimit[playerId]}次", "Eraser");
@@ -43,27 +44,27 @@ internal static class Eraser
     {
         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetEraseLimit, SendOption.Reliable, -1);
         writer.Write(playerId);
+        writer.Write(EraseLimit[playerId]);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
     }
     public static void ReceiveRPC(MessageReader reader)
     {
-        byte playerId = reader.ReadByte();
-
-        EraseLimit[playerId]--;
+        byte PlayerId = reader.ReadByte();
+        int Limit = reader.ReadInt32();
+        if (EraseLimit.ContainsKey(PlayerId))
+            EraseLimit[PlayerId] = Limit;
+        else
+            EraseLimit.Add(PlayerId, 0);
     }
     public static string GetProgressText(byte playerId) => Utils.ColorString(EraseLimit[playerId] > 0 ? Utils.GetRoleColor(CustomRoles.Eraser) : Color.gray, EraseLimit.TryGetValue(playerId, out var x) ? $"({x})" : "Invalid");
 
     public static void OnVote(PlayerControl player, PlayerControl target)
     {
-        if (!IsEnable) return;
         if (player == null || target == null) return;
-        if (target.Is(CustomRoles.Eraser)) return;
-        if (EraseLimit[player.PlayerId] <= 0) return;
-
         if (didVote.Contains(player.PlayerId)) return;
         didVote.Add(player.PlayerId);
 
-        Logger.Info($"{player.GetCustomRole()} votes for {target.GetCustomRole()}", "Vote Eraser");
+        if (EraseLimit[player.PlayerId] < 1) return;
 
         if (target.PlayerId == player.PlayerId)
         {
@@ -71,10 +72,9 @@ internal static class Eraser
             return;
         }
 
-        var targetRole = target.GetCustomRole();
-        if (targetRole.IsTasklessCrewmate() || targetRole.IsNeutral() || targetRole.IsCoven())
+        if (target.GetCustomRole().IsNeutral())
         {
-            Utils.SendMessage(string.Format(GetString("EraserEraseBaseImpostorOrNeutralRoleNotice"), target.GetRealName()), player.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Eraser), GetString("EraserEraseMsgTitle")));
+            Utils.SendMessage(string.Format(GetString("EraserEraseNeutralNotice"), target.GetRealName()), player.PlayerId, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Eraser), GetString("EraserEraseMsgTitle")));
             return;
         }
 
@@ -101,7 +101,7 @@ internal static class Eraser
         {
             var player = Utils.GetPlayerById(pc);
             if (player == null) continue;
-            player.RpcSetCustomRole(CustomRolesHelper.GetErasedRole(player.GetCustomRole().GetRoleTypes(), player.GetCustomRole()));
+            player.RpcSetCustomRole(CustomRolesHelper.GetErasedRole(player.GetCustomRole()));
             NameNotifyManager.Notify(player, GetString("LostRoleByEraser"));
             Logger.Info($"{player.GetNameWithRole()} 被擦除了", "Eraser");
         }
