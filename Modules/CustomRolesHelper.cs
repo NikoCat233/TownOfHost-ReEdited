@@ -1110,6 +1110,7 @@ static class CustomRolesHelper
                 if (pc.Is(CustomRoles.Lovers)
                     || pc.Is(CustomRoles.FFF)
                     || pc.Is(CustomRoles.GuardianAngelTOHE)
+                    || (pc.Is(CustomRoles.God) && Options.KnowNtrRole.GetBool())
                     || pc.Is(CustomRoles.RuthlessRomantic)
                     || pc.Is(CustomRoles.Romantic)
                     || pc.Is(CustomRoles.VengefulRomantic))

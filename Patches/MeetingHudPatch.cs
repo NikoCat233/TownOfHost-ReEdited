@@ -850,7 +850,7 @@ class MeetingHudStartPatch
         {
             var pc = Utils.GetPlayerById(pva.TargetPlayerId);
             if (pc == null) continue;
-            var RoleTextData = Utils.GetRoleText(PlayerControl.LocalPlayer.PlayerId, pc.PlayerId);
+            var RoleTextData = Utils.GetRoleText(PlayerControl.LocalPlayer.PlayerId, pc.PlayerId, !ExtendedPlayerControl.KnowRoleAddonsTarget(PlayerControl.LocalPlayer, pc));
             var roleTextMeeting = UnityEngine.Object.Instantiate(pva.NameText);
             roleTextMeeting.transform.SetParent(pva.NameText.transform);
             roleTextMeeting.transform.localPosition = new Vector3(0f, -0.18f, 0f);
@@ -1116,8 +1116,6 @@ class MeetingHudStartPatch
                     break;
             }
 
-            bool isLover = false;
-
             foreach (var SeerSubRole in seer.GetCustomSubRoles())
             {
                 switch (SeerSubRole)
@@ -1125,36 +1123,34 @@ class MeetingHudStartPatch
                     case CustomRoles.Guesser:
                         if (!seer.Data.IsDead && !target.Data.IsDead)
                             pva.NameText.text = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Guesser), target.PlayerId.ToString()) + " " + pva.NameText.text;
-                        break;
+                        break;         
                 }
             }
 
-            foreach (var TargetSubRole in target.GetCustomSubRoles())
-            {
-                switch (TargetSubRole)
-                {
-                    case CustomRoles.Lovers:
-                        if (seer.Is(CustomRoles.Lovers) || seer.Data.IsDead)
-                        {
-                            sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lovers), "♥"));
-                            isLover = true;
-                        }
-                        break;
-                     /*     case CustomRoles.Sidekick:
-                          if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
-                          {
-                              sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
-                          sb.Append(Snitch.GetWarningMark(seer, target));
-                          }
-                          break; */
-                }
-            }
-            //add checks for both seer and target's subrole, maybe one day we can use them...
+            //foreach (var TargetSubRole in target.GetCustomSubRoles())
+            //{
+            //    switch (TargetSubRole)
+            //    {
+            //        //case CustomRoles.Lovers:
+            //        //case CustomRoles.Ntr:
+            //            //if (ExtendedPlayerControl.CanSeeLoverMark(seer, target))
+            //            //{
+            //                    //sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lovers), "♥"));
+            //            //}
+            //            //break;
+            //         /*     case CustomRoles.Sidekick:
+            //              if (seer.Is(CustomRoles.Sidekick) && target.Is(CustomRoles.Sidekick) && Options.SidekickKnowOtherSidekick.GetBool())
+            //              {
+            //                  sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jackal), " ♥")); //変更対象にSnitchマークをつける
+            //              sb.Append(Snitch.GetWarningMark(seer, target));
+            //              }
+            //              break; */
+            //    }
+            //}
+            
+            // Currenyly we are not using target sub role =(
 
-            //海王相关显示
-            if ((seer.Is(CustomRoles.Ntr) || target.Is(CustomRoles.Ntr)) && !seer.Data.IsDead && !isLover)
-                sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lovers), "♥"));
-            else if (seer == target && CustomRolesHelper.RoleExist(CustomRoles.Ntr) && !isLover)
+            if (ExtendedPlayerControl.CanSeeLoverMark(seer, target))
                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lovers), "♥"));
 
             //呪われている場合

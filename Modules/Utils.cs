@@ -323,7 +323,7 @@ public static class Utils
         if (!Main.roleColors.TryGetValue(role, out var hexColor)) hexColor = "#ffffff";
         return hexColor;
     }
-    public static (string, Color) GetRoleText(byte seerId, byte targetId, bool pure = false)
+    public static (string, Color) GetRoleText(byte seerId, byte targetId, bool pure = true)
     {
         string RoleText = "Invalid Role";
         Color RoleColor;
@@ -334,7 +334,9 @@ public static class Utils
         var targetMainRole = Main.PlayerStates[targetId].MainRole;
         var targetSubRoles = Main.PlayerStates[targetId].SubRoles;
 
-        var self = seerId == targetId || Main.PlayerStates[seerId].IsDead;
+        //var self = seerId == targetId || Main.PlayerStates[seerId].IsDead; 
+        //getdisplayroletext always make bool self true, this will cause more bugs.
+        //We use bool pure to decide show addons & let other functions to check seerid = targetid
 
         RoleText = GetRoleName(targetMainRole);
         RoleColor = GetRoleColor(targetMainRole);
@@ -342,7 +344,7 @@ public static class Utils
         if (LastImpostor.currentId == targetId)
             RoleText = GetRoleString("Last-") + RoleText;
 
-        if (Options.NameDisplayAddons.GetBool() && !pure && self)
+        if (Options.NameDisplayAddons.GetBool() && !pure) //Removed self
         {     
             if (Options.AddBracketsToAddons.GetBool())       
             {
@@ -1788,9 +1790,9 @@ public static class Utils
             SelfMark.Clear();
 
 
-        // ====== Add SelfMark for seer ======
+            // ====== Add SelfMark for seer ======
 
-            if (seer.Is(CustomRoles.Lovers) || CustomRoles.Ntr.RoleExist())
+            if (ExtendedPlayerControl.CanSeeLoverMark(seer, seer))
                 SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Lovers), "♥"));
 
             if (seer.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
@@ -2084,20 +2086,8 @@ public static class Utils
                     if (Deathpact.IsEnable)
                         TargetMark.Append(Deathpact.GetDeathpactMark(seer, target));
 
-
-                    if (seer.Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers))
-                    {
-                        TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
-                    else if (seer.Data.IsDead && !seer.Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers))
-                    {
-                        TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
-                    else if (target.Is(CustomRoles.Ntr) || seer.Is(CustomRoles.Ntr))
-                    {
-                        TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
-
+                    if (ExtendedPlayerControl.CanSeeLoverMark(seer, target))
+                        TargetMark.Append(ColorString(GetRoleColor(CustomRoles.Lovers), "♥"));
 
                     if (seer.Is(CustomRoles.Medic) && (Medic.WhoCanSeeProtect.GetInt() is 0 or 1) && (Medic.InProtect(target.PlayerId) || Medic.TempMarkProtected == target.PlayerId))
                     {
@@ -2160,8 +2150,7 @@ public static class Utils
                 // ====== Seer know target role ======
 
                     string TargetRoleText = ExtendedPlayerControl.KnowRoleTarget(seer, target)
-                            ? $"<size={fontSize}>{target.GetDisplayRoleName(seer.PlayerId != target.PlayerId && !seer.Data.IsDead)}{GetProgressText(target)}</size>\r\n" : "";
-
+                            ? $"<size={fontSize}>{target.GetDisplayRoleName(!ExtendedPlayerControl.KnowRoleAddonsTarget(seer, target))}{GetProgressText(target)}</size>\r\n" : "";
 
                     if (!seer.Data.IsDead && seer.IsRevealedPlayer(target) && target.Is(CustomRoles.Trickster))
                     {

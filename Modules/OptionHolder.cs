@@ -235,6 +235,8 @@ public static class Options
     public static OptionItem HideJesterVote;
     public static OptionItem LegacyMafia;
     public static OptionItem NotifyGodAlive;
+    public static OptionItem GodKnowAddons;
+    public static OptionItem KnowNtrRole;
     public static OptionItem MarioVentNumWin;
     public static OptionItem MarioVentCD;
     public static OptionItem VeteranSkillCooldown;
@@ -414,6 +416,7 @@ public static class Options
     public static OptionItem ImpCanBeGravestone;
     public static OptionItem CrewCanBeGravestone;
     public static OptionItem NeutralCanBeGravestone;
+    public static OptionItem KnowGravestoneAddons;
 
     // Mare Add-on
     public static OptionItem MareKillCD;
@@ -890,6 +893,7 @@ public static class Options
     public static OptionItem ButtonBarryButtons;
     public static OptionItem LoverSpawnChances;
     public static OptionItem LoverKnowRoles;
+    public static OptionItem LoverKnowAddons;
     public static OptionItem LoverSuicide;
     public static OptionItem ImpCanBeEgoist;
     public static OptionItem ImpEgoistVisibalToAllies;
@@ -1812,8 +1816,7 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.DoubleShot]);
         NeutralCanBeDoubleShot = BooleanOptionItem.Create(13912, "NeutralCanBeDoubleShot", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.DoubleShot]);
-
-
+			
         SetupAdtRoleOptions(14100, CustomRoles.Lazy, canSetNum: true);
         TasklessCrewCanBeLazy = BooleanOptionItem.Create(14110, "TasklessCrewCanBeLazy", false, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Lazy]);
@@ -2019,6 +2022,8 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.Gravestone]);
         NeutralCanBeGravestone = BooleanOptionItem.Create(14012, "NeutralCanBeGravestone", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Gravestone]);
+        KnowGravestoneAddons = BooleanOptionItem.Create(14013, "KnowGravestoneAddons", true, TabGroup.Addons, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.Gravestone]);
         SetupAdtRoleOptions(19100, CustomRoles.Guesser, canSetNum: true, tab: TabGroup.Addons);
         ImpCanBeGuesser = BooleanOptionItem.Create(19110, "ImpCanBeGuesser", true, TabGroup.Addons, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.Guesser]);
@@ -2182,18 +2187,21 @@ public static class Options
             .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
         GodCanGuess = BooleanOptionItem.Create(18211, "CanGuess", false, TabGroup.OtherRoles, false)
             .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
+        GodKnowAddons = BooleanOptionItem.Create(18212, "GodKnowAddons", true, TabGroup.OtherRoles, false)
+            .SetParent(CustomRoleSpawnChances[CustomRoles.God]);
         Spiritcaller.SetupCustomOption();
 
         // 副职
         TextOptionItem.Create(100021, "OtherRoles.Addons", TabGroup.OtherRoles)
             .SetGameMode(CustomGameMode.Standard)
             .SetColor(new Color32(255, 154, 206, byte.MaxValue));
-
+      
     //    SetupAdtRoleOptions(18600, CustomRoles.Ntr, tab: TabGroup.OtherRoles);
    /*     SetupAdtRoleOptions(18700, CustomRoles.Flashman, canSetNum: true, tab: TabGroup.OtherRoles);
         FlashmanSpeed = FloatOptionItem.Create(6050335, "FlashmanSpeed", new(0.25f, 5f, 0.25f), 2.5f, TabGroup.OtherRoles, false)
         .SetParent(CustomRoleSpawnChances[CustomRoles.Flashman])
             .SetValueFormat(OptionFormat.Multiplier); */
+
         SetupAdtRoleOptions(18800, CustomRoles.Youtuber, canSetNum: true, tab: TabGroup.OtherRoles);
     /*    SetupAdtRoleOptions(19000, CustomRoles.Sidekick, canSetNum: true, tab: TabGroup.OtherRoles);
         SidekickCountMode = StringOptionItem.Create(19010, "SidekickCountMode", sidekickCountMode, 0, TabGroup.OtherRoles, false)
@@ -3012,6 +3020,10 @@ public static class Options
 
         LoverKnowRoles = BooleanOptionItem.Create(id + 4, "LoverKnowRoles", true, TabGroup.Addons, false)
         .SetParent(spawnOption)
+            .SetGameMode(customGameMode);
+
+        LoverKnowAddons = BooleanOptionItem.Create(id + 8, "LoverKnowAddons", true, TabGroup.Addons, false)
+        .SetParent(LoverKnowRoles)
             .SetGameMode(customGameMode);
 
         LoverSuicide = BooleanOptionItem.Create(id + 3, "LoverSuicide", true, TabGroup.Addons, false)
