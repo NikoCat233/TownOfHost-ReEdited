@@ -36,10 +36,8 @@ public class Main : BasePlugin
     public static readonly string MainMenuText = " ";
 
     public const string PluginGuid = "com.karped1em.townofhostedited";
-
     public const string PluginVersion = "3.0.0";
     public const string PluginDisplayVersion = "3.0.0";
-
     public static readonly string SupportedVersionAU = "2023.7.11";
     public const bool Canary = false;
 
@@ -520,9 +518,7 @@ public class Main : BasePlugin
                 {CustomRoles.Sleuth, "#803333" },
                 {CustomRoles.Clumsy, "#ff1919"},
                 {CustomRoles.Nimble, "#FFFAA6"},
-
                 {CustomRoles.Repairman, "#3333ff"},
-
 
           //      {CustomRoles.Cyber, "#ee4a55" },
 
@@ -862,9 +858,7 @@ public enum CustomRoles
     Sleuth,
     Clumsy,
     Nimble,
-
     Repairman,
-
   //  Cyber,
     // QuickFix
 }
