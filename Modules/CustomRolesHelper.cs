@@ -145,56 +145,19 @@ static class CustomRolesHelper
                 _ => role.IsImpostor() ? CustomRoles.Impostor : CustomRoles.Crewmate,
             };
     }
-
-    public static CustomRoles GetErasedRole(this CustomRoles role) // Erased RoleBase - Crewmate or Engineer or Scientist
+    // Erased RoleType - Impostor, Shapeshifter, Crewmate, Engineer, Scientist (Not Neutrals/Covens)
+    public static CustomRoles GetErasedRole(RoleTypes roleType, CustomRoles role)
     {
         return role.IsVanilla()
             ? role
-            : role switch
+            : roleType switch
             {
-                CustomRoles.Tracker => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mayor => Options.MayorHasPortableButton.GetBool() ? CustomRoles.EngineerTOHE : CustomRoles.CrewmateTOHE,
-                CustomRoles.Monitor => Monitor.CanVent.GetBool() ? CustomRoles.EngineerTOHE : CustomRoles.CrewmateTOHE,
-                CustomRoles.Observer => CustomRoles.CrewmateTOHE,
-                CustomRoles.DovesOfNeace => CustomRoles.EngineerTOHE,
-                CustomRoles.Judge => CustomRoles.CrewmateTOHE,
-                CustomRoles.Cleanser => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mortician => CustomRoles.CrewmateTOHE,
-                CustomRoles.Mediumshiper => CustomRoles.CrewmateTOHE,
-                CustomRoles.Bodyguard => CustomRoles.CrewmateTOHE,
-                CustomRoles.ParityCop => CustomRoles.CrewmateTOHE,
-                CustomRoles.Lookout => CustomRoles.CrewmateTOHE,
-                CustomRoles.Grenadier => CustomRoles.EngineerTOHE,
-                CustomRoles.Lighter => CustomRoles.EngineerTOHE,
-                CustomRoles.Transporter => CustomRoles.CrewmateTOHE,
-                CustomRoles.Veteran => CustomRoles.CrewmateTOHE,
-                CustomRoles.GuardianAngelTOHE => CustomRoles.GuardianAngel,
-                CustomRoles.Detective => CustomRoles.CrewmateTOHE,
-                CustomRoles.NiceGuesser => CustomRoles.CrewmateTOHE,
-                CustomRoles.Luckey => CustomRoles.CrewmateTOHE,
-                CustomRoles.CyberStar => CustomRoles.CrewmateTOHE,
-                CustomRoles.TaskManager => CustomRoles.CrewmateTOHE,
-                CustomRoles.Psychic => CustomRoles.CrewmateTOHE,
-                CustomRoles.Needy => CustomRoles.CrewmateTOHE,
-                CustomRoles.SuperStar => CustomRoles.CrewmateTOHE,
-                CustomRoles.Paranoia => CustomRoles.EngineerTOHE,
-                CustomRoles.EngineerTOHE => CustomRoles.EngineerTOHE,
-                CustomRoles.TimeMaster => CustomRoles.EngineerTOHE,
-                CustomRoles.CrewmateTOHE => CustomRoles.CrewmateTOHE,
-                CustomRoles.Doctor => CustomRoles.ScientistTOHE,
-                CustomRoles.ScientistTOHE => CustomRoles.ScientistTOHE,
-                CustomRoles.Tracefinder => CustomRoles.ScientistTOHE,
-                CustomRoles.SpeedBooster => CustomRoles.CrewmateTOHE,
-                CustomRoles.Dictator => CustomRoles.CrewmateTOHE,
-                CustomRoles.Snitch => CustomRoles.CrewmateTOHE,
-                CustomRoles.Marshall => CustomRoles.CrewmateTOHE,
-                CustomRoles.SabotageMaster => CustomRoles.EngineerTOHE,
-                CustomRoles.Retributionist => CustomRoles.Crewmate,
-                CustomRoles.Guardian => CustomRoles.CrewmateTOHE,
-                CustomRoles.Addict => CustomRoles.EngineerTOHE,
-                CustomRoles.Oracle => CustomRoles.CrewmateTOHE,
-                CustomRoles.Chameleon => CustomRoles.EngineerTOHE,
-                _ => role.IsImpostor() ? CustomRoles.ImpostorTOHE : CustomRoles.CrewmateTOHE,
+                RoleTypes.Crewmate => CustomRoles.CrewmateTOHE,
+                RoleTypes.Scientist => CustomRoles.ScientistTOHE,
+                RoleTypes.Engineer => CustomRoles.EngineerTOHE,
+                RoleTypes.Impostor => CustomRoles.ImpostorTOHE,
+                RoleTypes.Shapeshifter => CustomRoles.ShapeshifterTOHE,
+                _ => role,
             };
     }
 
@@ -291,7 +254,6 @@ static class CustomRolesHelper
             CustomRoles.VoidBallot or
             CustomRoles.Aware or
             CustomRoles.Swift or
-            CustomRoles.Cleansed or
             CustomRoles.Gravestone or
             CustomRoles.Trapper or
             CustomRoles.Mare or
@@ -323,7 +285,7 @@ static class CustomRolesHelper
             CustomRoles.Infected or
             CustomRoles.Onbound or
             CustomRoles.Lazy or
-       //     CustomRoles.Reflective or
+            //     CustomRoles.Reflective or
             CustomRoles.Rascal or
             CustomRoles.Contagious or
             CustomRoles.Guesser or
@@ -335,6 +297,7 @@ static class CustomRolesHelper
             CustomRoles.DoubleShot or
             CustomRoles.Ghoul or
             CustomRoles.EvilSpirit;
+            //CustomRoles.Fategiver;
     }
     public static bool IsAmneMaverick(this CustomRoles role) // ROLE ASSIGNING, NOT NEUTRAL TYPE
     {
@@ -883,6 +846,8 @@ static class CustomRolesHelper
             CustomRoles.Monarch or
             CustomRoles.Farseer or
             CustomRoles.SwordsMan or
+            CustomRoles.Admirer or
+            CustomRoles.Reverie or
             CustomRoles.Deputy;
     }
     public static bool IsTaskBasedCrewmate(this CustomRoles role)
@@ -1060,12 +1025,9 @@ static class CustomRolesHelper
                 break;
 
             case CustomRoles.VoidBallot:
-                if (pc.Is(CustomRoles.Mayor)
-                    || pc.Is(CustomRoles.Vindicator) 
-                    || pc.Is(CustomRoles.TicketsStealer)
-                    || pc.Is(CustomRoles.Pickpocket) 
-                    || pc.Is(CustomRoles.Glitch)
-                    || pc.Is(CustomRoles.Dictator))
+                if (pc.Is(CustomRoles.Mayor) /*|| pc.Is(CustomRoles.Fategiver)*/
+                    || pc.Is(CustomRoles.Vindicator) || pc.Is(CustomRoles.TicketsStealer)
+                    || pc.Is(CustomRoles.Pickpocket) || pc.Is(CustomRoles.Glitch))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeVoidBallot.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeVoidBallot.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeVoidBallot.GetBool()))
                     return false;
@@ -1324,6 +1286,7 @@ static class CustomRolesHelper
             case CustomRoles.DualPersonality:
                 if (pc.Is(CustomRoles.Dictator)
                     || pc.Is(CustomRoles.Madmate)
+                    /*|| pc.Is(CustomRoles.Fategiver)*/
                     || pc.Is(CustomRoles.GuardianAngelTOHE))
                     return false;
                 if (!pc.GetCustomRole().IsImpostor() && !pc.GetCustomRole().IsCrewmate())
@@ -1335,8 +1298,7 @@ static class CustomRolesHelper
                 break;
 
             case CustomRoles.Loyal:
-                if (pc.Is(CustomRoles.Madmate) 
-                    || pc.Is(CustomRoles.GuardianAngelTOHE))
+                if (pc.Is(CustomRoles.Madmate) || pc.Is(CustomRoles.GuardianAngelTOHE))
                     return false;
                 if (!pc.GetCustomRole().IsImpostor() && !pc.GetCustomRole().IsCrewmate())
                     return false;
@@ -1376,21 +1338,27 @@ static class CustomRolesHelper
                 break;
 
             case CustomRoles.Fool:
-                if (pc.Is(CustomRoles.SabotageMaster) 
-                    || pc.Is(CustomRoles.GuardianAngelTOHE))
+                if (pc.Is(CustomRoles.SabotageMaster) || pc.Is(CustomRoles.GuardianAngelTOHE))
                     return false;
                 if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanBeFool.GetBool()) || (pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeFool.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpCanBeFool.GetBool()))
                     return false;
                 break;
 
             case CustomRoles.Sidekick:
-                if (pc.Is(CustomRoles.Jackal) 
-                    || pc.Is(CustomRoles.Madmate) 
-                    || pc.Is(CustomRoles.Egoist))
+                if (pc.Is(CustomRoles.Jackal) || pc.Is(CustomRoles.Madmate) || pc.Is(CustomRoles.Egoist))
                     return false;
                 if ((pc.GetCustomRole().IsNeutral() && !Options.NeutralCanBeSidekick.GetBool()) || (pc.GetCustomRole().IsCrewmate() && !Options.CrewmateCanBeSidekick.GetBool()) || (pc.GetCustomRole().IsImpostor() && !Options.ImpostorCanBeSidekick.GetBool()))
                     return false;
                 break;
+
+            //case CustomRoles.Fategiver:
+            //    if (pc.Is(CustomRoles.VoidBallot) || pc.Is(CustomRoles.DualPersonality)) return false;
+            //    if (pc.Is(CustomRoles.Glitch) || pc.Is(CustomRoles.Dictator)) return false;
+            //    if ((pc.GetCustomRole().IsCrewmate() && !Options.CrewCanbeFategiver.GetBool()) ||
+            //        (pc.GetCustomRole().IsImpostor() && !Options.ImpCanbeFategiver.GetBool()) ||
+            //        ((pc.GetCustomRole().IsNeutral() || pc.GetCustomRole().IsCoven()) && !Options.NeutralsCanbeFategiver.GetBool())) return false;
+            //    break;
+
         }
 
         // Code not used:

@@ -31,7 +31,7 @@ public static class Repairman
         SkillLimit = IntegerOptionItem.Create(Id + 10, "RepairmanSkillLimit", new(0, 100, 1), 50, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman])
             .SetValueFormat(OptionFormat.Times);
         FixesDoors = BooleanOptionItem.Create(Id + 11, "SabotageMasterFixesDoors", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
-        FixesReactors = BooleanOptionItem.Create(Id + 12, "SabotageMasternFixesReactors", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
+        FixesReactors = BooleanOptionItem.Create(Id + 12, "SabotageMasterFixesReactors", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
         FixesOxygens = BooleanOptionItem.Create(Id + 13, "SabotageMasterFixesOxygens", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
         FixesComms = BooleanOptionItem.Create(Id + 14, "SabotageMasterFixesCommunications", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
         FixesElectrical = BooleanOptionItem.Create(Id + 15, "SabotageMasterFixesElectrical", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Repairman]);
