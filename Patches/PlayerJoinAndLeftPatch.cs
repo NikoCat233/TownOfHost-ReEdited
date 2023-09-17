@@ -3,7 +3,7 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
-using Steamworks;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TOHE.Modules;
@@ -19,7 +19,7 @@ class OnGameJoinedPatch
     public static void Postfix(AmongUsClient __instance)
     {
         while (!Options.IsLoaded) System.Threading.Tasks.Task.Delay(1);
-        Logger.Info($"{__instance.GameId} 加入房间", "OnGameJoined");
+        Logger.Info($"{__instance.GameId} Joining room", "OnGameJoined");
         Main.playerVersion = new Dictionary<byte, PlayerVersion>();
         if (!Main.VersionCheat.Value) RPC.RpcVersionCheck();
         SoundManager.Instance.ChangeAmbienceVolume(DataManager.Settings.Audio.AmbienceVolume);
@@ -31,7 +31,7 @@ class OnGameJoinedPatch
         GameStates.InGame = false;
         ErrorText.Instance.Clear();
 
-        if (AmongUsClient.Instance.AmHost) //以下、ホストのみ実行
+        if (AmongUsClient.Instance.AmHost) // Execute the following only on the host
         {
 
             GameStartManagerPatch.GameStartManagerUpdatePatch.exitTimer = -1;
@@ -59,31 +59,25 @@ class OnGameJoinedPatch
         }
     }
 }
-/*[HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.DisconnectInternal))]
+[HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.DisconnectInternal))]
 class DisconnectInternalPatch
 {
     public static void Prefix(InnerNetClient __instance, DisconnectReasons reason, string stringReason)
     {
-        ShowDisconnectPopupPatch.Reason = reason;
-        ShowDisconnectPopupPatch.StringReason = stringReason;
-        Logger.Info($"断开连接(理由:{reason}:{stringReason}，Ping:{__instance.Ping})", "Session");
-        ErrorText.Instance.CheatDetected = false;
-        ErrorText.Instance.SBDetected = false;
-        ErrorText.Instance.Clear();
-        Cloud.StopConnect();
+        Logger.Info($"Disconnect (Reason:{reason}:{stringReason}, ping:{__instance.Ping})", "Reason Disconnect");
     }
-} */
+}
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
 class OnPlayerJoinedPatch
 {
     public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData client)
     {
-        Logger.Info($"{client.PlayerName}(ClientID:{client.Id}/FriendCode:{client.FriendCode}/Platform:{client.PlatformData.Platform}) 加入房间", "Session");
+        Logger.Info($"{client.PlayerName}(ClientID:{client.Id}/FriendCode:{client.FriendCode}/Platform:{client.PlatformData.Platform}) Joining room", "Session");
         if (AmongUsClient.Instance.AmHost && client.FriendCode == "" && Options.KickPlayerFriendCodeNotExist.GetBool())
         {
             AmongUsClient.Instance.KickPlayer(client.Id, false);
             Logger.SendInGame(string.Format(GetString("Message.KickedByNoFriendCode"), client.PlayerName));
-            Logger.Info($"フレンドコードがないプレイヤーを{client?.PlayerName}をキックしました。", "Kick");
+            Logger.Info($"Kicked a player {client?.PlayerName} without a friend code", "Kick");
         }
         Platforms platform = client.PlatformData.Platform;
         if (AmongUsClient.Instance.AmHost && Options.KickOtherPlatformPlayer.GetBool() && platform != Platforms.Unknown)
@@ -103,7 +97,7 @@ class OnPlayerJoinedPatch
         if (DestroyableSingleton<FriendsListManager>.Instance.IsPlayerBlockedUsername(client.FriendCode) && AmongUsClient.Instance.AmHost)
         {
             AmongUsClient.Instance.KickPlayer(client.Id, true);
-            Logger.Info($"ブロック済みのプレイヤー{client?.PlayerName}({client.FriendCode})をBANしました。", "BAN");
+            Logger.Info($"Ban Player ー {client?.PlayerName}({client.FriendCode}) has been banned.", "BAN");
         }
         BanManager.CheckBanPlayer(client);
         BanManager.CheckDenyNamePlayer(client);
@@ -122,97 +116,103 @@ class OnPlayerLeftPatch
 {
     public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData data, [HarmonyArgument(1)] DisconnectReasons reason)
     {
-        //            Logger.info($"RealNames[{data.Character.PlayerId}]を削除");
-        //            main.RealNames.Remove(data.Character.PlayerId);
-        if (GameStates.IsInGame)
+        try
         {
-            if (data.Character.Is(CustomRoles.Lovers) && !data.Character.Data.IsDead)
-                foreach (var lovers in Main.LoversPlayers.ToArray())
-                {
-                    Main.isLoversDead = true;
-                    Main.LoversPlayers.Remove(lovers);
-                    Main.PlayerStates[lovers.PlayerId].RemoveSubRole(CustomRoles.Lovers);
-                }
-            if (data.Character.Is(CustomRoles.Executioner) && Executioner.Target.ContainsKey(data.Character.PlayerId))
-                Executioner.ChangeRole(data.Character);
-            if (Executioner.Target.ContainsValue(data.Character.PlayerId))
-                Executioner.ChangeRoleByTarget(data.Character);
-            if (data.Character.Is(CustomRoles.Lawyer) && Lawyer.Target.ContainsKey(data.Character.PlayerId))
-                Lawyer.ChangeRole(data.Character);
-            if (Lawyer.Target.ContainsValue(data.Character.PlayerId))
-                Lawyer.ChangeRoleByTarget(data.Character);
-            if (data.Character.Is(CustomRoles.Pelican))
-                Pelican.OnPelicanDied(data.Character.PlayerId);
-            if (Spiritualist.SpiritualistTarget == data.Character.PlayerId)
-                Spiritualist.RemoveTarget();
-            if (Main.PlayerStates[data.Character.PlayerId].deathReason == PlayerState.DeathReason.etc) //死因が設定されていなかったら
-            {
-                Main.PlayerStates[data.Character.PlayerId].deathReason = PlayerState.DeathReason.Disconnected;
-                Main.PlayerStates[data.Character.PlayerId].SetDead();
-            }
-            AntiBlackout.OnDisconnect(data.Character.Data);
-            PlayerGameOptionsSender.RemoveSender(data.Character);
-        }
-
-        if (Main.HostClientId == __instance.ClientId)
-        {
-            var clientId = -1;
-            var player = PlayerControl.LocalPlayer;
-            var title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            var name = player?.Data?.PlayerName;
-            var msg = "";
             if (GameStates.IsInGame)
             {
-                Utils.ErrorEnd("房主退出游戏");
-                msg = GetString("Message.HostLeftGameInGame");
+                if (data.Character.Is(CustomRoles.Lovers) && !data.Character.Data.IsDead)
+                    foreach (var lovers in Main.LoversPlayers.ToArray())
+                    {
+                        Main.isLoversDead = true;
+                        Main.LoversPlayers.Remove(lovers);
+                        Main.PlayerStates[lovers.PlayerId].RemoveSubRole(CustomRoles.Lovers);
+                    }
+                if (data.Character.Is(CustomRoles.Executioner) && Executioner.Target.ContainsKey(data.Character.PlayerId))
+                    Executioner.ChangeRole(data.Character);
+                if (Executioner.Target.ContainsValue(data.Character.PlayerId))
+                    Executioner.ChangeRoleByTarget(data.Character);
+                if (data.Character.Is(CustomRoles.Lawyer) && Lawyer.Target.ContainsKey(data.Character.PlayerId))
+                    Lawyer.ChangeRole(data.Character);
+                if (Lawyer.Target.ContainsValue(data.Character.PlayerId))
+                    Lawyer.ChangeRoleByTarget(data.Character);
+                if (data.Character.Is(CustomRoles.Pelican))
+                    Pelican.OnPelicanDied(data.Character.PlayerId);
+                if (Spiritualist.SpiritualistTarget == data.Character.PlayerId)
+                    Spiritualist.RemoveTarget();
+                if (Main.PlayerStates[data.Character.PlayerId].deathReason == PlayerState.DeathReason.etc) // If no cause of death was established
+                {
+                    Main.PlayerStates[data.Character.PlayerId].deathReason = PlayerState.DeathReason.Disconnected;
+                    Main.PlayerStates[data.Character.PlayerId].SetDead();
+                }
+                AntiBlackout.OnDisconnect(data.Character.Data);
+                PlayerGameOptionsSender.RemoveSender(data.Character);
             }
-            else if (GameStates.IsLobby)
-                msg = GetString("Message.HostLeftGameInLobby");
 
-            player.SetName(title);
-            DestroyableSingleton<HudManager>.Instance.Chat.AddChat(player, msg);
-            player.SetName(name);
-
-            var writer = CustomRpcSender.Create("MessagesToSend", SendOption.None);
-            writer.StartMessage(clientId);
-            writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
-                .Write(title)
-                .EndRpc();
-            writer.StartRpc(player.NetId, (byte)RpcCalls.SendChat)
-                .Write(msg)
-                .EndRpc();
-            writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
-                .Write(player.Data.PlayerName)
-                .EndRpc();
-            writer.EndMessage();
-            writer.SendMessage();
-        }
-
-        // 附加描述掉线原因
-        switch (reason)
-        {
-            case DisconnectReasons.Hacking:
-                Logger.SendInGame(string.Format(GetString("PlayerLeftByAU-Anticheat"), data?.PlayerName));
-                break;
-            case DisconnectReasons.Error:
-            Logger.SendInGame(string.Format(GetString("PlayerLeftByError"), data?.PlayerName));
-            _ = new LateTask(() =>
+            if (Main.HostClientId == __instance.ClientId)
             {
-            CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Error);
-            GameManager.Instance.enabled = false;
-            GameManager.Instance.RpcEndGame(GameOverReason.ImpostorDisconnect, false);
-            }, 3f, "Disconnect Error Auto-end");
+                var clientId = -1;
+                var player = PlayerControl.LocalPlayer;
+                var title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
+                var name = player?.Data?.PlayerName;
+                var msg = "";
+                if (GameStates.IsInGame)
+                {
+                    Utils.ErrorEnd("Host exits the game");
+                    msg = GetString("Message.HostLeftGameInGame");
+                }
+                else if (GameStates.IsLobby)
+                    msg = GetString("Message.HostLeftGameInLobby");
 
-            break;
+                player.SetName(title);
+                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(player, msg);
+                player.SetName(name);
+
+                var writer = CustomRpcSender.Create("MessagesToSend", SendOption.None);
+                writer.StartMessage(clientId);
+                writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                    .Write(title)
+                    .EndRpc();
+                writer.StartRpc(player.NetId, (byte)RpcCalls.SendChat)
+                    .Write(msg)
+                    .EndRpc();
+                writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                    .Write(player.Data.PlayerName)
+                    .EndRpc();
+                writer.EndMessage();
+                writer.SendMessage();
+            }
+
+            // 附加描述掉线原因
+            switch (reason)
+            {
+                case DisconnectReasons.Hacking:
+                    Logger.SendInGame(string.Format(GetString("PlayerLeftByAU-Anticheat"), data?.PlayerName));
+                    break;
+                case DisconnectReasons.Error:
+                    Logger.SendInGame(string.Format(GetString("PlayerLeftByError"), data?.PlayerName));
+                    _ = new LateTask(() =>
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Error);
+                        GameManager.Instance.enabled = false;
+                        GameManager.Instance.RpcEndGame(GameOverReason.ImpostorDisconnect, false);
+                    }, 3f, "Disconnect Error Auto-end");
+
+                    break;
+            }
+
+            Logger.Info($"{data?.PlayerName} - (ClientID:{data?.Id} / FriendCode:{data?.FriendCode} / Platform:{data?.PlatformData.Platform}) Disconnect (Reason:{reason}，Ping:{AmongUsClient.Instance.Ping})", "Session");
+
+            if (AmongUsClient.Instance.AmHost)
+            {
+                Main.SayStartTimes.Remove(__instance.ClientId);
+                Main.SayBanwordsTimes.Remove(__instance.ClientId);
+                Main.playerVersion.Remove(data?.Character?.PlayerId ?? byte.MaxValue);
+            }
         }
-
-        Logger.Info($"{data?.PlayerName}(ClientID:{data?.Id}/FriendCode:{data?.FriendCode}/Platform:{data?.PlatformData.Platform})断开连接(理由:{reason}，Ping:{AmongUsClient.Instance.Ping})", "Session");
-
-        if (AmongUsClient.Instance.AmHost)
+        catch (Exception error)
         {
-            Main.SayStartTimes.Remove(__instance.ClientId);
-            Main.SayBanwordsTimes.Remove(__instance.ClientId);
-            Main.playerVersion.Remove(data?.Character?.PlayerId ?? byte.MaxValue);
+            Logger.Error(error.ToString(), "OnPlayerLeftPatch.Postfix");
+            //Logger.SendInGame("Error: " + error.ToString());
         }
     }
 }
@@ -223,9 +223,9 @@ class CreatePlayerPatch
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
-        Logger.Msg($"创建玩家数据：ID{client.Character.PlayerId}: {client.PlayerName}", "CreatePlayer");
+        Logger.Msg($"Create player data: ID {client.Character.PlayerId}: {client.PlayerName}", "CreatePlayer");
 
-        //规范昵称
+        // Standard nickname
         var name = client.PlayerName;
         if (Options.FormatNameMode.GetInt() == 2 && client.Id != AmongUsClient.Instance.ClientId)
             name = Main.Get_TName_Snacks;
@@ -243,12 +243,12 @@ class CreatePlayerPatch
             _ = new LateTask(() =>
             {
                 if (client.Character == null) return;
-                Logger.Warn($"规范昵称：{client.PlayerName} => {name}", "Name Format");
+                Logger.Warn($"Standard nickname：{client.PlayerName} => {name}", "Name Format");
                 client.Character.RpcSetName(name);
             }, 1f, "Name Format");
         }
 
-        _ = new LateTask(() => { if (client.Character == null || !GameStates.IsLobby) return; OptionItem.SyncAllOptions(client.Id); }, 3f, "Sync All Options For New Player");
+        _ = new LateTask(() => { if (client.Character == null || client == null) return; OptionItem.SyncAllOptions(client.Id); }, 3f, "Sync All Options For New Player");
 
         _ = new LateTask(() =>
         {

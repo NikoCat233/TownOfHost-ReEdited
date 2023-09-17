@@ -177,7 +177,7 @@ class StartPatch
     public static void Postfix()
     {
         Logger.CurrentMethod();
-        Logger.Info("-----------游戏开始-----------", "Phase");
+        Logger.Info("-----------Start of game-----------", "Phase");
 
         Utils.CountAlivePlayers(true);
 

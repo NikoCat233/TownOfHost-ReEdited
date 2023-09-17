@@ -43,9 +43,23 @@ class RandomSpawn
     {
         public virtual void RandomTeleport(PlayerControl player)
         {
-            var location = GetLocation();
-            Logger.Info($"{player.Data.PlayerName}:{location}", "RandomSpawn");
-            player.RpcTeleport(new Vector2 (location.x, location.y));
+            var selectRand = (Options.SpawnRandomLocation.GetBool() && Options.SpawnRandomVents.GetBool()) ? IRandom.Instance.Next(0, 101) 
+                : Options.SpawnRandomLocation.GetBool() ? 50
+                : Options.SpawnRandomVents.GetBool() ? 51 : -1; // -1: Not Random Spawn
+
+            if (selectRand == -1) return;
+
+            if (selectRand >= 0 && selectRand <= 50)
+            {
+                var location = GetLocation();
+                Logger.Info($"{player.Data.PlayerName}:{location}", "Spawn Random Location");
+                player.RpcTeleport(new Vector2(location.x, location.y));
+            }
+            if (selectRand >= 51 && selectRand <= 101)
+            {
+                Logger.Info($"{player.Data.PlayerName}", "Spawn Random Vent");
+                player.RpcRandomVentTeleport();
+            }
         }
         public abstract Vector2 GetLocation();
     }
