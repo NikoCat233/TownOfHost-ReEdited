@@ -1,4 +1,5 @@
 using Hazel;
+using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 
@@ -37,6 +38,9 @@ public static class NameColorManager
         if (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Crewpostor) && Options.AlliesKnowCrewpostor.GetBool()) color = Main.roleColors[CustomRoles.Madmate];
         if (seer.Is(CustomRoles.Madmate) && target.Is(CustomRoles.Madmate) && Options.MadmateKnowWhosMadmate.GetBool()) color = Main.roleColors[CustomRoles.Madmate];
         if (seer.Is(CustomRoles.Gangster) && target.Is(CustomRoles.Madmate)) color = Main.roleColors[CustomRoles.Madmate];
+
+        //СС��Ҳ�ܿɰ�))))
+        if (!seer.GetCustomRole().IsImpostorTeam() && (target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini))) color = Main.roleColors[CustomRoles.Mini];
 
         // Succubus
         if (seer.Is(CustomRoles.Charmed) && target.Is(CustomRoles.Succubus)) color = Main.roleColors[CustomRoles.Succubus];
@@ -176,9 +180,13 @@ public static class NameColorManager
             || (target.Is(CustomRoles.Gravestone) && Main.PlayerStates[target.Data.PlayerId].IsDead)
             || (target.Is(CustomRoles.Mayor) && Options.MayorRevealWhenDoneTasks.GetBool() && target.GetPlayerTaskState().IsTaskFinished)
             || (seer.Is(CustomRoleTypes.Crewmate) && target.Is(CustomRoles.Marshall) && target.GetPlayerTaskState().IsTaskFinished)
-         //   || Mare.KnowTargetRoleColor(target, isMeeting)
             || EvilDiviner.IsShowTargetRole(seer, target)
-            || PotionMaster.IsShowTargetRole(seer, target);
+            || PotionMaster.IsShowTargetRole(seer, target)
+         //   || Mare.KnowTargetRoleColor(target, isMeeting)
+        //    || (target.Is(CustomRoles.NiceMini) && Mini.EveryoneCanKnowMini.GetBool())
+          //  || (target.Is(CustomRoles.EvilMini) && Mini.EveryoneCanKnowMini.GetBool())
+            || (target.Is(CustomRoles.NiceMini) && Mini.EveryoneCanKnowMini.GetBool())
+            || (target.Is(CustomRoles.EvilMini) && Mini.EveryoneCanKnowMini.GetBool());
     }
     public static bool TryGetData(PlayerControl seer, PlayerControl target, out string colorCode)
     {

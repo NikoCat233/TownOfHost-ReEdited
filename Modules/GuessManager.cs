@@ -11,6 +11,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Neutral;
 using TOHE.Roles.AddOns.Common;
 using static TOHE.Translator;
+using TOHE.Roles.Double;
 
 namespace TOHE;
 
@@ -264,6 +265,12 @@ public static class GuessManager
                         else pc.ShowPopUp(GetString("GuessMayor"));
                         return true;
                     }
+                }
+                if (role == CustomRoles.NiceMini && Mini.Age != 18 || target.Is(CustomRoles.NiceMini) && Mini.Age != 18 )
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessMini"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessMini"));
+                    return true;
                 }
                 if (pc.Is(CustomRoles.Terrorist) && !Options.TerroristCanGuess.GetBool())
                 {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TOHE.Roles.Crewmate;
+using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 using UnityEngine;
@@ -50,7 +51,7 @@ class CheckForEndVotingPatch
                     }
                 }
 
-//催眠师催眠
+                //催眠师催眠
 
                 if (pc.Is(CustomRoles.Dictator) && pva.DidVote && pc.PlayerId != pva.VotedFor && pva.VotedFor < 253 && !pc.Data.IsDead)
                 {
@@ -471,6 +472,14 @@ class CheckForEndVotingPatch
                 break;
         }
         var DecidedWinner = false;
+
+        //迷你船员长大前被驱逐抢夺胜利
+    /*    if (crole == CustomRoles.NiceMini && Mini.Age !< 18)
+        {
+            name = string.Format(GetString("ExiledNiceMini"), realName, coloredRole);
+            DecidedWinner = true;
+        } */
+
         //小丑胜利
    /*     if (crole == CustomRoles.Jester)
         {
@@ -1125,6 +1134,14 @@ class MeetingHudStartPatch
             //如果是大明星
             if (target.Is(CustomRoles.SuperStar) && Options.EveryOneKnowSuperStar.GetBool())
                 sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.SuperStar), "★"));
+                
+            //迷你船员
+            if (target.Is(CustomRoles.NiceMini) && Mini.EveryoneCanKnowMini.GetBool())
+                sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), Mini.Age != 18 ? $"({Mini.Age})" : ""));
+
+            //迷你船员
+            if (target.Is(CustomRoles.EvilMini) && Mini.EveryoneCanKnowMini.GetBool())
+                sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), Mini.Age != 18 ? $"({Mini.Age})" : ""));
 
             //球状闪电提示
             if (BallLightning.IsGhost(target))

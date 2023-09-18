@@ -14,6 +14,7 @@ using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 using static TOHE.Translator;
+using TOHE.Roles.Double;
 
 namespace TOHE;
 
@@ -690,17 +691,25 @@ class CheckMurderPatch
             if (killer.Is(CustomRoles.Werewolf))
             {
                 Logger.Info("Werewolf Kill", "Mauled");
-                foreach (var player in Main.AllPlayerControls)
                 {
-                    if (!player.IsAlive() || Pelican.IsEaten(player.PlayerId)) continue;
-                    if (player == killer) continue;
-                    if (player.Is(CustomRoles.Pestilence)) continue;
-                    if (Vector2.Distance(killer.transform.position, player.transform.position) <= Werewolf.MaulRadius.GetFloat())
+                _ = new LateTask(() =>
                     {
-                        Main.PlayerStates[player.PlayerId].deathReason = PlayerState.DeathReason.Mauled;
-                        player.SetRealKiller(killer);
-                        player.RpcMurderPlayerV3(player);
-                    }
+                        foreach (var player in Main.AllPlayerControls)
+                        {
+                            if (!player.IsAlive() || Pelican.IsEaten(player.PlayerId)) continue;
+                            if (player == killer) continue;
+                            if (player.Is(CustomRoles.NiceMini) && Mini.Age != 18) continue;
+                            if (player.Is(CustomRoles.EvilMini) && Mini.Age != 18) continue;
+                            if (player.Is(CustomRoles.Pestilence)) continue;
+                            if (Vector2.Distance(killer.transform.position, player.transform.position) <= Werewolf.MaulRadius.GetFloat())
+                                {
+                                Main.PlayerStates[player.PlayerId].deathReason = PlayerState.DeathReason.Mauled;
+                                player.SetRealKiller(killer);
+                                player.RpcMurderPlayerV3(player);
+                            }
+                        }
+                    }, 0.1f, "Werewolf Maul Bug Fix");
+
                 }
             }
 
@@ -850,6 +859,33 @@ class CheckMurderPatch
         if (Jackal.ResetKillCooldownWhenSbGetKilled.GetBool() && !killer.Is(CustomRoles.Sidekick) && !target.Is(CustomRoles.Sidekick) && !killer.Is(CustomRoles.Jackal) && !target.Is(CustomRoles.Jackal) && !GameStates.IsMeeting)
             Jackal.AfterPlayerDiedTask(killer);
 
+        //迷你船员岁数检查
+        if (target.Is(CustomRoles.NiceMini) && Mini.Age != 18)
+        {
+            killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), GetString("Cantkillkid")));
+            return false;
+        }
+        if (target.Is(CustomRoles.EvilMini) && Mini.Age != 18)
+        {
+            killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.NiceMini), GetString("Cantkillkid")));
+            return false;
+        }
+        if (killer.Is(CustomRoles.EvilMini) && Mini.Age != 18)
+        {
+            Main.EvilMiniKillcooldown[killer.PlayerId] = Mini.MinorCD.GetFloat();
+            Main.AllPlayerKillCooldown[killer.PlayerId] = Mini.MinorCD.GetFloat();
+            Main.EvilMiniKillcooldownf = Mini.MinorCD.GetFloat();
+            killer.MarkDirtySettings();
+            killer.SetKillCooldown();
+            return true;
+        }
+        if (killer.Is(CustomRoles.EvilMini) && Mini.Age == 18)
+        {
+            Main.AllPlayerKillCooldown[killer.PlayerId] = Mini.MajorCD.GetFloat();
+            killer.MarkDirtySettings();
+            killer.SetKillCooldown();
+            return true;
+        }
 
     /*    if (target.Is(CustomRoles.BoobyTrap) && Options.TrapOnlyWorksOnTheBodyBoobyTrap.GetBool() && !GameStates.IsMeeting)
         {
@@ -2083,6 +2119,7 @@ class ReportDeadBodyPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 class FixedUpdatePatch
 {
+    private static long LastFixedUpdate = new();
     private static StringBuilder Mark = new(20);
     private static StringBuilder Suffix = new(120);
     private static int LevelKickBufferTime = 10;
@@ -2380,6 +2417,67 @@ class FixedUpdatePatch
                     }
                 }
 
+                #region 检查迷你船员是否要增加年龄
+                if (GameStates.IsInTask && player.Is(CustomRoles.NiceMini))
+                {
+                    if (Mini.Age < 18 && player.IsAlive())
+                    {
+                        if (LastFixedUpdate == Utils.GetTimeStamp()) return;
+                        LastFixedUpdate = Utils.GetTimeStamp();
+                        Mini.GrowUpTime ++;
+                        if (Mini.GrowUpTime >= Mini.GrowUpDuration.GetInt()/18)
+                        {
+                            Mini.Age += 1;
+                            Mini.GrowUpTime = 0;                         
+                            player.RpcGuardAndKill();
+                            Logger.Info($"年龄增加1", "Child");
+                            if (Mini.UpDateAge.GetBool())
+                            {
+                                foreach (var pc in Main.AllPlayerControls)
+                                {
+                                //    pc.RpcGuardAndKill(player);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (GameStates.IsInTask && player.Is(CustomRoles.EvilMini))
+                {
+                    if (Mini.Age < 18)
+                    {
+                        if (LastFixedUpdate == Utils.GetTimeStamp()) return;
+                        LastFixedUpdate = Utils.GetTimeStamp();
+                        Mini.GrowUpTime++;
+                        if (Main.EvilMiniKillcooldown[player.PlayerId] >= 1f)
+                        {
+                            Main.EvilMiniKillcooldown[player.PlayerId]--;
+
+                        }
+                        if (Mini.GrowUpTime >= Mini.GrowUpDuration.GetInt() / 18)
+                        {
+                            Main.EvilMiniKillcooldownf = Main.EvilMiniKillcooldown[player.PlayerId];
+                            Logger.Info($"记录击杀冷却{Main.EvilMiniKillcooldownf}", "Child");
+                            Main.AllPlayerKillCooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                            Main.EvilMiniKillcooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                            player.MarkDirtySettings();
+                            Mini.Age += 1;
+                            Mini.GrowUpTime = 0;
+                            Logger.Info($"年龄增加1", "Child");
+                            player.SetKillCooldown();
+
+                            if (Mini.UpDateAge.GetBool())
+                            {
+                                foreach (var pc in Main.AllPlayerControls)
+                                {
+                                //    pc.RpcGuardAndKill(player);
+                                }
+                            }
+                            Logger.Info($"重置击杀冷却{Main.EvilMiniKillcooldownf -1f}", "Child");
+                        }
+                    }
+                }
+                #endregion
+
                 //检查掷雷兵技能是否生效
                 if (GameStates.IsInTask && player.Is(CustomRoles.Grenadier))
                 {
@@ -2419,6 +2517,14 @@ class FixedUpdatePatch
                     Main.MarioVentCount[player.PlayerId] = Options.MarioVentNumWin.GetInt();
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Mario); //马里奥这个多动症赢了
                     CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
+                }
+                foreach (var mini in Main.AllPlayerControls)
+                {
+                    if (GameStates.IsInTask && mini.Is(CustomRoles.NiceMini) && Mini.Age < 18 && !mini.IsAlive())
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.NiceMini);
+                    //    CustomWinnerHolder.WinnerIds.Add(mini.PlayerId); // Nice Mini does not win (Crewmates should not solo win unless Egoist)
+                    }
                 }
 
                 if (GameStates.IsInTask && player.Is(CustomRoles.Vulture) && Vulture.BodyReportCount[player.PlayerId] >= Vulture.NumberOfReportsToWin.GetInt())
@@ -2660,7 +2766,12 @@ class FixedUpdatePatch
                         Mark.Append(Shroud.TargetMark(seer, target));
                         break;
                 }
+                if (target.Is(CustomRoles.NiceMini) && Mini.EveryoneCanKnowMini.GetBool())
+                    Mark.Append(Utils.ColorString(Color.white, Mini.Age != 18 ? $"({Mini.Age})" : ""));
 
+                if (target.Is(CustomRoles.EvilMini) && Mini.EveryoneCanKnowMini.GetBool())
+                    Mark.Append(Utils.ColorString(Color.white, Mini.Age != 18 ? $"({Mini.Age})" : ""));
+                    
                 if ((Medic.WhoCanSeeProtect.GetInt() is 0 or 2) && seer.PlayerId == target.PlayerId && (Medic.InProtect(seer.PlayerId) || Medic.TempMarkProtected == seer.PlayerId))
                     Mark.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Medic)}>✚</color>");
 

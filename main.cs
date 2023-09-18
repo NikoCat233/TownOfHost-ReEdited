@@ -36,8 +36,8 @@ public class Main : BasePlugin
     public static readonly string MainMenuText = " ";
 
     public const string PluginGuid = "com.karped1em.townofhostedited";
-    public const string PluginVersion = "3.0.0";
-    public const string PluginDisplayVersion = "3.0.0";
+    public const string PluginVersion = "3.0.10";
+    public const string PluginDisplayVersion = "3.0.0_1";
     public static readonly string SupportedVersionAU = "2023.7.11";
     public const bool Canary = false;
 
@@ -116,6 +116,9 @@ public class Main : BasePlugin
     public static List<PlayerControl> LoversPlayers = new();
     public static bool isLoversDead = true;
     public static Dictionary<byte, float> AllPlayerKillCooldown = new();
+    public static Dictionary<byte, float> EvilMiniKillcooldown = new();
+    public static Dictionary<byte, long> NiceMiniTime = new(); 
+    public static float EvilMiniKillcooldownf = new();
     public static Dictionary<byte, Vent> LastEnteredVent = new();
     public static Dictionary<byte, Vector2> LastEnteredVentLocation = new();
     public static Dictionary<byte, Vector2> TimeMasterBackTrack = new();
@@ -317,6 +320,10 @@ public class Main : BasePlugin
                 {CustomRoles.Engineer, "#8cffff"},
                 {CustomRoles.Scientist, "#8cffff"},
                 {CustomRoles.GuardianAngel, "#ffffff"},
+                // Special impostor roles
+                {CustomRoles.EvilMini, "#FF1919" },
+                // Probability roles
+                {CustomRoles.Mini, "#dddddd" },
                 // Vanilla Remakes
                 {CustomRoles.CrewmateTOHE, "#8cffff"},
                 {CustomRoles.EngineerTOHE, "#FF6A00"},
@@ -381,6 +388,7 @@ public class Main : BasePlugin
                 {CustomRoles.Monitor, "#7223DA"},
                 {CustomRoles.Swapper, "#66E666"},
                 {CustomRoles.ChiefOfPolice,"#f8cd46"},
+                {CustomRoles.NiceMini, "#8cffff" },
                 //第三陣営役職
                 {CustomRoles.Arsonist, "#ff6633"},
                 {CustomRoles.Agitater, "#F4A460"},
@@ -655,6 +663,7 @@ public enum CustomRoles
     Ludopath,
     Chronomancer,
     Pitfall,
+    EvilMini,
     // Flashbang,
     //Crewmate(Vanilla)
     Engineer,
@@ -725,6 +734,7 @@ public enum CustomRoles
     Monitor,
     Swapper,
     ChiefOfPolice,
+    NiceMini,
 
     //Neutral
     Arsonist,
@@ -791,6 +801,8 @@ public enum CustomRoles
     Banshee,
     Occultist,
     Shade,
+   //two-way camp
+    Mini,
    // Sorcerer,
    // Flux,
 
@@ -925,6 +937,7 @@ public enum CustomWinner
     Seeker = CustomRoles.Seeker,
     SoulCollector = CustomRoles.SoulCollector,
     RuthlessRomantic = CustomRoles.RuthlessRomantic,
+    NiceMini = CustomRoles.Mini,
 }
 public enum AdditionalWinners
 {
@@ -947,6 +960,7 @@ public enum AdditionalWinners
     Phantom = CustomRoles.Phantom,
     Maverick = CustomRoles.Maverick,
     Shaman = CustomRoles.Shaman,
+ //   NiceMini = CustomRoles.NiceMini,
  //   Baker = CustomRoles.Baker,
 }
 public enum SuffixModes

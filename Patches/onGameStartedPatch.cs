@@ -13,6 +13,7 @@ using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 using static TOHE.Modules.CustomRoleSelector;
 using static TOHE.Translator;
+using TOHE.Roles.Double;
 
 namespace TOHE;
 
@@ -303,7 +304,8 @@ internal class ChangeRoleSettings
             Agitater.Init();
             Swapper.Init();
             ChiefOfPolice.Init();
-
+            Mini.Init();
+            
             CustomWinnerHolder.Reset();
             AntiBlackout.Reset();
             NameNotifyManager.Reset();

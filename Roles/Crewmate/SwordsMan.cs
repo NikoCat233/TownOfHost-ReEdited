@@ -13,10 +13,13 @@ public static class SwordsMan
 
     public static List<byte> killed = new();
     public static OptionItem CanVent;
+    public static OptionItem KillCooldown;
 
     public static void SetupCustomOption()
     {
         Options.SetupRoleOptions(Id, TabGroup.CrewmateRoles, CustomRoles.SwordsMan);
+        KillCooldown = FloatOptionItem.Create(Id + 10, "KillCooldown", new(0f, 60f, 2.5f), 15f, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.SwordsMan])
+            .SetValueFormat(OptionFormat.Seconds);
         CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", false, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.SwordsMan]);
     }
     public static void Init()
@@ -35,7 +38,7 @@ public static class SwordsMan
             Main.ResetCamPlayerList.Add(playerId);
     }
 
-    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = IsKilled(id) ? 300f : 1f;
+    public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = IsKilled(id) ? 300f : KillCooldown.GetFloat();
     public static string GetKillLimit(byte id) => Utils.ColorString(!IsKilled(id) ? Utils.GetRoleColor(CustomRoles.SwordsMan).ShadeColor(0.25f) : Color.gray, !IsKilled(id) ? "(1)" : "(0)");
     public static bool CanUseKillButton(byte playerId)
         => !Main.PlayerStates[playerId].IsDead

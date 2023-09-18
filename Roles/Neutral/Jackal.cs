@@ -3,6 +3,7 @@ using HarmonyLib;
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
+using TOHE.Roles.Double;
 using UnityEngine;
 using static TOHE.Options;
 using static TOHE.Translator;
@@ -144,6 +145,7 @@ public static class Jackal
     {
         if (target.Is(CustomRoles.Pestilence)) return true;
         if (target.Is(CustomRoles.Jackal)) return true;
+        //if (JackalCanAttendant.GetBool() && CanBeAttendant(target) && Mini.Age == 18|| JackalCanAttendant.GetBool() && CanBeAttendant(target) && Mini.Age != 18 && !(target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)))
 
         if (!CanRecruitSidekick.GetBool() || RecruitLimit[killer.PlayerId] < 1) return false;
         
@@ -153,6 +155,7 @@ public static class Jackal
             {
                 RecruitLimit[killer.PlayerId]--;
                 SendRPC(killer.PlayerId);
+                //if (!AttendantCantRoles.GetBool() && Mini.Age == 18 || !AttendantCantRoles.GetBool() &&  Mini.Age != 18 && !(target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)))
                 target.RpcSetCustomRole(CustomRoles.Sidekick);
 
                 if (!Main.ResetCamPlayerList.Contains(target.PlayerId))
@@ -215,6 +218,6 @@ public static class Jackal
 
     public static bool CanBeSidekick(this PlayerControl pc)
     {
-        return pc != null && !pc.Is(CustomRoles.Sidekick) && !pc.Is(CustomRoles.Recruit) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Rascal) && !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Infected) && !pc.Is(CustomRoles.DualPersonality) && !pc.Is(CustomRoles.Contagious) && pc.GetCustomRole().IsAbleToBeSidekicked();
+        return pc != null && !pc.Is(CustomRoles.Sidekick) && !pc.Is(CustomRoles.Recruit) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Rascal) && !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Infected) && !pc.Is(CustomRoles.DualPersonality) && !pc.Is(CustomRoles.Contagious) && !pc.Is(CustomRoles.NiceMini) && Mini.Age == 18 || pc.Is(CustomRoles.EvilMini) && Mini.Age == 18 && pc.GetCustomRole().IsAbleToBeSidekicked();
     }
 }

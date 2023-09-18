@@ -106,6 +106,7 @@ class RepairSystemPatch
             if (player.Is(CustomRoles.PotionMaster) && player.IsAlive()) return true;
             if (player.Is(CustomRoles.Refugee) && player.IsAlive()) return true;
             if (player.Is(CustomRoles.Glitch) && player.IsAlive()) return true;
+            if (player.Is(CustomRoles.EvilMini)) return true;
             return false;
         }
 
@@ -177,7 +178,7 @@ class StartPatch
     public static void Postfix()
     {
         Logger.CurrentMethod();
-        Logger.Info("-----------游戏开始-----------", "Phase");
+        Logger.Info("-----------Start of game-----------", "Phase");
 
         Utils.CountAlivePlayers(true);
 

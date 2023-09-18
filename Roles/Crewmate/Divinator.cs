@@ -322,6 +322,7 @@ public static class Divinator
                 CustomRoles.Marshall or
                 CustomRoles.Workaholic or
                 CustomRoles.Phantom or
+                CustomRoles.Mini or
                 CustomRoles.Terrorist
                 => "Result29",
 

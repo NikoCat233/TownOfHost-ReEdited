@@ -85,7 +85,7 @@ public static class Lawyer
                 else if (!CanTargetCrewmate.GetBool() && target.Is(CustomRoleTypes.Crewmate)) continue;
                 else if (!CanTargetJester.GetBool() && target.Is(CustomRoles.Jester)) continue;
                 else if (target.Is(CustomRoleTypes.Neutral) && !target.IsNeutralKiller() && !target.Is(CustomRoles.Jester)) continue;
-                if (target.GetCustomRole() is CustomRoles.GM or CustomRoles.SuperStar) continue;
+                if (target.GetCustomRole() is CustomRoles.GM or CustomRoles.SuperStar or CustomRoles.NiceMini or CustomRoles.EvilMini) continue;
                 if (Utils.GetPlayerById(playerId).Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers)) continue;
 
                 targetList.Add(target);

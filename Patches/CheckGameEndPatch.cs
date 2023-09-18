@@ -3,6 +3,7 @@ using HarmonyLib;
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
+using TOHE.Roles.Double;
 using TOHE.Roles.Neutral;
 using static TOHE.Translator;
 
@@ -169,6 +170,15 @@ class GameEndChecker
                         .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
                 }
 
+                //迷你船员长大前被驱逐抢夺胜利
+                //if (CustomRolesHelper.RoleExist(CustomRoles.NiceMini))
+                //{
+                //    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.NiceMini);
+                //    Main.AllPlayerControls
+                //        .Where(p => p.Is(CustomRoles.NiceMini) && p.IsAlive() && Mini.Age < 18)
+                //        .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
+                //}
+
                 //恋人抢夺胜利
                 else if (CustomRolesHelper.RoleExist(CustomRoles.Lovers) && !reason.Equals(GameOverReason.HumansByTask))
                 {
@@ -187,6 +197,12 @@ class GameEndChecker
                 //追加胜利
                 foreach (var pc in Main.AllPlayerControls)
                 {
+                    //NiceMini
+                    //if (pc.Is(CustomRoles.NiceMini) && pc.IsAlive())
+                    //{
+                    //    CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                    //    CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.NiceMini);
+                    //}
                     //Opportunist
                     if (pc.Is(CustomRoles.Opportunist) && pc.IsAlive())
                     {
@@ -216,6 +232,7 @@ class GameEndChecker
                         CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                         CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Sunnyboy);
                     }
+                    //Maverick
                     if (pc.Is(CustomRoles.Maverick) && pc.IsAlive())
                     {
                         CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
@@ -223,12 +240,13 @@ class GameEndChecker
                     }
                     if (!Options.PhantomSnatchesWin.GetBool())
                     {
-                        if (pc.Is(CustomRoles.Phantom) && !pc.IsAlive() && pc.GetPlayerTaskState().IsTaskFinished)
-                        {
-                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Phantom);
-                        }
+                    //Phantom
+                    if (pc.Is(CustomRoles.Phantom) && !pc.IsAlive() && pc.GetPlayerTaskState().IsTaskFinished)
+                    {
+                        CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                        CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Phantom);
                     }
+                }
                     //自爆卡车来咯
                     if (pc.Is(CustomRoles.Provocateur) && Main.Provoked.TryGetValue(pc.PlayerId, out var tar))
                     {

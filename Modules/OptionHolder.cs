@@ -11,6 +11,7 @@ using TOHE.Roles.AddOns.Impostor;
 using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
+using TOHE.Roles.Double;
 
 namespace TOHE;
 
@@ -649,7 +650,9 @@ public static class Options
     public static OptionItem UseMoreRandomMapSelection;
     public static OptionItem AddedDleks;
     public static OptionItem RandomSpawn;
+    public static OptionItem SpawnRandomLocation;
     public static OptionItem AirshipAdditionalSpawn;
+    public static OptionItem SpawnRandomVents;
     public static OptionItem AirshipVariableElectrical;
     public static OptionItem DisableAirshipMovingPlatform;
     public static OptionItem ResetDoorsEveryTurns;
@@ -1534,6 +1537,7 @@ public static class Options
         Farseer.SetupCustomOption();
         Monitor.SetupCustomOption();
     //    ChiefOfPolice.SetupCustomOption();
+        Mini.SetupCustomOption();
 
         // Neutral
         TextOptionItem.Create(100010, "RoleType.NeutralBenign", TabGroup.NeutralRoles)
@@ -2397,9 +2401,12 @@ public static class Options
         RandomSpawn = BooleanOptionItem.Create(22000, "RandomSpawn", false, TabGroup.GameSettings, false)
             .SetGameMode(CustomGameMode.Standard)
             .SetColor(new Color32(19, 188, 233, byte.MaxValue));
-        AirshipAdditionalSpawn = BooleanOptionItem.Create(22010, "AirshipAdditionalSpawn", false, TabGroup.GameSettings, false)
-            .SetParent(RandomSpawn)
-            .SetGameMode(CustomGameMode.Standard);
+        SpawnRandomLocation = BooleanOptionItem.Create(22005, "SpawnRandomLocation", true, TabGroup.GameSettings, false)
+            .SetParent(RandomSpawn);
+        AirshipAdditionalSpawn = BooleanOptionItem.Create(22010, "AirshipAdditionalSpawn", true, TabGroup.GameSettings, false)
+            .SetParent(SpawnRandomLocation);
+        SpawnRandomVents = BooleanOptionItem.Create(22012, "SpawnRandomVents", false, TabGroup.GameSettings, false)
+            .SetParent(RandomSpawn);
 
         // Airship Variable Electrical
         AirshipVariableElectrical = BooleanOptionItem.Create(22100, "AirshipVariableElectrical", false, TabGroup.GameSettings, false)

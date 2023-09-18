@@ -9,6 +9,7 @@ using System.Text;
 using TOHE.Modules;
 using TOHE.Roles.AddOns.Impostor;
 using TOHE.Roles.Crewmate;
+using TOHE.Roles.Double;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 using UnityEngine;
@@ -523,6 +524,7 @@ static class ExtendedPlayerControl
             CustomRoles.Seeker => pc.IsAlive(),
             CustomRoles.Agitater => pc.IsAlive(),
             CustomRoles.ChiefOfPolice => ChiefOfPolice.CanUseKillButton(pc.PlayerId),
+            CustomRoles.EvilMini => pc.IsAlive(),
 
             _ => pc.Is(CustomRoleTypes.Impostor),
         };
@@ -998,6 +1000,29 @@ static class ExtendedPlayerControl
                 break;
             case CustomRoles.ChiefOfPolice:
                 ChiefOfPolice.SetKillCooldown(player.PlayerId);
+                break;
+            case CustomRoles.EvilMini:
+                foreach (var pc in Main.AllPlayerControls)
+                {
+                    if (pc.Is(CustomRoles.EvilMini) && Mini.Age == 0)
+                    {
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Mini.MinorCD.GetFloat();
+                        Main.EvilMiniKillcooldown[player.PlayerId] = Mini.MinorCD.GetFloat();
+
+                    }
+                    else if (pc.Is(CustomRoles.EvilMini) && Mini.Age != 18 && Mini.Age != 0)
+                    {
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                        Main.EvilMiniKillcooldown[player.PlayerId] = Main.EvilMiniKillcooldownf;
+                        player.MarkDirtySettings();
+                    }
+                    else if (pc.Is(CustomRoles.EvilMini) && Mini.Age == 18)
+                    {                      
+                        Main.AllPlayerKillCooldown[player.PlayerId] = Mini.MajorCD.GetFloat();
+                        player.MarkDirtySettings();
+                        player.SyncSettings();
+                    }
+                }
                 break;
         }
         if (player.PlayerId == LastImpostor.currentId)
