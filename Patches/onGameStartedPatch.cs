@@ -303,6 +303,7 @@ internal class ChangeRoleSettings
             Agitater.Init();
             Swapper.Init();
             ChiefOfPolice.Init();
+            MiniCrew.Init();
 
             CustomWinnerHolder.Reset();
             AntiBlackout.Reset();
@@ -865,6 +866,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.ChiefOfPolice:
                         ChiefOfPolice.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.MiniCrew:
+                        MiniCrew.Add(pc.PlayerId);
                         break;
                 }
                 foreach (var subRole in pc.GetCustomSubRoles())

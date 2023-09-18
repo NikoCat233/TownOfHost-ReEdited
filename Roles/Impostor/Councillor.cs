@@ -115,6 +115,12 @@ public static class Councillor
                     else pc.ShowPopUp(Utils.ColorString(Color.cyan, GetString("MessageFromKPD")) + "\n" + GetString("LaughToWhoMurderSelf"));
                     CouncillorSuicide = true;
                 }
+                if (target.Is(CustomRoles.MiniCrew) && MiniCrew.Age < 18)
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessMiniCrew"), pc.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+                    else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+                    return true;
+                }
                 else if (target.Is(CustomRoles.Madmate) && CanMurderMadmate.GetBool()) CouncillorSuicide = false;
                 else if (target.Is(CustomRoles.Parasite) && CanMurderMadmate.GetBool()) CouncillorSuicide = false;
                 else if (target.Is(CustomRoles.Refugee) && CanMurderMadmate.GetBool()) CouncillorSuicide = false;

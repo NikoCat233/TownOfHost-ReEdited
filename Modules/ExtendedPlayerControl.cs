@@ -1000,6 +1000,12 @@ static class ExtendedPlayerControl
             case CustomRoles.ChiefOfPolice:
                 ChiefOfPolice.SetKillCooldown(player.PlayerId);
                 break;
+            case CustomRoles.MiniCrew:
+                if (MiniCrew.IsEvilMini)
+                {
+                    MiniCrew.SetKillCooldown(player.PlayerId);
+                }
+                break;
         }
         if (player.PlayerId == LastImpostor.currentId)
             LastImpostor.SetKillCooldown();
@@ -1206,6 +1212,7 @@ static class ExtendedPlayerControl
         else if (Amnesiac.KnowRole(seer, target)) return true;
         else if (Infectious.KnowRole(seer, target)) return true;
         else if (Virus.KnowRole(seer, target)) return true;
+        else if (target.Is(CustomRoles.MiniCrew) && MiniCrew.EveryoneCanKnowMini.GetBool()) return true;
 
         else return false;
     }

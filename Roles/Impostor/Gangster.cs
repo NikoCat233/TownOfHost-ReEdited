@@ -238,7 +238,8 @@ public static class Gangster
             pc.Is(CustomRoles.Lazy) ||
             pc.Is(CustomRoles.Loyal) ||
             pc.Is(CustomRoles.CyberStar) ||
-            pc.Is(CustomRoles.Egoist)
-            );
+            pc.Is(CustomRoles.Egoist) ||
+            pc.Is(CustomRoles.MiniCrew)
+            ); //why not use custom role helper can be madmate
     }
 }

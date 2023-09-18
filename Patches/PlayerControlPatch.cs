@@ -1086,6 +1086,13 @@ class CheckMurderPatch
                     return false;
                 }
                 break;
+            case CustomRoles.MiniCrew:
+                if (MiniCrew.Age < 18)
+                {
+                    killer.Notify(Utils.ColorString(Utils.GetRoleColor(CustomRoles.MiniCrew), GetString("KillMiniCrew")));
+                    return false;
+                }
+                break;
         }
 
         //保镖保护
@@ -1290,7 +1297,7 @@ class MurderPlayerPatch
         {
             var pcList = Main.AllAlivePlayerControls.Where(x => x.PlayerId != target.PlayerId).ToList();
             var rp = pcList[IRandom.Instance.Next(0, pcList.Count)];
-            if (!rp.Is(CustomRoles.Pestilence))
+            if (!rp.Is(CustomRoles.Pestilence) && !rp.Is(CustomRoles.MiniCrew))
             {
                 Main.PlayerStates[rp.PlayerId].deathReason = PlayerState.DeathReason.Revenge;
                 rp.SetRealKiller(target);
@@ -2452,6 +2459,7 @@ class FixedUpdatePatch
                 Wraith.OnFixedUpdate(player);
                 Shade.OnFixedUpdate(player);
                 Chameleon.OnFixedUpdate(player);
+                MiniCrew.OnFixedUpdate(player);
 
                 if (GameStates.IsInTask)
                 {

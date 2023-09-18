@@ -381,6 +381,12 @@ public static class GuessManager
                     else pc.ShowPopUp(GetString("GuessGuardianTask"));
                     return true;
                 }
+                if (target.Is(CustomRoles.MiniCrew) && MiniCrew.Age < 18)
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessMiniCrew"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessMiniCrew"));
+                    return true;
+                }
                 if (pc.Is(CustomRoles.Doomsayer))
                 {
                     if (Doomsayer.CantGuess)

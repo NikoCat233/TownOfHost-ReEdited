@@ -101,6 +101,12 @@ public static class RetributionistRevengeManager
             else pc.ShowPopUp(GetString("PestilenceImmune"));
             return true;
         }
+        if (target.Is(CustomRoles.MiniCrew) && MiniCrew.Age < 18)
+        {
+            if (!isUI) Utils.SendMessage(GetString("GuessMiniCrew"), pc.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+            else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+            return true;
+        }
 
         Logger.Info($"{pc.GetNameWithRole()} 复仇了 {target.GetNameWithRole()}", "Retributionist");
 

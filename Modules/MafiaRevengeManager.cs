@@ -3,6 +3,7 @@ using Hazel;
 using Rewired.UI.ControlMapper;
 using System;
 using TOHE.Modules;
+using TOHE.Roles.Crewmate;
 using UnityEngine;
 using static TOHE.Translator;
 
@@ -77,6 +78,12 @@ public static class MafiaRevengeManager
         {
             if (!isUI) Utils.SendMessage(GetString("PestilenceImmune"), pc.PlayerId);
             else pc.ShowPopUp(GetString("PestilenceImmune"));
+            return true;
+        }
+        if (target.Is(CustomRoles.MiniCrew) && MiniCrew.Age < 18)
+        {
+            if (!isUI) Utils.SendMessage(GetString("GuessMiniCrew"), pc.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+            else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
             return true;
         }
 

@@ -119,6 +119,12 @@ public static class Judge
                     else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jailer), GetString("JailerTitle")) + "\n" + GetString("CanNotTrialJailed"));
                     return true;
                 }
+                if (target.Is(CustomRoles.MiniCrew) && MiniCrew.Age < 18)
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessMiniCrew"), pc.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+                    else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Judge), GetString("GuessMiniCrew")));
+                    return true;
+                }
                 if (pc.PlayerId == target.PlayerId)
                 {
                     if (!isUI) Utils.SendMessage(GetString("LaughToWhoTrialSelf"), pc.PlayerId, Utils.ColorString(Color.cyan, GetString("MessageFromKPD")));

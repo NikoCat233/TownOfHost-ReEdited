@@ -1,4 +1,5 @@
 using Hazel;
+using TOHE.Roles.Crewmate;
 using TOHE.Roles.Impostor;
 using TOHE.Roles.Neutral;
 
@@ -157,6 +158,13 @@ public static class NameColorManager
         if (seer.Is(CustomRoles.Contagious) && target.Is(CustomRoles.Virus)) color = Main.roleColors[CustomRoles.Virus];
         if (seer.Is(CustomRoles.Virus) && target.Is(CustomRoles.Contagious)) color = Main.roleColors[CustomRoles.Contagious];
         if (seer.Is(CustomRoles.Contagious) && target.Is(CustomRoles.Contagious) && Virus.TargetKnowOtherTarget.GetBool()) color = Main.roleColors[CustomRoles.Virus];
+
+        //Mini Crew
+        if (target.Is(CustomRoles.MiniCrew))
+        {
+            if (seer.GetCustomRole().IsImpostorTeam() && MiniCrew.IsEvilMini) color = Main.roleColors[CustomRoles.ImpostorTOHE];
+            else if (MiniCrew.EveryoneCanKnowMini.GetBool()) color = Main.roleColors[CustomRoles.MiniCrew];
+        }
 
         if (color != "") return true;
         else return seer == target

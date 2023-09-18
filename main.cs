@@ -381,6 +381,7 @@ public class Main : BasePlugin
                 {CustomRoles.Monitor, "#7223DA"},
                 {CustomRoles.Swapper, "#66E666"},
                 {CustomRoles.ChiefOfPolice,"#f8cd46"},
+                {CustomRoles.MiniCrew, "#FFFFFF"},
                 //第三陣営役職
                 {CustomRoles.Arsonist, "#ff6633"},
                 {CustomRoles.Agitater, "#F4A460"},
@@ -725,6 +726,7 @@ public enum CustomRoles
     Monitor,
     Swapper,
     ChiefOfPolice,
+    MiniCrew,
 
     //Neutral
     Arsonist,
@@ -925,6 +927,7 @@ public enum CustomWinner
     Seeker = CustomRoles.Seeker,
     SoulCollector = CustomRoles.SoulCollector,
     RuthlessRomantic = CustomRoles.RuthlessRomantic,
+    MiniCrew = CustomRoles.MiniCrew,
 }
 public enum AdditionalWinners
 {

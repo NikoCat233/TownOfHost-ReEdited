@@ -599,7 +599,8 @@ public static class Utils
             pc.Is(CustomRoles.TaskManager) ||
          //   pc.Is(CustomRoles.Cyber) ||
             pc.Is(CustomRoles.Egoist) ||
-            pc.Is(CustomRoles.DualPersonality)
+            pc.Is(CustomRoles.DualPersonality) ||
+            pc.Is(CustomRoles.MiniCrew)
             );
     }
     public static string GetProgressText(PlayerControl pc)
@@ -975,7 +976,10 @@ public static class Utils
                 break;
             case CustomRoles.ChiefOfPolice:
                 ProgressText.Append(ChiefOfPolice.GetSkillLimit(playerId));
-                break; 
+                break;
+            case CustomRoles.MiniCrew:
+                ProgressText.Append(MiniCrew.GetAge());
+                break;
             default:
                 //タスクテキスト
                 var taskState = Main.PlayerStates?[playerId].GetTaskState();
