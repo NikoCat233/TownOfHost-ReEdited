@@ -48,7 +48,6 @@ class ExileControllerWrapUpPatch
 
         bool DecidedWinner = false;
         if (!AmongUsClient.Instance.AmHost) return;
-        PlayerControl exiledPC = Utils.GetPlayerById(exiled.PlayerId);
         AntiBlackout.RestoreIsDead(doSend: false);
 
         Logger.Info($"{!Collector.CollectorWin(false)}", "!Collector.CollectorWin(false)");
@@ -98,19 +97,8 @@ class ExileControllerWrapUpPatch
 
             if (role == CustomRoles.MiniCrew && AmongUsClient.Instance.AmHost)
             {
-                if (MiniCrew.Age < 18)
+                if (MiniCrew.Age < 18 && CustomRoles.MiniCrew.RoleExist())
                 {
-                    //if (MiniCrew.IsEvilMini)
-                    //{
-                    //    //CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
-                    //    //Should I enable this?
-                    //}
-                    //else if (exiledPC.Is(CustomRoles.Admired))
-                    //{
-                    //    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);
-                    //    CustomWinnerHolder.WinnerIds.Add(exiled.PlayerId);
-                    //}
-                    //else
                     if (!MiniCrew.IsEvilMini)
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.MiniCrew);
@@ -119,6 +107,7 @@ class ExileControllerWrapUpPatch
                     }
                 }
             }
+
             Executioner.CheckExileTarget(exiled, DecidedWinner);
 
             if (role == CustomRoles.Terrorist) Utils.CheckTerroristWin(exiled);
