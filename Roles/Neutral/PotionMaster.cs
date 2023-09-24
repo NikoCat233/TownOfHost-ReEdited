@@ -18,7 +18,7 @@ namespace TOHE.Roles.Neutral
         private static OptionItem KillCooldown;
         private static OptionItem RitualMaxCount;
         public static OptionItem CanVent;
-    //    public static OptionItem HasImpostorVision;
+        public static OptionItem HasImpostorVision;
 
         public static Dictionary<byte, int> RitualCount = new();
         public static Dictionary<byte, List<byte>> RitualTarget = new();
@@ -26,13 +26,13 @@ namespace TOHE.Roles.Neutral
 
         public static void SetupCustomOption()
         {
-        SetupSingleRoleOptions(Id, TabGroup.CovenRoles, CustomRoles.PotionMaster, 1, zeroOne: false);
-            KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster])
+        SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.PotionMaster, 1, zeroOne: false);
+            KillCooldown = FloatOptionItem.Create(Id + 14, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster])
                 .SetValueFormat(OptionFormat.Seconds);
-            RitualMaxCount = IntegerOptionItem.Create(Id + 11, "RitualMaxCount", new(1, 15, 1), 5, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster])
+            RitualMaxCount = IntegerOptionItem.Create(Id + 11, "RitualMaxCount", new(1, 15, 1), 5, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster])
                 .SetValueFormat(OptionFormat.Times);
-        CanVent = BooleanOptionItem.Create(Id + 12, "CanVent", true, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster]);
-    //    HasImpostorVision = BooleanOptionItem.Create(Id + 13, "ImpostorVision", true, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster]);
+        CanVent = BooleanOptionItem.Create(Id + 12, "CanVent", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 13, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.PotionMaster]);
         }
         public static void Init()
         {
@@ -126,7 +126,7 @@ namespace TOHE.Roles.Neutral
             });
             return IsWatch;
         }
-        public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(true);
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
         public static void CanUseVent(PlayerControl player)
         {
             bool canUse = CanVent.GetBool();

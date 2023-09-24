@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TOHE.Roles.Crewmate;
+using TOHE.Roles.Double;
 using UnityEngine;
 using static TOHE.Translator;
 
@@ -114,6 +115,12 @@ public static class Councillor
                     if (!isUI) Utils.SendMessage(GetString("LaughToWhoMurderSelf"), pc.PlayerId, Utils.ColorString(Color.cyan, GetString("MessageFromKPD")));
                     else pc.ShowPopUp(Utils.ColorString(Color.cyan, GetString("MessageFromKPD")) + "\n" + GetString("LaughToWhoMurderSelf"));
                     CouncillorSuicide = true;
+                }
+                if ((target.Is(CustomRoles.NiceMini) || target.Is(CustomRoles.EvilMini)) && Mini.Age < 18)
+                {
+                    if (!isUI) Utils.SendMessage(GetString("GuessMini"), pc.PlayerId);
+                    else pc.ShowPopUp(GetString("GuessMini"));
+                    return true;
                 }
                 else if (target.Is(CustomRoles.Madmate) && CanMurderMadmate.GetBool()) CouncillorSuicide = false;
                 else if (target.Is(CustomRoles.Parasite) && CanMurderMadmate.GetBool()) CouncillorSuicide = false;

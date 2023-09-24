@@ -22,12 +22,12 @@ public static class Banshee
 
     public static void SetupCustomOption()
     {
-        SetupSingleRoleOptions(Id, TabGroup.CovenRoles, CustomRoles.Banshee, 1, zeroOne: false);
-        KillCooldown = FloatOptionItem.Create(Id + 10, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee])
+        SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Banshee, 1, zeroOne: false);
+        KillCooldown = FloatOptionItem.Create(Id + 10, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee])
             .SetValueFormat(OptionFormat.Seconds);
-        CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", true, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee]);
-  //      HasImpostorVision = BooleanOptionItem.Create(Id + 13, "ImpostorVision", true, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee]);
-        ProtectDuration = FloatOptionItem.Create(Id + 14, "BKProtectDuration", new(1f, 180f, 1f), 15f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee])
+        CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee]);
+  //      HasImpostorVision = BooleanOptionItem.Create(Id + 13, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee]);
+        ProtectDuration = FloatOptionItem.Create(Id + 14, "BKProtectDuration", new(1f, 180f, 1f), 15f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Banshee])
             .SetValueFormat(OptionFormat.Seconds);
     }
     public static void Init()

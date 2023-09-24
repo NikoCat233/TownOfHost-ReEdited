@@ -195,12 +195,6 @@ public static class Romantic
             Logger.Info($"Impostor Romantic Partner Died changing {pc.GetNameWithRole()} to Refugee", "Romantic");
             pc.RpcSetCustomRole(CustomRoles.Refugee);
         }
-        else if (player.GetCustomRole().IsCoven())
-        {
-            Logger.Info($"Coven Romantic Partner Died changing {pc.GetNameWithRole()} to Banshee", "Romantic");
-            Banshee.Add(Romantic);
-            pc.RpcSetCustomRole(CustomRoles.Banshee);
-        }
         else if (player.IsNeutralKiller())
         {
             Logger.Info($"Neutral Romantic Partner Died changing {pc.GetNameWithRole()} to Ruthless Romantic", "Romantic");

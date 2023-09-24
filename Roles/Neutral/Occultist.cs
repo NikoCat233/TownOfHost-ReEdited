@@ -6,6 +6,7 @@ using System.Text;
 using static TOHE.Options;
 using static TOHE.Translator;
 using TOHE.Roles.Crewmate;
+using AmongUs.GameOptions;
 namespace TOHE.Roles.Neutral;
 
 public static class Occultist
@@ -32,6 +33,7 @@ public static class Occultist
     public static Dictionary<byte, List<byte>> CursedPlayer = new();
 
     public static OptionItem ModeSwitchAction;
+    public static OptionItem HasImpostorVision;
     public static OptionItem CursesLookLikeSpells;
     public static SwitchTrigger NowSwitchTrigger;
     public static void SetupCustomOption()
@@ -39,6 +41,7 @@ public static class Occultist
         SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Occultist, 1, zeroOne: false);        
         ModeSwitchAction = StringOptionItem.Create(Id + 10, "WitchModeSwitchAction", SwitchTriggerText, 2, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Occultist]);
         CursesLookLikeSpells = BooleanOptionItem.Create(Id + 11, "CursesLookLikeSpells",  false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Occultist]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 12, "ImpostorVision",  true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Occultist]);
     }
     public static void Init()
     {
@@ -162,6 +165,8 @@ public static class Occultist
             SendRPC(true, occultist);
         }
     }
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
+
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
         if (Medic.ProtectList.Contains(target.PlayerId)) return false;

@@ -23,7 +23,6 @@ public static class Jailer
     public static OptionItem NCCanBeExe;
     public static OptionItem NECanBeExe;
     public static OptionItem NKCanBeExe;
-    public static OptionItem CovenCanBeExe;
     public static OptionItem CKCanBeExe;
     public static OptionItem notifyJailedOnMeeting;
 
@@ -40,7 +39,6 @@ public static class Jailer
         NECanBeExe = BooleanOptionItem.Create(Id + 14, "JailerNECanBeExe", true, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jailer]);
         NKCanBeExe = BooleanOptionItem.Create(Id + 15, "JailerNKCanBeExe", true, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jailer]);
         CKCanBeExe = BooleanOptionItem.Create(Id + 16, "JailerCKCanBeExe", false, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jailer]);
-        CovenCanBeExe = BooleanOptionItem.Create(Id + 17, "JailerCovenCanBeExe", true, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jailer]);
         notifyJailedOnMeeting = BooleanOptionItem.Create(Id + 18, "notifyJailedOnMeeting", true, TabGroup.CrewmateRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Jailer]);
     }
 
@@ -170,7 +168,6 @@ public static class Jailer
                 (role.IsNC() && NCCanBeExe.GetBool()) ||
                 (role.IsNE() && NCCanBeExe.GetBool()) ||
                 (role.IsNK() && NKCanBeExe.GetBool()) ||
-                (role.IsCoven() && CovenCanBeExe.GetBool()) ||
                 (role.IsCK() && CKCanBeExe.GetBool()) ||
                 (role.IsImpostorTeamV3()));
     }

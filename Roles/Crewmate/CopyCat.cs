@@ -187,6 +187,7 @@ public static class CopyCat
             CustomRoles.Lighter or
             CustomRoles.DovesOfNeace or
             CustomRoles.Veteran or
+            CustomRoles.Bastion or
             CustomRoles.Addict or
             CustomRoles.Chameleon or
             //bcoz of arrows

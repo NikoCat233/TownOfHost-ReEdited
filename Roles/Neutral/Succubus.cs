@@ -116,6 +116,6 @@ public static class Succubus
     public static bool CanBeCharmed(this PlayerControl pc)
     {
         return pc != null && (pc.GetCustomRole().IsCrewmate() || pc.GetCustomRole().IsImpostor() || 
-            (CanCharmNeutral.GetBool() && pc.GetCustomRole().IsNeutral())) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Infectious) && !pc.Is(CustomRoles.Virus) && !pc.Is(CustomRoles.Succubus) && !pc.Is(CustomRoles.NiceMini) && Mini.Age == 18 || pc.Is(CustomRoles.EvilMini) && Mini.Age == 18;
+            (CanCharmNeutral.GetBool() && pc.GetCustomRole().IsNeutral())) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Infectious) && !pc.Is(CustomRoles.Virus) && !pc.Is(CustomRoles.Succubus);
     }
 }

@@ -133,6 +133,17 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         Vampire.SetKillButtonText();
                         break;
+                    case CustomRoles.Vampiress:
+                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
+                        if (!shapeshifting)
+                        {
+                            __instance.KillButton.OverrideText(GetString("VampireBiteButtonText"));
+                        }
+                        if (shapeshifting)
+                        {
+                            __instance.KillButton.OverrideText(GetString("KillButtonText"));
+                        }
+                        break;
                     case CustomRoles.Poisoner:
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         Poisoner.SetKillButtonText();
@@ -201,6 +212,7 @@ class HudManagerPatch
                         break;
                     case CustomRoles.NSerialKiller:
                     case CustomRoles.Juggernaut:
+                    case CustomRoles.Pyromaniac:
                     case CustomRoles.Jackal:
                     case CustomRoles.Virus:
                     case CustomRoles.BloodKnight:
@@ -314,6 +326,10 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.AbilityButton.buttonLabelText.text = GetString("VeteranVentButtonText");
                         break;
+                    case CustomRoles.Bastion:
+                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
+                        __instance.AbilityButton.buttonLabelText.text = GetString("BastionVentButtonText");
+                        break;
                     case CustomRoles.TimeMaster:
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.AbilityButton.buttonLabelText.text = GetString("TimeMasterVentButtonText");
@@ -350,6 +366,11 @@ class HudManagerPatch
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.KillButton.OverrideText(GetString("JailorKillButtonText"));
                         break;
+                    case CustomRoles.Undertaker:
+                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
+                        __instance.KillButton.OverrideText(GetString("KillButtonText"));
+                        __instance.AbilityButton.OverrideText(GetString("UndertakerButtonText"));
+                        break;
                     case CustomRoles.Agitater:
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         __instance.KillButton.OverrideText(GetString("AgitaterKillButtonText"));
@@ -379,6 +400,10 @@ class HudManagerPatch
                         break;
                     case CustomRoles.Infectious:
                         __instance.KillButton.OverrideText(GetString("InfectiousKillButtonText"));
+                        __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
+                        break;
+                    case CustomRoles.Imitator:
+                        __instance.KillButton.OverrideText(GetString("ImitatorKillButtonText"));
                         __instance.ReportButton.OverrideText(GetString("ReportButtonText"));
                         break;
                     case CustomRoles.Monarch:
@@ -693,7 +718,7 @@ class MapBehaviourShowPatch
         if (opts.Mode is MapOptions.Modes.Normal or MapOptions.Modes.Sabotage)
         {
             var player = PlayerControl.LocalPlayer;
-            if (player.Is(CustomRoleTypes.Impostor) || (player.Is(CustomRoles.Parasite)) || (player.Is(CustomRoles.PotionMaster)) || (player.Is(CustomRoles.Glitch)) || (player.Is(CustomRoles.Refugee)) || (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage.GetBool()) || (player.Is(CustomRoles.Traitor) && Traitor.CanUseSabotage.GetBool()))
+            if (player.Is(CustomRoleTypes.Impostor) || (player.Is(CustomRoles.Parasite)) || (player.Is(CustomRoles.Bandit) && Bandit.CanUseSabotage.GetBool()) || (player.Is(CustomRoles.PotionMaster)) || (player.Is(CustomRoles.Glitch)) || (player.Is(CustomRoles.Refugee)) || (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage.GetBool()) || (player.Is(CustomRoles.Traitor) && Traitor.CanUseSabotage.GetBool()))
                 opts.Mode = MapOptions.Modes.Sabotage;
             else
                 opts.Mode = MapOptions.Modes.Normal;

@@ -27,7 +27,7 @@ public static class AntiBlackout
     ///</summary>
     public static bool IsRequired => Options.NoGameEnd.GetBool()
         // Neutrals
-        || Jackal.IsEnable || BloodKnight.IsEnable
+        || Jackal.IsEnable || BloodKnight.IsEnable || Pyromaniac.IsEnable
         || Glitch.IsEnable || Infectious.IsEnable
         || Juggernaut.IsEnable || Pelican.IsEnable
         || Pickpocket.IsEnable || NSerialKiller.IsEnable
@@ -74,8 +74,9 @@ public static class AntiBlackout
 
             foreach (var pc in Main.AllPlayerControls)
             {
-                if ((pc.GetCustomRole().IsNK() && !pc.Is(CustomRoles.Arsonist)) || pc.GetCustomRole().IsCoven()) numNeutrals++;
+                if ((pc.GetCustomRole().IsNK() && !pc.Is(CustomRoles.Arsonist))) numNeutrals++;
                 else if (pc.Is(CustomRoles.Arsonist) && Options.ArsonistKeepsGameGoing.GetBool()) numNeutrals++;
+                else if (pc.Is(CustomRoles.Succubus)) numNeutrals++;
             }
 
             Logger.Info($" {numNeutrals}", "AntiBlackout Num Neutrals");

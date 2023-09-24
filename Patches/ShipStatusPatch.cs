@@ -102,6 +102,7 @@ class RepairSystemPatch
             if (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage.GetBool()) return true;
             if (player.Is(CustomRoles.Sidekick) && Jackal.CanUseSabotageSK.GetBool()) return true;
             if (player.Is(CustomRoles.Traitor) && Traitor.CanUseSabotage.GetBool()) return true;
+            if (player.Is(CustomRoles.Bandit) && Bandit.CanUseSabotage.GetBool()) return true;
             if (player.Is(CustomRoles.Parasite) && player.IsAlive()) return true;
             if (player.Is(CustomRoles.PotionMaster) && player.IsAlive()) return true;
             if (player.Is(CustomRoles.Refugee) && player.IsAlive()) return true;

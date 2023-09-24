@@ -1,4 +1,5 @@
 ﻿using Hazel;
+using AmongUs.GameOptions;
 using System.Collections.Generic;
 using static TOHE.Translator;
 
@@ -14,6 +15,7 @@ public static class Agitater
     public static OptionItem AgitaterCanGetBombed;
     public static OptionItem AgiTaterBombCooldown;
     public static OptionItem AgitaterAutoReportBait;
+    public static OptionItem HasImpostorVision;
 
     public static byte CurrentBombedPlayer = byte.MaxValue;
     public static byte LastBombedPlayer = byte.MaxValue;
@@ -33,6 +35,7 @@ public static class Agitater
             .SetValueFormat(OptionFormat.Seconds);
         AgitaterCanGetBombed = BooleanOptionItem.Create(Id + 13, "AgitaterCanGetBombed", false, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Agitater]);
         AgitaterAutoReportBait = BooleanOptionItem.Create(Id + 14, "AgitaterAutoReportBait", false, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Agitater]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 15, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Agitater]);
     }
     public static void Init()
     {
@@ -63,6 +66,7 @@ public static class Agitater
         SendRPC(CurrentBombedPlayer, LastBombedPlayer);
     }
     public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = AgiTaterBombCooldown.GetFloat();
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
 
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {

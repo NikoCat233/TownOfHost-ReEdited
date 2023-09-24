@@ -16,7 +16,6 @@ public static class Lawyer
     private static OptionItem CanTargetImpostor;
     private static OptionItem CanTargetNeutralKiller;
     private static OptionItem CanTargetCrewmate;
-    private static OptionItem CanTargetCoven;
     private static OptionItem CanTargetJester;
     public static OptionItem ChangeRolesAfterTargetKilled;
     public static OptionItem LawyerVision;
@@ -54,7 +53,6 @@ public static class Lawyer
         CanTargetImpostor = BooleanOptionItem.Create(Id + 10, "LawyerCanTargetImpostor", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
         CanTargetNeutralKiller = BooleanOptionItem.Create(Id + 11, "LawyerCanTargetNeutralKiller", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
         CanTargetCrewmate = BooleanOptionItem.Create(Id + 12, "LawyerCanTargetCrewmate", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
-        CanTargetCoven = BooleanOptionItem.Create(Id + 17, "LawyerCanTargetCoven", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
         CanTargetJester = BooleanOptionItem.Create(Id + 13, "LawyerCanTargetJester", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
         KnowTargetRole = BooleanOptionItem.Create(Id + 14, "KnowTargetRole", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
         TargetKnowsLawyer = BooleanOptionItem.Create(Id + 15, "TargetKnowsLawyer", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
@@ -81,7 +79,6 @@ public static class Lawyer
                 if (playerId == target.PlayerId) continue;
                 else if (!CanTargetImpostor.GetBool() && target.Is(CustomRoleTypes.Impostor)) continue;
                 else if (!CanTargetNeutralKiller.GetBool() && target.IsNeutralKiller()) continue;
-                else if (!CanTargetCoven.GetBool() && target.IsCovenMember()) continue;
                 else if (!CanTargetCrewmate.GetBool() && target.Is(CustomRoleTypes.Crewmate)) continue;
                 else if (!CanTargetJester.GetBool() && target.Is(CustomRoles.Jester)) continue;
                 else if (target.Is(CustomRoleTypes.Neutral) && !target.IsNeutralKiller() && !target.Is(CustomRoles.Jester)) continue;

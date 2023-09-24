@@ -22,10 +22,10 @@ public static class CovenLeader
     public static void SetupCustomOption()
     {
         //CovenLeaderは1人固定
-        SetupSingleRoleOptions(Id, TabGroup.CovenRoles, CustomRoles.CovenLeader, 1, zeroOne: false);
-        ControlCooldown = FloatOptionItem.Create(Id + 12, "ControlCooldown", new(0f, 180f, 1f), 20f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.CovenLeader])
+        SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.CovenLeader, 1, zeroOne: false);
+        ControlCooldown = FloatOptionItem.Create(Id + 12, "ControlCooldown", new(0f, 180f, 1f), 20f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.CovenLeader])
             .SetValueFormat(OptionFormat.Seconds);
-        CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", false, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.CovenLeader]);
+        CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.CovenLeader]);
     }
     public static void Init()
     {
@@ -98,7 +98,7 @@ public static class CovenLeader
 
             foreach (var target in Main.AllAlivePlayerControls)
             {
-                if (target.PlayerId != leader.PlayerId && !(target.GetCustomRole().IsCoven() || target.Is(CustomRoles.Glitch) || target.Is(CustomRoles.Pestilence)))
+                if (target.PlayerId != leader.PlayerId && !(/*target.GetCustomRole().IsCoven() ||*/ target.Is(CustomRoles.Glitch) || target.Is(CustomRoles.Pestilence)))
                 {
                     dis = Vector2.Distance(covenleaderPos, target.transform.position);
                     targetDistance.Add(target.PlayerId, dis);

@@ -26,6 +26,7 @@ public static class Vampire
     public static bool IsEnable = false;
 
     private static OptionItem OptionKillDelay;
+    public static OptionItem CanVent;
     private static float KillDelay;
     private static readonly Dictionary<byte, BittenInfo> BittenPlayers = new();
     public static void SetupCustomOption()
@@ -33,6 +34,7 @@ public static class Vampire
         Options.SetupRoleOptions(Id, TabGroup.ImpostorRoles, CustomRoles.Vampire);
         OptionKillDelay = FloatOptionItem.Create(Id + 10, "VampireKillDelay", new(1f, 60f, 1f), 10f, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Vampire])
             .SetValueFormat(OptionFormat.Seconds);
+        CanVent = BooleanOptionItem.Create(Id + 11, "CanVent", true, TabGroup.ImpostorRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Vampire]);
     }
     public static void Init()
     {

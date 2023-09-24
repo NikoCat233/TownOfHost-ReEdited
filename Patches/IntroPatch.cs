@@ -175,7 +175,7 @@ class BeginCrewmatePatch
                 }
                 teamToDisplay = serialkillerTeam;
         }
-        if (PlayerControl.LocalPlayer.GetCustomRole().IsCoven())
+    /*    if (PlayerControl.LocalPlayer.GetCustomRole().IsCoven())  // Likely will be repurposed
             {
                 var covenTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
                 covenTeam.Add(PlayerControl.LocalPlayer);
@@ -185,7 +185,7 @@ class BeginCrewmatePatch
                         covenTeam.Add(ar);
                 }
                 teamToDisplay = covenTeam;
-        }
+        }*/
        
         return true;
     }
@@ -212,7 +212,7 @@ class BeginCrewmatePatch
                 __instance.ImpostorText.text = GetString("SubText.Crewmate");
                 break;
             case CustomRoleTypes.Neutral:
-                if (!PlayerControl.LocalPlayer.GetCustomRole().IsCoven())
+            //    if (!PlayerControl.LocalPlayer.GetCustomRole().IsCoven())
                 __instance.TeamTitle.text = GetString("TeamNeutral");
                 __instance.TeamTitle.color = __instance.BackgroundBar.material.color = new Color32(127, 140, 141, byte.MaxValue);
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Shapeshifter);
@@ -275,9 +275,6 @@ class BeginCrewmatePatch
             case CustomRoles.Chameleon:
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = PlayerControl.LocalPlayer.MyPhysics.ImpostorDiscoveredSound;
                 break;
-            case CustomRoles.Addict:
-                PlayerControl.LocalPlayer.Data.Role.IntroSound = ShipStatus.Instance.VentEnterSound;
-                break;
         /*    case CustomRoles.ParityCop:
             case CustomRoles.Mediumshiper:
             case CustomRoles.Mayor:
@@ -312,14 +309,14 @@ class BeginCrewmatePatch
                 __instance.ImpostorText.gameObject.SetActive(true);
                 __instance.ImpostorText.text = GetString("SubText.Madmate");
         }
-        if (PlayerControl.LocalPlayer.GetCustomRole().IsCoven())
+    /*    if (PlayerControl.LocalPlayer.GetCustomRole().IsCoven())
         {
                 __instance.TeamTitle.text = GetString("TeamCoven");
                 __instance.TeamTitle.color = __instance.BackgroundBar.material.color = new Color32(102, 51, 153, byte.MaxValue);
                 PlayerControl.LocalPlayer.Data.Role.IntroSound = GetIntroSound(RoleTypes.Shapeshifter);
                 __instance.ImpostorText.gameObject.SetActive(true);
                 __instance.ImpostorText.text = GetString("SubText.Coven");
-        }
+        } */
 
         if (Input.GetKey(KeyCode.RightShift))
         {
@@ -404,22 +401,13 @@ class BeginImpostorPatch
             __instance.overlayHandle.color = Palette.CrewmateBlue;
             return false;
         }
-        else if (role is CustomRoles.Romantic or CustomRoles.RuthlessRomantic or CustomRoles.VengefulRomantic or CustomRoles.NSerialKiller or CustomRoles.Jackal or CustomRoles.Seeker or CustomRoles.Agitater or CustomRoles.Occultist or CustomRoles.Shade or CustomRoles.CursedSoul or CustomRoles.Pirate or CustomRoles.Amnesiac or CustomRoles.Arsonist or CustomRoles.Sidekick or CustomRoles.Innocent or CustomRoles.Pelican or CustomRoles.Pursuer or CustomRoles.Revolutionist or CustomRoles.FFF or CustomRoles.Gamer or CustomRoles.Glitch or CustomRoles.Juggernaut or CustomRoles.DarkHide or CustomRoles.Provocateur or CustomRoles.BloodKnight or CustomRoles.NSerialKiller or CustomRoles.Werewolf or CustomRoles.Maverick or CustomRoles.NWitch or CustomRoles.Shroud or CustomRoles.Totocalcio or CustomRoles.Succubus or CustomRoles.Pelican or CustomRoles.Infectious or CustomRoles.Virus or CustomRoles.Pickpocket or CustomRoles.Traitor or CustomRoles.PlagueBearer or CustomRoles.Pestilence or CustomRoles.Spiritcaller)
+        else if (role is CustomRoles.Romantic or CustomRoles.Pyromaniac or CustomRoles.RuthlessRomantic or CustomRoles.VengefulRomantic or CustomRoles.NSerialKiller or CustomRoles.Jackal or CustomRoles.Seeker or CustomRoles.Agitater or CustomRoles.Occultist or CustomRoles.Shade or CustomRoles.CursedSoul or CustomRoles.Pirate or CustomRoles.Amnesiac or CustomRoles.Arsonist or CustomRoles.Sidekick or CustomRoles.Innocent or CustomRoles.Pelican or CustomRoles.Pursuer or CustomRoles.Revolutionist or CustomRoles.FFF or CustomRoles.Gamer or CustomRoles.Glitch or CustomRoles.Juggernaut or CustomRoles.DarkHide or CustomRoles.Provocateur or CustomRoles.BloodKnight or CustomRoles.NSerialKiller or CustomRoles.Werewolf or CustomRoles.Maverick or CustomRoles.NWitch or CustomRoles.Shroud or CustomRoles.Totocalcio or CustomRoles.Succubus or CustomRoles.Pelican or CustomRoles.Infectious or CustomRoles.Virus or CustomRoles.Pickpocket or CustomRoles.Traitor or CustomRoles.PlagueBearer or CustomRoles.Pestilence or CustomRoles.Spiritcaller or CustomRoles.CovenLeader or CustomRoles.Ritualist or CustomRoles.Banshee or CustomRoles.Necromancer or CustomRoles.Medusa or CustomRoles.HexMaster or CustomRoles.Wraith or CustomRoles.Jinx or CustomRoles.Poisoner or CustomRoles.PotionMaster)
         {
             yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
             yourTeam.Add(PlayerControl.LocalPlayer);
             foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner)) yourTeam.Add(pc);
             __instance.BeginCrewmate(yourTeam);
             __instance.overlayHandle.color = new Color32(127, 140, 141, byte.MaxValue);
-            return false;
-        }
-        else if (role is CustomRoles.CovenLeader or CustomRoles.Ritualist or CustomRoles.Banshee or CustomRoles.Necromancer or CustomRoles.Medusa or CustomRoles.HexMaster or CustomRoles.Wraith or CustomRoles.Jinx or CustomRoles.Poisoner or CustomRoles.PotionMaster)
-        {
-            yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-            yourTeam.Add(PlayerControl.LocalPlayer);
-            foreach (var pc in Main.AllPlayerControls.Where(x => !x.AmOwner)) yourTeam.Add(pc);
-            __instance.BeginCrewmate(yourTeam);
-            __instance.overlayHandle.color = new Color32(102, 51, 153, byte.MaxValue);
             return false;
         }
         BeginCrewmatePatch.Prefix(__instance, ref yourTeam);
@@ -483,3 +471,4 @@ class IntroCutsceneDestroyPatch
         Logger.Info("OnDestroy", "IntroCutscene");
     }
 }
+ 

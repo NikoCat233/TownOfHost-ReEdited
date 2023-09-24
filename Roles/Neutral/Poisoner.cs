@@ -28,15 +28,17 @@ public static class Poisoner
     private static float KillDelay;
     public static OptionItem CanVent;
     public static OptionItem KillCooldown;
+    public static OptionItem HasImpostorVision;
     private static readonly Dictionary<byte, PoisonedInfo> PoisonedPlayers = new();
     public static void SetupCustomOption()
     {
-        Options.SetupSingleRoleOptions(Id, TabGroup.CovenRoles, CustomRoles.Poisoner, 1, zeroOne: false);
-        KillCooldown = FloatOptionItem.Create(Id + 10, "PoisonCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.CovenRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner])
+        Options.SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Poisoner, 1, zeroOne: false);
+        KillCooldown = FloatOptionItem.Create(Id + 10, "PoisonCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner])
             .SetValueFormat(OptionFormat.Seconds);
-        OptionKillDelay = FloatOptionItem.Create(Id + 11, "PoisonerKillDelay", new(1f, 60f, 1f), 10f, TabGroup.CovenRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner])
+        OptionKillDelay = FloatOptionItem.Create(Id + 11, "PoisonerKillDelay", new(1f, 60f, 1f), 10f, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner])
             .SetValueFormat(OptionFormat.Seconds);
-        CanVent = BooleanOptionItem.Create(Id + 12, "CanVent", true, TabGroup.CovenRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner]);
+        CanVent = BooleanOptionItem.Create(Id + 12, "CanVent", true, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 13, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Poisoner]);
     }
 
     public static void Init()
@@ -67,7 +69,6 @@ public static class Poisoner
         if (target.Is(CustomRoles.Opportunist) && target.AllTasksCompleted() && Options.OppoImmuneToAttacksWhenTasksDone.GetBool()) return false;
         if (target.Is(CustomRoles.Glitch)) return true;
         if (target.Is(CustomRoles.Pestilence)) return true;
-        if (target.GetCustomRole().IsCoven()) return false;
         if (target.Is(CustomRoles.Veteran) && Main.VeteranInProtect.ContainsKey(target.PlayerId)) return true;
         if (Medic.ProtectList.Contains(target.PlayerId)) return false;
 
@@ -131,7 +132,7 @@ public static class Poisoner
             Logger.Info("Poisonerに噛まれている" + target.name + "はすでに死んでいました。", "Poisoner");
         }
     }
-    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(true);
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
 
     public static void OnStartMeeting()
     {

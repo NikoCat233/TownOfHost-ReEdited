@@ -17,7 +17,6 @@ public static class Executioner
     private static OptionItem CanTargetNeutralBenign;
     private static OptionItem CanTargetNeutralEvil;
     private static OptionItem CanTargetNeutralChaos;
-    private static OptionItem CanTargetCoven;
     public static OptionItem KnowTargetRole;
     public static OptionItem ChangeRolesAfterTargetKilled;
 
@@ -43,7 +42,6 @@ public static class Executioner
     {
         SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Executioner);
         CanTargetImpostor = BooleanOptionItem.Create(Id + 10, "ExecutionerCanTargetImpostor", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Executioner]);
-        CanTargetCoven = BooleanOptionItem.Create(Id + 17, "ExecutionerCanTargetCoven", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Executioner]);
         CanTargetNeutralKiller = BooleanOptionItem.Create(Id + 12, "ExecutionerCanTargetNeutralKiller", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Executioner]);
         CanTargetNeutralBenign = BooleanOptionItem.Create(Id + 14, "CanTargetNeutralBenign", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Executioner]);
         CanTargetNeutralEvil = BooleanOptionItem.Create(Id + 15, "CanTargetNeutralEvil", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Executioner]);
@@ -75,7 +73,6 @@ public static class Executioner
                 else if (!CanTargetNeutralBenign.GetBool() && target.GetCustomRole().IsNB()) continue;
                 else if (!CanTargetNeutralEvil.GetBool() && target.GetCustomRole().IsNE()) continue;
                 else if (!CanTargetNeutralChaos.GetBool() && target.GetCustomRole().IsNC()) continue;
-                else if (!CanTargetCoven.GetBool() && target.GetCustomRole().IsCoven()) continue;
                 if (target.GetCustomRole() is CustomRoles.GM or CustomRoles.SuperStar or CustomRoles.NiceMini or CustomRoles.EvilMini) continue;
                 if (Utils.GetPlayerById(playerId).Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers)) continue;
 

@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AmongUs.GameOptions;
+using HarmonyLib;
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ public static class Wraith
     private static OptionItem WraithCooldown;
     private static OptionItem WraithDuration;
     private static OptionItem WraithVentNormallyOnCooldown;
+    private static OptionItem HasImpostorVision;
 
     private static Dictionary<byte, long> InvisTime = new();
     private static Dictionary<byte, long> lastTime = new();
@@ -25,12 +27,13 @@ public static class Wraith
 
     public static void SetupCustomOption()
     {
-        SetupSingleRoleOptions(Id, TabGroup.CovenRoles, CustomRoles.Wraith, 1, zeroOne: false);        
-        WraithCooldown = FloatOptionItem.Create(Id + 2, "WraithCooldown", new(1f, 180f, 1f), 30f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith])
+        SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Wraith, 1, zeroOne: false);        
+        WraithCooldown = FloatOptionItem.Create(Id + 2, "WraithCooldown", new(1f, 180f, 1f), 30f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith])
             .SetValueFormat(OptionFormat.Seconds);
-        WraithDuration = FloatOptionItem.Create(Id + 4, "WraithDuration", new(1f, 60f, 1f), 15f, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith])
+        WraithDuration = FloatOptionItem.Create(Id + 4, "WraithDuration", new(1f, 60f, 1f), 15f, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith])
             .SetValueFormat(OptionFormat.Seconds);
-        WraithVentNormallyOnCooldown = BooleanOptionItem.Create(Id + 5, "WraithVentNormallyOnCooldown", true, TabGroup.CovenRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith]);
+        WraithVentNormallyOnCooldown = BooleanOptionItem.Create(Id + 5, "WraithVentNormallyOnCooldown", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith]);
+        HasImpostorVision = BooleanOptionItem.Create(Id + 6, "ImpostorVision", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Wraith]);
     }
     public static void Init()
     {
@@ -156,6 +159,7 @@ public static class Wraith
             }
         }, 0.5f, "Wraith Vent");
     }
+    public static void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision.GetBool());
     public static void OnEnterVent(PlayerControl pc, Vent vent)
     {
         if (!IsEnable) return;
@@ -192,7 +196,6 @@ public static class Wraith
     public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
     {
         if (Medic.ProtectList.Contains(target.PlayerId)) return true;
-        if (target.GetCustomRole().IsCoven()) return true;
         if (target.Is(CustomRoles.Bait)) return true;
         if (target.Is(CustomRoles.Pestilence)) return true;
         if (target.Is(CustomRoles.Veteran) && Main.VeteranInProtect.ContainsKey(target.PlayerId)) return true;

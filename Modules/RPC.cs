@@ -22,6 +22,7 @@ enum CustomRPC
     VersionCheck = 60,
     RequestRetryVersionCheck = 61,
     SyncCustomSettings = 80,
+    RestTOHESetting,
     SetDeathReason,
     EndGame,
     PlaySound,
@@ -72,6 +73,7 @@ enum CustomRPC
     SetSoulCollectorLimit,
     SetPelicanEtenNum,
     SwordsManKill,
+    UndertakerLocationSync,
     SetCounterfeiterSellLimit,
     SetPursuerSellLimit,
     SetMedicalerProtectLimit,
@@ -116,6 +118,7 @@ enum CustomRPC
     SetRevealedPlayer,
     SetCurrentRevealTarget,
     SetJackalRecruitLimit,
+    SetBanditStealLimit,
     SetBloodhoundArrow,
     SetVultureArrow,
     SetSpiritcallerSpiritLimit,
@@ -128,9 +131,11 @@ enum CustomRPC
     SetChameleonTimer,
     SetAdmireLimit,
     SetRememberLimit,
+    SetImitateLimit,
     SyncCovenLeader,
     SyncNWitch,
     SyncShroud,
+    SyncMiniAge,
 }
 public enum Sounds
 {
@@ -145,7 +150,7 @@ public enum Sounds
 internal class RPCHandlerPatch
 {
     public static bool TrustedRpc(byte id)
-    => (CustomRPC)id is CustomRPC.VersionCheck or CustomRPC.RequestRetryVersionCheck or CustomRPC.AntiBlackout or CustomRPC.Judge or CustomRPC.MeetingKill or CustomRPC.Guess or CustomRPC.MafiaRevenge or CustomRPC.NecromancerRevenge or CustomRPC.RetributionistRevenge;
+    => (CustomRPC)id is CustomRPC.VersionCheck or CustomRPC.RequestRetryVersionCheck or CustomRPC.AntiBlackout or CustomRPC.Judge or CustomRPC.MeetingKill or CustomRPC.Guess or CustomRPC.MafiaRevenge or CustomRPC.NecromancerRevenge or CustomRPC.RetributionistRevenge or CustomRPC.SetSwapperVotes;
     public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
     {
         var rpcType = (RpcCalls)callId;
@@ -355,6 +360,9 @@ internal class RPCHandlerPatch
             case CustomRPC.SniperSync:
                 Sniper.ReceiveRPC(reader);
                 break;
+            case CustomRPC.UndertakerLocationSync:
+                Undertaker.ReceiveRPC(reader);
+                break;
             case CustomRPC.SetLoversPlayers:
                 Main.LoversPlayers.Clear();
                 int count = reader.ReadInt32();
@@ -432,11 +440,17 @@ internal class RPCHandlerPatch
             case CustomRPC.SetJackalRecruitLimit:
                 Jackal.ReceiveRPC(reader);
                 break;
+            case CustomRPC.SetBanditStealLimit:
+                Bandit.ReceiveRPC(reader);
+                break;
             case CustomRPC.SetAdmireLimit:
                 Admirer.ReceiveRPC(reader);
                 break;
             case CustomRPC.SetRememberLimit:
                 Amnesiac.ReceiveRPC(reader);
+                break;
+            case CustomRPC.SetImitateLimit:
+                Imitator.ReceiveRPC(reader);
                 break;
             case CustomRPC.PlayCustomSound:
                 CustomSoundsManager.ReceiveRPC(reader);
@@ -472,10 +486,10 @@ internal class RPCHandlerPatch
             case CustomRPC.SetQuickShooterShotLimit:
                 QuickShooter.ReceiveRPC(reader);
                 break;
-            //case CustomRPC.RestTOHESetting:
-            //    OptionItem.AllOptions.ToArray().Where(x => x.Id > 0).Do(x => x.SetValueNoRpc(x.DefaultValue));
-            //    OptionShower.GetText();
-            //    break;
+            case CustomRPC.RestTOHESetting:
+                OptionItem.AllOptions.ToArray().Where(x => x.Id > 0).Do(x => x.SetValueNoRpc(x.DefaultValue));
+                OptionShower.GetText();
+                break;
             case CustomRPC.SetEraseLimit:
                 Eraser.ReceiveRPC(reader);
                 break;
@@ -621,6 +635,9 @@ internal class RPCHandlerPatch
                 break;
             case CustomRPC.SetPoliceLimlit:
                 ChiefOfPolice.ReceiveRPC(reader);
+                break;
+            case CustomRPC.SyncMiniAge:
+                Mini.ReceiveRPC(reader);
                 break;
         }
     }
@@ -820,6 +837,9 @@ internal static class RPC
             case CustomRoles.Sniper:
                 Sniper.Add(targetId);
                 break;
+            case CustomRoles.Undertaker:
+                Undertaker.Add(targetId);
+                break;
             case CustomRoles.Crusader:
                 Crusader.Add(targetId);
                 break;
@@ -834,6 +854,9 @@ internal static class RPC
                 break;
             case CustomRoles.Vampire:
                 Vampire.Add(targetId);
+                break;
+            case CustomRoles.Vampiress:
+                Vampiress.Add(targetId);
                 break;
             case CustomRoles.Executioner:
                 Executioner.Add(targetId);
@@ -858,6 +881,9 @@ internal static class RPC
                 break;
             case CustomRoles.Sidekick:
                 Sidekick.Add(targetId);
+                break;
+            case CustomRoles.Bandit:
+                Bandit.Add(targetId);
                 break;
             case CustomRoles.Poisoner:
                 Poisoner.Add(targetId);
@@ -1076,6 +1102,9 @@ internal static class RPC
             case CustomRoles.Amnesiac:
                 Amnesiac.Add(targetId);
                 break;
+            case CustomRoles.Imitator:
+                Imitator.Add(targetId);
+                break;
             case CustomRoles.DovesOfNeace:
                 Main.DovesOfNeaceNumOfUsed.Add(targetId, Options.DovesOfNeaceMaxOfUseage.GetInt());
                 break;
@@ -1108,6 +1137,9 @@ internal static class RPC
                 break;
             case CustomRoles.NSerialKiller:
                 NSerialKiller.Add(targetId);
+                break;
+            case CustomRoles.Pyromaniac:
+                Pyromaniac.Add(targetId);
                 break;
             case CustomRoles.Werewolf:
                 Werewolf.Add(targetId);
@@ -1177,6 +1209,9 @@ internal static class RPC
                 break;
             case CustomRoles.EvilMini:
                 Mini.Add(targetId);
+                break;
+            case CustomRoles.Blackmailer:
+                Blackmailer.Add(targetId);
                 break;
         }
         HudManager.Instance.SetHudActive(true);

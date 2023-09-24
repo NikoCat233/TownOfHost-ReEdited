@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TOHE.Roles.Crewmate;
 using TOHE.Roles.Double;
 using TOHE.Roles.Neutral;
+using static TOHE.Translator;
 
 namespace TOHE.Modules;
 
@@ -77,7 +79,7 @@ internal class CustomRoleSelector
             else if (role.IsMini()) MiniOnList.Add(role);
             else if (role.IsNonNK()) NonNeutralKillingOnList.Add(role);
             else if (role.IsNK()) NeutralKillingOnList.Add(role);
-            else if (role.IsCoven()) CovenOnList.Add(role);
+        //    else if (role.IsCoven()) CovenOnList.Add(role);
             else roleOnList.Add(role);
         }
         // 职业设置为：启用
@@ -87,7 +89,7 @@ internal class CustomRoleSelector
             else if (role.IsMini()) MiniRateList.Add(role);
             else if (role.IsNonNK()) NonNeutralKillingRateList.Add(role);
             else if (role.IsNK()) NeutralKillingRateList.Add(role);
-            else if (role.IsCoven()) CovenRateList.Add(role);
+        //    else if (role.IsCoven()) CovenRateList.Add(role);
             else roleRateList.Add(role);
         }
 
@@ -276,12 +278,55 @@ internal class CustomRoleSelector
          //   if (rd.Next(0, 100) < NSerialKiller.ChanceToSpawnAnother.GetInt()) rolesToAssign.Add(CustomRoles.NSerialKiller);
         }
 
+        if (CustomRoles.Autopsy.IsEnable() && CustomRoles.Doctor.IsEnable() || 
+        CustomRoles.Lucky.IsEnable() && CustomRoles.Luckey.IsEnable() ||
+        CustomRoles.Sleuth.IsEnable() && CustomRoles.Detective.IsEnable() ||
+        CustomRoles.Cyber.IsEnable() && CustomRoles.SuperStar.IsEnable() ||
+        CustomRoles.Cyber.IsEnable() && CustomRoles.CyberStar.IsEnable() ||
+        CustomRoles.Repairman.IsEnable() && CustomRoles.SabotageMaster.IsEnable() ||
+        CustomRoles.Lazy.IsEnable() && CustomRoles.Needy.IsEnable())
+        {
+            _ = new LateTask(() =>
+                {
+                    Logger.SendInGame(GetString("IncompatibleRoleSet"));
+                }, 3f, "Incompatible Role Set Info");
+
+        }
+
+        if (Options.NeutralKillingRolesMaxPlayer.GetInt() > 1 && !Options.TemporaryAntiBlackoutFix.GetBool())
+        {
+            _ = new LateTask(() =>
+                {
+                    Logger.SendInGame(GetString("NeutralKillingBlackoutWarning"));
+                }, 4f, "Neutral Killing Blackout Warning");
+
+        }
+
         if (CustomRoles.Autopsy.IsEnable())
         {
                 if (rolesToAssign.Contains(CustomRoles.Doctor))
                     {
                         rolesToAssign.Remove(CustomRoles.Doctor);
                         rolesToAssign.Add(CustomRoles.ScientistTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
+                    }
+        }
+        if (CustomRoles.Cyber.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.SuperStar))
+                    {
+                        rolesToAssign.Remove(CustomRoles.SuperStar);
+                        rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
+                    }
+        }
+        if (CustomRoles.Cyber.IsEnable())
+        {
+                if (rolesToAssign.Contains(CustomRoles.CyberStar))
+                    {
+                        rolesToAssign.Remove(CustomRoles.CyberStar);
+                        rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         }
         if (CustomRoles.Lazy.IsEnable())
@@ -290,6 +335,7 @@ internal class CustomRoleSelector
                     {
                         rolesToAssign.Remove(CustomRoles.Needy);
                         rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         }
 
@@ -299,6 +345,7 @@ internal class CustomRoleSelector
                     {
                         rolesToAssign.Remove(CustomRoles.Luckey);
                         rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         }
         if (CustomRoles.Sleuth.IsEnable())
@@ -307,6 +354,7 @@ internal class CustomRoleSelector
                     {
                         rolesToAssign.Remove(CustomRoles.Detective);
                         rolesToAssign.Add(CustomRoles.CrewmateTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         }
         if (CustomRoles.Repairman.IsEnable())
@@ -315,6 +363,7 @@ internal class CustomRoleSelector
                     {
                         rolesToAssign.Remove(CustomRoles.SabotageMaster);
                         rolesToAssign.Add(CustomRoles.EngineerTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         }
     /*    if (CustomRoles.Tricky.IsEnable())
@@ -323,6 +372,7 @@ internal class CustomRoleSelector
                     {
                         rolesToAssign.Remove(CustomRoles.Trickster);
                         rolesToAssign.Add(CustomRoles.ImpostorTOHE);
+                        Logger.Warn($"Incompatible role in list, replacing with vanilla role", "CustomRoleSelector");
                     }
         } */
 
@@ -375,7 +425,7 @@ internal class CustomRoleSelector
                     (dr.Value.IsImpostor() && role.IsImpostor()) ||
                     (dr.Value.IsNonNK() && role.IsNonNK()) ||
                     (dr.Value.IsNK() && role.IsNK()) ||
-                    (dr.Value.IsCoven() && role.IsCoven()) ||
+                //    (dr.Value.IsCoven() && role.IsCoven()) ||
                     (dr.Value.IsCrewmate() & role.IsCrewmate())
                     )
                 {

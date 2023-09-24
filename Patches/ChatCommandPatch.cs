@@ -48,6 +48,7 @@ internal class ChatCommands
         if (Pirate.DuelCheckMsg(PlayerControl.LocalPlayer, text)) goto Canceled;
         if (Councillor.MurderMsg(PlayerControl.LocalPlayer, text)) goto Canceled;
         if (Mediumshiper.MsMsg(PlayerControl.LocalPlayer, text)) goto Canceled;
+        if (Blackmailer.Extortions(PlayerControl.LocalPlayer, text)) goto Canceled;
         if (MafiaRevengeManager.MafiaMsgCheck(PlayerControl.LocalPlayer, text)) goto Canceled;
         if (NecromancerRevengeManager.NecromancerMsgCheck(PlayerControl.LocalPlayer, text)) goto Canceled;
         if (RetributionistRevengeManager.RetributionistMsgCheck(PlayerControl.LocalPlayer, text)) goto Canceled;
@@ -244,7 +245,7 @@ internal class ChatCommands
                     canceled = true;
                         int impnum = 0;
                         int neutralnum = 0;
-                        int covennum = 0;
+                    //    int covennum = 0;
                     {
                         foreach (var players in Main.AllAlivePlayerControls)
                         {
@@ -258,14 +259,14 @@ internal class ChatCommands
                                 if (players.GetCustomRole().IsNK())
                                 neutralnum++;
                             }
-                            if (Options.ShowCovenRemainOnEject.GetBool())
+                        /*    if (Options.ShowCovenRemainOnEject.GetBool())
                             {
                                 if (players.GetCustomRole().IsCoven())
-                                covennum++;
-                            }
+                                covennum++; 
+                            }*/
                         }
                         if (!GameStates.IsLobby && Options.EnableKillerLeftCommand.GetBool()) 
-                        Utils.SendMessage(GetString("Remaining.ImpostorCount") + impnum + "\n\r" + GetString("Remaining.NeutralCount") + neutralnum + "\n\r" + GetString("Remaining.CovenCount") + covennum, PlayerControl.LocalPlayer.PlayerId);
+                        Utils.SendMessage(GetString("Remaining.ImpostorCount") + impnum + "\n\r" + GetString("Remaining.NeutralCount") + neutralnum, PlayerControl.LocalPlayer.PlayerId);
                         break;
                     }
 
@@ -1024,6 +1025,7 @@ internal class ChatCommands
         if (ParityCop.ParityCheckMsg(player, text)) { canceled = true; return; }
         if (Pirate.DuelCheckMsg(player, text)) { canceled = true; return; }
         if (Councillor.MurderMsg(player, text)) { canceled = true; return; }
+        if (Blackmailer.Extortions(player, text)) { canceled = true; return; }
         if (Swapper.SwapMsg(player, text)) { canceled = true; return; }
         if (Mediumshiper.MsMsg(player, text)) return;
         if (MafiaRevengeManager.MafiaMsgCheck(player, text)) return;
@@ -1136,7 +1138,7 @@ internal class ChatCommands
                 case "/kcount":
                         int impnum = 0;
                         int neutralnum = 0;
-                        int covennum = 0;
+                    //    int covennum = 0;
                     {
                         foreach (var players in Main.AllAlivePlayerControls)
                         {
@@ -1150,14 +1152,14 @@ internal class ChatCommands
                                 if (players.GetCustomRole().IsNK())
                                 neutralnum++;
                             }
-                            if (Options.ShowCovenRemainOnEject.GetBool())
+                        /*    if (Options.ShowCovenRemainOnEject.GetBool())
                             {
                                 if (players.GetCustomRole().IsCoven())
                                 covennum++;
-                            }
+                            } */
                         }
                         if (!GameStates.IsLobby && Options.EnableKillerLeftCommand.GetBool()) 
-                        Utils.SendMessage(GetString("Remaining.ImpostorCount") + impnum + "\n\r" + GetString("Remaining.NeutralCount") + neutralnum + "\n\r" + GetString("Remaining.CovenCount") + covennum, player.PlayerId);
+                        Utils.SendMessage(GetString("Remaining.ImpostorCount") + impnum + "\n\r" + GetString("Remaining.NeutralCount") + neutralnum, player.PlayerId);
                         break;
                     }
 

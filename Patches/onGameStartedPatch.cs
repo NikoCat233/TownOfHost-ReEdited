@@ -63,11 +63,13 @@ internal class ChangeRoleSettings
             Main.ForCrusade = new();
             Main.KillGhoul = new();
             Main.CyberStarDead = new();
+            Main.CyberDead = new();
             Main.KilledDiseased = new();
             Main.KilledAntidote = new();
             Main.WorkaholicAlive = new();
             Main.BaitAlive = new();
             Main.BoobyTrapBody = new();
+            Main.TasklessCrewmate = new();
             Main.KillerOfBoobyTrapBody = new();
             Main.CleanerBodies = new();
             Main.BurstBodies = new();
@@ -101,6 +103,7 @@ internal class ChangeRoleSettings
             Main.AllKillers = new();
             Main.MadGrenadierBlinding = new();
             Main.CursedWolfSpellCount = new();
+            Main.BombedVents = new();
             Main.JinxSpellCount = new();
             Main.OverDeadPlayerList = new();
             Main.Provoked = new();
@@ -190,6 +193,7 @@ internal class ChangeRoleSettings
             EvilDiviner.Init();
             FireWorks.Init();
             Sniper.Init();
+            Undertaker.Init();
             TimeThief.Init();
             Puppeteer.Init();
         //    Mare.Init();
@@ -202,6 +206,7 @@ internal class ChangeRoleSettings
             Lawyer.Init();
             Jackal.Init();
             Sidekick.Init();
+            Bandit.Init();
             Sheriff.Init();
             CopyCat.Init();
             Cleanser.Init();
@@ -209,6 +214,7 @@ internal class ChangeRoleSettings
             EvilTracker.Init();
             Snitch.Init();
             Vampire.Init();
+            Vampiress.Init();
             Poisoner.Init();
             AntiAdminer.Init();
             Monitor.Init();
@@ -261,6 +267,7 @@ internal class ChangeRoleSettings
             Crusader.Init();
             CursedSoul.Init();
             Admirer.Init();
+            Imitator.Init();
             Medusa.Init();
             Marshall.Init();
             Amnesiac.Init();
@@ -272,6 +279,7 @@ internal class ChangeRoleSettings
             Bloodhound.Init();
             Tracker.Init();
             Merchant.Init();
+            Pyromaniac.Init();
             NSerialKiller.Init();
             Maverick.Init();
             Jinx.Init();
@@ -305,6 +313,7 @@ internal class ChangeRoleSettings
             Swapper.Init();
             ChiefOfPolice.Init();
             Mini.Init();
+            Blackmailer.Init();
             
             CustomWinnerHolder.Reset();
             AntiBlackout.Reset();
@@ -517,11 +526,17 @@ internal class SelectRolesPatch
                     case CustomRoles.Sniper:
                         Sniper.Add(pc.PlayerId);
                         break;
+                    case CustomRoles.Undertaker:
+                        Undertaker.Add(pc.PlayerId);
+                        break;
                /*     case CustomRoles.Mare:
                         Mare.Add(pc.PlayerId);
                         break; */
                     case CustomRoles.Vampire:
                         Vampire.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Vampiress:
+                        Vampiress.Add(pc.PlayerId);
                         break;
                     case CustomRoles.SwordsMan:
                         SwordsMan.Add(pc.PlayerId);
@@ -562,6 +577,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.Sidekick:
                         Sidekick.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Bandit:
+                        Bandit.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Poisoner:
                         Poisoner.Add(pc.PlayerId);
@@ -766,6 +784,9 @@ internal class SelectRolesPatch
                     case CustomRoles.Amnesiac:
                         Amnesiac.Add(pc.PlayerId);
                         break;
+                    case CustomRoles.Imitator:
+                        Imitator.Add(pc.PlayerId);
+                        break;
                     case CustomRoles.DovesOfNeace:
                         Main.DovesOfNeaceNumOfUsed.Add(pc.PlayerId, Options.DovesOfNeaceMaxOfUseage.GetInt());
                         break;
@@ -795,6 +816,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.NSerialKiller:
                         NSerialKiller.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Pyromaniac:
+                        Pyromaniac.Add(pc.PlayerId);
                         break;
                     case CustomRoles.Werewolf:
                         Werewolf.Add(pc.PlayerId);
@@ -867,6 +891,9 @@ internal class SelectRolesPatch
                         break;
                     case CustomRoles.ChiefOfPolice:
                         ChiefOfPolice.Add(pc.PlayerId);
+                        break;
+                    case CustomRoles.Blackmailer:
+                        Blackmailer.Add(pc.PlayerId);
                         break;
                 }
                 foreach (var subRole in pc.GetCustomSubRoles())
@@ -1046,7 +1073,6 @@ internal class SelectRolesPatch
                 || pc.Is(CustomRoles.God) 
                 || pc.Is(CustomRoles.FFF) 
                 || pc.Is(CustomRoles.Sunnyboy)
-                || pc.GetCustomRole().IsCoven()
                 || pc.Is(CustomRoles.Bomber)
                 || pc.Is(CustomRoles.Nuker) 
                 || pc.Is(CustomRoles.Provocateur)

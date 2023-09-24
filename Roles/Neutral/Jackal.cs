@@ -61,9 +61,9 @@ public static class Jackal
             .SetValueFormat(OptionFormat.Seconds);
         JackalCanKillSidekick = BooleanOptionItem.Create(Id + 15, "JackalCanKillSidekick", false, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Jackal]);
         CanRecruitSidekick = BooleanOptionItem.Create(Id + 30, "JackalCanRecruitSidekick", true, TabGroup.NeutralRoles, false).SetParent(CustomRoleSpawnChances[CustomRoles.Jackal]);
-        SidekickAssignMode = StringOptionItem.Create(Id + 32, "SidekickAssignMode", sidekickAssignMode, 1, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
-                .SetHidden(true);
-        SidekickRecruitLimitOpt = IntegerOptionItem.Create(Id + 31, "JackalSidekickRecruitLimit", new(0, 15, 1), 1, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
+        SidekickAssignMode = StringOptionItem.Create(Id + 34, "SidekickAssignMode", sidekickAssignMode, 0, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
+                .SetHidden(false);
+        SidekickRecruitLimitOpt = IntegerOptionItem.Create(Id + 33, "JackalSidekickRecruitLimit", new(0, 15, 1), 2, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
                 .SetValueFormat(OptionFormat.Times);
         KillCooldownSK = FloatOptionItem.Create(Id + 20, "KillCooldown", new(0f, 180f, 2.5f), 20f, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
             .SetValueFormat(OptionFormat.Seconds);
@@ -74,7 +74,7 @@ public static class Jackal
       //  SidekickKnowOtherSidekickRole = BooleanOptionItem.Create(6050590, "SidekickKnowOtherSidekickRole", false, TabGroup.NeutralRoles, false).SetParent(SidekickKnowOtherSidekick);
         SidekickCanKillSidekick = BooleanOptionItem.Create(Id + 24, "SidekickCanKillSidekick", false, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick);
         SidekickCountMode = StringOptionItem.Create(Id + 25, "SidekickCountMode", sidekickCountMode, 0, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick)
-            .SetHidden(true);
+            .SetHidden(false);
      //   SidekickCanWinWithOriginalTeam = BooleanOptionItem.Create(6050795, "SidekickCanWinWithOriginalTeam", false, TabGroup.NeutralRoles, false).SetParent(CanRecruitSidekick);
     }
     public static void Init()
@@ -218,6 +218,6 @@ public static class Jackal
 
     public static bool CanBeSidekick(this PlayerControl pc)
     {
-        return pc != null && !pc.Is(CustomRoles.Sidekick) && !pc.Is(CustomRoles.Recruit) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Rascal) && !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Infected) && !pc.Is(CustomRoles.DualPersonality) && !pc.Is(CustomRoles.Contagious) && !pc.Is(CustomRoles.NiceMini) && Mini.Age == 18 || pc.Is(CustomRoles.EvilMini) && Mini.Age == 18 && pc.GetCustomRole().IsAbleToBeSidekicked();
+        return pc != null && !pc.Is(CustomRoles.Sidekick) && !pc.Is(CustomRoles.Recruit) && !pc.Is(CustomRoles.Loyal) && !pc.Is(CustomRoles.Admired) && !pc.Is(CustomRoles.Rascal) && !pc.Is(CustomRoles.Madmate) && !pc.Is(CustomRoles.Charmed) && !pc.Is(CustomRoles.Infected) && !pc.Is(CustomRoles.DualPersonality) && !pc.Is(CustomRoles.Contagious) && pc.GetCustomRole().IsAbleToBeSidekicked();
     }
 }
